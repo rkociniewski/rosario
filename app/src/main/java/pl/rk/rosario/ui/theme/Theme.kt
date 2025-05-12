@@ -1,6 +1,5 @@
 package pl.rk.rosario.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -9,18 +8,33 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+/**
+ * Light color scheme definition for the application theme.
+ *
+ * This color scheme is used when the app is in light mode or when dynamic coloring is unavailable.
+ */
+val LightColorScheme = lightColorScheme(
+    primary = MagentaPrimary,
+    onPrimary = MagentaOnPrimary,
+    secondary = MagentaSecondary,
+    background = Color(0xFFFDFDFD),
+    surface = Color(0xFFFFFFFF),
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+/**
+ * Dark color scheme definition for the application theme.
+ *
+ * This color scheme is used when the app is in dark mode or when dynamic coloring is unavailable.
+ */
+val DarkColorScheme = darkColorScheme(
+    primary = MagentaPrimary,
+    onPrimary = MagentaOnPrimary,
+    secondary = MagentaSecondary,
+    background = Color(0xFF121212),
+    surface = Color(0xFF1E1E1E),
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -33,10 +47,19 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/**
+ * Main theme composable for the Rosario application.
+ *
+ * This function applies the appropriate theme based on the current system settings and device capabilities.
+ * It supports dynamic coloring on Android 12+ and handles the dark/light theme switching.
+ *
+ * @param darkTheme Whether to use the dark theme. Defaults to the system setting.
+ * @param dynamicColor Whether to use Material You dynamic coloring on supported devices. Defaults to true.
+ * @param content The composable content to which this theme should be applied.
+ */
 @Composable
 fun RosarioTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

@@ -108,7 +108,9 @@ tasks.withType<DetektCreateBaselineTask>().configureEach {
 
 dokka {
     dokkaSourceSets.main {
-        jdkVersion.set(java.targetCompatibility.toString().toInt()) // Used for linking to JDK documentation
+        jdkVersion.set(
+            java.targetCompatibility.toString().toInt()
+        ) // Used for linking to JDK documentation
         skipDeprecated.set(false)
     }
 
