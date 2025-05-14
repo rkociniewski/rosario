@@ -16,11 +16,11 @@ plugins {
 }
 
 android {
-    namespace = "rk.gac"
+    namespace = "pl.rk.rosario"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "rk.gac"
+        applicationId = "pl.rk.rosario"
         minSdk = 28
         targetSdk = 35
         versionCode = 1

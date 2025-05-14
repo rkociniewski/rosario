@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Rosario</string>
+
+    <string name="navigation_mode_both">Both</string>
+    <string name="navigation_mode_tap">Tap</string>
+    <string name="navigation_mode_button">Button</string>
+
+    <string name="lang_pl">Polski</string>
+    <string name="lang_en">English</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_es">Español</string>
+
+    <string name="settings_label_lang">Language</string>
+    <string name="settings_label_mode_change">Change mode</string>
+    <string name="settings_allow_rewind">Allow rewind</string>
+
+    <string name="prayer_type_rosary">Rosary</string>
+    <string name="prayer_type_divine_mercy">Divine Mercy Chaplet</string>
+    <string name="prayer_type_jesus_prayer">Jesus Prayer (Chotka)</string>
+    <string name="settings_label_prayer_type">Prayer type</string>
+
+    <string name="display_mode_light">Light</string>
+    <string name="display_mode_dark">Dark</string>
+    <string name="display_mode_system">System</string>
+
+    <string name="log_debug_settings_updated">Settings updated: %1$s</string>
+
+    <string name="tooltip_icon_description">Show setting description</string>
+    <string name="tooltip_label_prayer_type">Determines the type of cyclic prayer that will be recited</string>
+    <string name="tooltip_display_mode">Defines how the app is displayed: light, dark, or system</string>
+    <string name="settings_label_display_mode">Display mode</string>
 </resources>

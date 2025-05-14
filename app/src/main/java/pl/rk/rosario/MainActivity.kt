@@ -4,44 +4,51 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import pl.rk.rosario.enums.DisplayMode
+import pl.rk.rosario.ui.MainScreen
+import pl.rk.rosario.ui.parts.settingsFlow
 import pl.rk.rosario.ui.theme.RosarioTheme
+import pl.rk.rosario.viewModel.MainViewModel
 
+/**
+ * MainActivity.kt
+ *
+ * The application's main entry point activity.
+ * Sets up the UI theme based on configuration and initializes the main pericope screen.
+ */
+
+/**
+ * Main activity that initializes the application UI.
+ * Sets up the theme based on user preferences and displays the pericope screen.
+ */
 class MainActivity : ComponentActivity() {
+    /**
+     * Sets up the activity with appropriate theme and content.
+     *
+     * @param savedInstanceState If the activity is being re-initialized, this Bundle
+     * contains the data it most recently supplied in onSaveInstanceState.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RosarioTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            val viewModel: MainViewModel = viewModel()
+            val config by settingsFlow.collectAsState()
+
+            val darkTheme = when (config.displayMode) {
+                DisplayMode.SYSTEM -> isSystemInDarkTheme()
+                DisplayMode.DARK -> true
+                DisplayMode.LIGHT -> false
+            }
+
+            RosarioTheme(darkTheme) {
+                MainScreen(viewModel)
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    RosarioTheme {
-        Greeting("Android")
-    }
-}
