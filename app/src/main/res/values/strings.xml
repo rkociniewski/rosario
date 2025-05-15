@@ -14,6 +14,7 @@
     <string name="settings_label_lang">Language</string>
     <string name="settings_label_mode_change">Change mode</string>
     <string name="settings_allow_rewind">Allow rewind</string>
+    <string name="tooltip_display_mode">Defines how the app is displayed: light, dark, or system</string>
 
     <string name="prayer_type_rosary">Rosary</string>
     <string name="prayer_type_divine_mercy">Divine Mercy Chaplet</string>
@@ -28,6 +29,8 @@
 
     <string name="tooltip_icon_description">Show setting description</string>
     <string name="tooltip_label_prayer_type">Determines the type of cyclic prayer that will be recited</string>
-    <string name="tooltip_display_mode">Defines how the app is displayed: light, dark, or system</string>
+
     <string name="settings_label_display_mode">Display mode</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
 </resources>

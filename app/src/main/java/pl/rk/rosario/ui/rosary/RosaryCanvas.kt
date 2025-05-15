@@ -7,27 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import pl.rk.rosario.enums.BeadType
-import pl.rk.rosario.model.Bead
+import pl.rk.rosario.ui.parts.generateRosaryBeads
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-
-private val rosary: List<Bead> = buildList {
-    add(Bead(0, BeadType.CROSS))
-    add(Bead(1, BeadType.LARGE))
-    var actualIndex = 2
-
-    repeat(3) {
-        add(Bead(actualIndex++, BeadType.SMALL))
-    }
-
-    repeat(5) {
-        add(Bead(actualIndex++, BeadType.LARGE))
-        repeat(10) {
-            add(Bead(actualIndex++, BeadType.SMALL))
-        }
-    }
-}
 
 @Suppress("MagicNumber")
 @Composable
@@ -35,6 +18,8 @@ fun RosaryCanvas(
     currentIndex: Int,
     modifier: Modifier = Modifier
 ) {
+
+    val rosary = generateRosaryBeads()
     val rosarySize = rosary.maxOf { it.index } + 1
     val angleStep = (2 * PI / rosarySize).toFloat()
 
