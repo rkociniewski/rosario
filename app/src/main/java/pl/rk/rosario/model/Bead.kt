@@ -1,0 +1,8 @@
+package pl.rk.rosario.model
+
+import pl.rk.rosario.enums.BeadType
+
+data class Bead(
+    val index: Int,
+    val type: BeadType
+)
