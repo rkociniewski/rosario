@@ -19,6 +19,7 @@ import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionPr
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.DisplayText
+import pl.rk.rosario.viewModel.MainViewModel
 import kotlin.enums.EnumEntries
 
 /**
@@ -94,4 +96,8 @@ fun HelpLabel(label: String, tooltip: String) {
             )
         }
     }
+}
+
+val LocalMainViewModel = staticCompositionLocalOf<MainViewModel> {
+    error("MainViewModel not provided")
 }

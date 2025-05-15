@@ -12,18 +12,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
-import pl.rk.rosario.ui.parts.settingsFlow
-import pl.rk.rosario.ui.parts.updateSettings
-import pl.rk.rosario.viewModel.PrayerTypeViewModel
+import pl.rk.rosario.ui.parts.LocalMainViewModel
 
 @Composable
-fun PrayerTypeScreen(viewModel: PrayerTypeViewModel = viewModel(factory = PrayerTypeViewModel.Factory)) {
-    val settings by settingsFlow.collectAsState()
+fun PrayerTypeScreen() {
+    val mainViewModel = LocalMainViewModel.current
+    val settings by mainViewModel.settings.collectAsState()
 
     Column(Modifier.padding(16.dp)) {
         HelpLabel(
@@ -39,7 +37,7 @@ fun PrayerTypeScreen(viewModel: PrayerTypeViewModel = viewModel(factory = Prayer
         EnumSelector(
             options = PrayerType.entries,
             selected = settings.prayer,
-            onSelect = { viewModel.updateSettings(settings.copy(prayer = it), viewModel.context) }
+            onSelect = { mainViewModel.updateSettings(settings.copy(prayer = it)) }
         )
     }
 }

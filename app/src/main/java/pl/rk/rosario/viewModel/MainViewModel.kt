@@ -15,10 +15,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val context: Context get() = getApplication()
 
     /** Mutable state flow for the current configuration */
-    private val _config = MutableStateFlow(Settings())
+    private val _settings = MutableStateFlow(Settings())
 
     /** Public state flow exposing the current configuration */
-    val settings: StateFlow<Settings> = _config
+    val settings: StateFlow<Settings> = _settings
 
     /**
      * Initializes the ViewModel by loading the configuration.
@@ -26,7 +26,15 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     init {
         viewModelScope.launch {
             // load persisted settings
-            SettingsStore.read(context).collect { _config.value = it }
+            SettingsStore.read(context).collect { _settings.value = it }
+        }
+    }
+
+    fun updateSettings(newSettings: Settings) {
+        if (_settings.value == newSettings) return
+        _settings.value = newSettings
+        viewModelScope.launch {
+            SettingsStore.write(context, newSettings)
         }
     }
 }

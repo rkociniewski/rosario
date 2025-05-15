@@ -5,12 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.ui.MainScreen
-import pl.rk.rosario.ui.parts.settingsFlow
+import pl.rk.rosario.ui.parts.LocalMainViewModel
 import pl.rk.rosario.ui.theme.RosarioTheme
 import pl.rk.rosario.viewModel.MainViewModel
 
@@ -37,18 +38,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel: MainViewModel = viewModel()
-            val config by settingsFlow.collectAsState()
+            CompositionLocalProvider(LocalMainViewModel provides viewModel) {
+                val settings by viewModel.settings.collectAsState()
+                val darkTheme = when (settings.displayMode) {
+                    DisplayMode.SYSTEM -> isSystemInDarkTheme()
+                    DisplayMode.DARK -> true
+                    DisplayMode.LIGHT -> false
+                }
 
-            val darkTheme = when (config.displayMode) {
-                DisplayMode.SYSTEM -> isSystemInDarkTheme()
-                DisplayMode.DARK -> true
-                DisplayMode.LIGHT -> false
-            }
-
-            RosarioTheme(darkTheme) {
-                MainScreen(viewModel)
+                RosarioTheme(darkTheme) {
+                    MainScreen(viewModel)
+                }
             }
         }
     }
 }
-
