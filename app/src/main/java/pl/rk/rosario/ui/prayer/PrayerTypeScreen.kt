@@ -16,12 +16,12 @@ import pl.rk.rosario.R
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
-import pl.rk.rosario.ui.parts.LocalMainViewModel
+import pl.rk.rosario.ui.parts.localRosaryViewModel
 
 @Composable
 fun PrayerTypeScreen() {
-    val mainViewModel = LocalMainViewModel.current
-    val settings by mainViewModel.settings.collectAsState()
+    val viewModel = localRosaryViewModel.current
+    val settings by viewModel.settings.collectAsState()
 
     Column(Modifier.padding(16.dp)) {
         HelpLabel(
@@ -37,7 +37,7 @@ fun PrayerTypeScreen() {
         EnumSelector(
             options = PrayerType.entries,
             selected = settings.prayer,
-            onSelect = { mainViewModel.updateSettings(settings.copy(prayer = it)) }
+            onSelect = { viewModel.updateSettings(settings.copy(prayer = it)) }
         )
     }
 }

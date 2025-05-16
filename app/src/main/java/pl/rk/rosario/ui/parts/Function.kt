@@ -16,18 +16,19 @@ fun generateRosaryBeads(): List<Bead> {
     val beads = mutableListOf<Bead>()
     var index = 0
 
-    beads += Bead(index++, BeadType.CROSS, BeadRole.CROSS)
-    beads += Bead(index++, BeadType.LARGE, BeadRole.INTRO_SIGN_OF_CROSS)
+    beads += Bead(index++, BeadType.CROSS)
+    beads += Bead(index, BeadType.CROSS)
+    beads += Bead(index++, BeadType.LARGE)
 
-    beads += Bead(index++, BeadType.SMALL, BeadRole.FAITH)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.HOPE)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.LOVE)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
 
     repeat(5) {
-        beads += Bead(index++, BeadType.LARGE, BeadRole.PRE_DECADE_GLORY)
-        beads += Bead(index++, BeadType.LARGE, BeadRole.PRE_DECADE_OUR_FATHER)
+        beads += Bead(index++, BeadType.LARGE)
+        beads += Bead(index, BeadType.LARGE)
         repeat(10) {
-            beads += Bead(index++, BeadType.SMALL, BeadRole.DECADE_HAIL_MARY)
+            beads += Bead(index++, BeadType.SMALL)
         }
     }
 
@@ -39,27 +40,27 @@ fun generateChapletBeads(): List<Bead> {
     val beads = mutableListOf<Bead>()
     var index = 0
 
-    beads += Bead(index++, BeadType.CROSS, BeadRole.CROSS)
-    beads += Bead(index++, BeadType.LARGE, BeadRole.INTRO_SIGN_OF_CROSS)
+    beads += Bead(index++, BeadType.CROSS)
+    beads += Bead(index++, BeadType.LARGE)
 
-    beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_INTRO_OUR_FATHER)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_INTRO_HAIL_MARY)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_INTRO_CREED)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
 
     repeat(5) {
-        beads += Bead(index++, BeadType.LARGE, BeadRole.PRE_DECADE_OUR_FATHER)
+        beads += Bead(index++, BeadType.LARGE)
         repeat(10) {
-            beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_DECADE_MAIN)
+            beads += Bead(index++, BeadType.SMALL)
         }
     }
 
     repeat(3) {
-        beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_CONCLUSION_TRISAGION)
+        beads += Bead(index++, BeadType.SMALL)
     }
-    beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_CONCLUSION_TRUST)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_CONCLUSION_TRUST)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.CHAPLET_CONCLUSION_TRUST)
-    beads += Bead(index++, BeadType.LARGE, BeadRole.CHAPLET_END_SIGN_OF_CROSS)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.LARGE)
 
     return beads
 }
@@ -69,14 +70,14 @@ fun generateChotkaBeads(): List<Bead> {
     val beads = mutableListOf<Bead>()
     var index = 0
 
-    beads += Bead(index++, BeadType.CROSS, BeadRole.CROSS, active = false)
-    beads += Bead(index++, BeadType.LARGE, BeadRole.INTRO_SIGN_OF_CROSS, active = false)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.FAITH, active = false)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.HOPE, active = false)
-    beads += Bead(index++, BeadType.SMALL, BeadRole.LOVE, active = false)
+    beads += Bead(index++, BeadType.CROSS)
+    beads += Bead(index++, BeadType.LARGE)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
+    beads += Bead(index++, BeadType.SMALL)
 
     repeat(50) {
-        beads += Bead(index++, BeadType.SMALL, BeadRole.DECADE_JESUS_PRAYER)
+        beads += Bead(index++, BeadType.SMALL)
     }
 
     return beads
@@ -91,6 +92,7 @@ suspend fun loadPrayerTextMap(context: Context, @RawRes rawResId: Int) =
 
         val rawMap = Json.decodeFromString<Map<String, String>>(text)
         rawMap.mapNotNull { (key, value) ->
+            println("loadPrayerTextMap: $key $value")
             try {
                 BeadRole.valueOf(key) to value
             } catch (e: IllegalArgumentException) {

@@ -10,10 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.rk.rosario.enums.DisplayMode
-import pl.rk.rosario.ui.MainScreen
-import pl.rk.rosario.ui.parts.LocalMainViewModel
+import pl.rk.rosario.ui.parts.localRosaryViewModel
+import pl.rk.rosario.ui.rosary.RosaryScreen
 import pl.rk.rosario.ui.theme.RosarioTheme
-import pl.rk.rosario.viewModel.MainViewModel
+import pl.rk.rosario.viewModel.RosaryViewModel
 
 /**
  * MainActivity.kt
@@ -26,19 +26,14 @@ import pl.rk.rosario.viewModel.MainViewModel
  * Main activity that initializes the application UI.
  * Sets up the theme based on user preferences and displays the pericope screen.
  */
+
 class MainActivity : ComponentActivity() {
-    /**
-     * Sets up the activity with appropriate theme and content.
-     *
-     * @param savedInstanceState If the activity is being re-initialized, this Bundle
-     * contains the data it most recently supplied in onSaveInstanceState.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel: MainViewModel = viewModel()
-            CompositionLocalProvider(LocalMainViewModel provides viewModel) {
+            val viewModel: RosaryViewModel = viewModel()
+            CompositionLocalProvider(localRosaryViewModel provides viewModel) {
                 val settings by viewModel.settings.collectAsState()
                 val darkTheme = when (settings.displayMode) {
                     DisplayMode.SYSTEM -> isSystemInDarkTheme()
@@ -47,9 +42,10 @@ class MainActivity : ComponentActivity() {
                 }
 
                 RosarioTheme(darkTheme) {
-                    MainScreen(viewModel)
+                    RosaryScreen()
                 }
             }
         }
     }
 }
+

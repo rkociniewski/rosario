@@ -22,11 +22,11 @@ import pl.rk.rosario.enums.Language
 import pl.rk.rosario.enums.NavigationMode
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
-import pl.rk.rosario.ui.parts.LocalMainViewModel
+import pl.rk.rosario.ui.parts.localRosaryViewModel
 
 @Composable
 fun SettingsScreen() {
-    val mainViewModel = LocalMainViewModel.current
+    val mainViewModel = localRosaryViewModel.current
     val settings by mainViewModel.settings.collectAsState()
 
     Column(Modifier.padding(16.dp)) {

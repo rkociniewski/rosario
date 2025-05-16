@@ -33,11 +33,11 @@ object SettingsStore {
     fun read(context: Context): Flow<Settings> {
         return context.dataStore.data.map {
             Settings(
-                language = safeEnumValueOf(it[LANGUAGE], Language.EN),
-                navigationMode = safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
-                prayer = safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
-                displayMode = safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
-                allowRewind = it[ALLOW_REWIND] ?: false
+                safeEnumValueOf(it[LANGUAGE], Language.EN),
+                safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
+                safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
+                safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
+                it[ALLOW_REWIND] ?: false
             )
         }
     }

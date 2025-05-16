@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.DisplayText
-import pl.rk.rosario.viewModel.MainViewModel
+import pl.rk.rosario.viewModel.RosaryViewModel
 import kotlin.enums.EnumEntries
 
 /**
@@ -98,6 +98,6 @@ fun HelpLabel(label: String, tooltip: String) {
     }
 }
 
-val LocalMainViewModel = staticCompositionLocalOf<MainViewModel> {
-    error("MainViewModel not provided")
+val localRosaryViewModel = staticCompositionLocalOf<RosaryViewModel> {
+    error("RosaryViewModel not provided")
 }

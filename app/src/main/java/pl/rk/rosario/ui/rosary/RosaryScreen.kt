@@ -1,5 +1,6 @@
 package pl.rk.rosario.ui.rosary
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,11 +20,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.rk.rosario.R
-import pl.rk.rosario.ui.parts.LocalMainViewModel
+import pl.rk.rosario.enums.NavigationMode
+import pl.rk.rosario.ui.parts.localRosaryViewModel
 import pl.rk.rosario.viewModel.RosaryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,8 +35,8 @@ fun RosaryScreen(
     modifier: Modifier = Modifier,
     rosaryViewModel: RosaryViewModel = viewModel()
 ) {
-    val mainViewModel = LocalMainViewModel.current
-    val settings by mainViewModel.settings.collectAsState()
+    val viewModel = localRosaryViewModel.current
+    val settings by viewModel.settings.collectAsState()
     val currentIndex by rosaryViewModel.currentIndex.collectAsState()
     val currentPrayer by rosaryViewModel.currentPrayer.collectAsState()
 
@@ -73,11 +76,28 @@ fun RosaryScreen(
         },
         modifier = modifier
     ) { padding ->
-        RosaryCanvas(
-            currentIndex = currentIndex,
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-        )
+                .pointerInput(settings.navigationMode) {
+                    detectTapGestures { offset ->
+                        if (settings.navigationMode != NavigationMode.BUTTON) {
+                            if (offset.x < size.width / 2) {
+                                if (settings.allowRewind) rosaryViewModel.previous()
+                            } else {
+                                rosaryViewModel.next()
+                            }
+                        }
+                    }
+                }
+        ) {
+            RosaryCanvas(
+                currentIndex = currentIndex,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
+
+
