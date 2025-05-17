@@ -35,14 +35,16 @@ fun RosaryTopAppBar(
                 IconButton(onClick = onPreviousClick) {
                     Icon(
                         imageVector = Icons.Outlined.RemoveCircle,
-                        contentDescription = stringResource(R.string.action_previous)
+                        contentDescription = stringResource(R.string.action_previous),
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
             IconButton(onClick = onNextClick) {
                 Icon(
                     imageVector = Icons.Outlined.AddCircle,
-                    contentDescription = stringResource(R.string.action_next)
+                    contentDescription = stringResource(R.string.action_next),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             IconButton(onClick = onSettingsClick) {
