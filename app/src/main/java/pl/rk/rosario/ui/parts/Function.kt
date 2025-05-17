@@ -1,103 +1,89 @@
 package pl.rk.rosario.ui.parts
 
-import android.content.Context
-import android.util.Log
-import androidx.annotation.RawRes
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
-import pl.rk.rosario.enums.BeadRole
+import pl.rk.rosario.R
 import pl.rk.rosario.enums.BeadType
 import pl.rk.rosario.model.Bead
-import java.io.InputStreamReader
 
-@Suppress("MagicNumber")
-fun generateRosaryBeads(): List<Bead> {
-    val beads = mutableListOf<Bead>()
-    var index = 0
+private const val THREE = 3
+private const val FOUR = 4
+private const val FIVE = 5
+private const val SIX = 5
+private const val TEN = 10
 
-    beads += Bead(index++, BeadType.CROSS)
-    beads += Bead(index, BeadType.CROSS)
-    beads += Bead(index++, BeadType.LARGE)
+fun generateRosaryBeads() = buildList {
+    add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
+    add(Bead(0, BeadType.CROSS, R.string.prayer_apostles_creed))
+    add(Bead(1, BeadType.TAIL_LARGE, R.string.prayer_our_father))
+    add(Bead(2, BeadType.TAIL_SMALL, R.string.prayer_faith))
+    add(Bead(THREE, BeadType.TAIL_SMALL, R.string.prayer_hope))
+    add(Bead(FOUR, BeadType.TAIL_SMALL, R.string.prayer_love))
+    add(Bead(FOUR, BeadType.TAIL_SMALL, R.string.prayer_love))
+    add(Bead(SIX, BeadType.BEAD_LARGE, R.string.prayer_glory_be))
+    add(Bead(SIX, BeadType.BEAD_LARGE, R.string.prayer_o_my_jesus))
+    add(Bead(SIX, BeadType.BEAD_LARGE, R.string.prayer_our_father))
 
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
+    var actualIndex = SIX
 
-    repeat(5) {
-        beads += Bead(index++, BeadType.LARGE)
-        beads += Bead(index, BeadType.LARGE)
-        repeat(10) {
-            beads += Bead(index++, BeadType.SMALL)
+    repeat(FIVE) {
+        repeat(TEN) {
+            add(Bead(actualIndex++, BeadType.BEAD_SMALL, R.string.prayer_hail_mary))
+        }
+
+        if (it < FIVE - 1) {
+            add(Bead(actualIndex, BeadType.BEAD_LARGE, R.string.prayer_glory_be))
+            add(Bead(actualIndex, BeadType.BEAD_LARGE, R.string.prayer_o_my_jesus))
+            add(Bead(actualIndex++, BeadType.BEAD_LARGE, R.string.prayer_our_father))
+        }
+    }
+    add(Bead(SIX, BeadType.BEAD_LARGE, R.string.prayer_glory_be))
+    add(Bead(SIX, BeadType.BEAD_LARGE, R.string.prayer_o_my_jesus))
+    add(Bead(SIX, BeadType.BEAD_LARGE, R.string.prayer_our_father))
+
+    add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
+}
+
+fun generateDivineMercyBeads() = buildList {
+    add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
+    add(Bead(1, BeadType.TAIL_LARGE))
+    add(Bead(2, BeadType.TAIL_SMALL, R.string.prayer_our_father))
+    add(Bead(THREE, BeadType.TAIL_SMALL, R.string.prayer_hail_mary))
+    add(Bead(FOUR, BeadType.TAIL_SMALL, R.string.prayer_apostles_creed))
+
+    var actualIndex = FIVE
+
+    repeat(FIVE) {
+        add(Bead(actualIndex++, BeadType.BEAD_LARGE, R.string.prayer_ethernal_father))
+        repeat(TEN) {
+            add(Bead(actualIndex++, BeadType.BEAD_SMALL, R.string.prayer_for_the_sake))
         }
     }
 
-    return beads
+    add(Bead(FOUR, BeadType.TAIL_SMALL, R.string.prayer_holy_god))
+    add(Bead(THREE, BeadType.TAIL_SMALL, R.string.prayer_holy_god))
+    add(Bead(2, BeadType.TAIL_LARGE, R.string.prayer_holy_god))
+
+    add(Bead(1, BeadType.TAIL_LARGE, R.string.prayer_o_blood_and_water))
+
+    add(Bead(FOUR, BeadType.TAIL_LARGE, R.string.prayer_jesus_I_trust))
+    add(Bead(THREE, BeadType.TAIL_LARGE, R.string.prayer_jesus_I_trust))
+    add(Bead(2, BeadType.TAIL_LARGE, R.string.prayer_jesus_I_trust))
+
+    add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
 }
 
-@Suppress("MagicNumber")
-fun generateChapletBeads(): List<Bead> {
-    val beads = mutableListOf<Bead>()
-    var index = 0
+fun generateChotkaBeads() = buildList {
+    add(Bead(0, BeadType.CROSS))
+    add(Bead(1, BeadType.TAIL_LARGE))
+    add(Bead(2, BeadType.TAIL_SMALL))
+    add(Bead(THREE, BeadType.TAIL_SMALL))
+    add(Bead(FOUR, BeadType.TAIL_SMALL))
 
-    beads += Bead(index++, BeadType.CROSS)
-    beads += Bead(index++, BeadType.LARGE)
+    var actualIndex = FIVE
 
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-
-    repeat(5) {
-        beads += Bead(index++, BeadType.LARGE)
-        repeat(10) {
-            beads += Bead(index++, BeadType.SMALL)
+    repeat(FIVE) {
+        add(Bead(actualIndex++, BeadType.BEAD_LARGE))
+        repeat(TEN) {
+            add(Bead(actualIndex++, BeadType.BEAD_SMALL, R.string.prayer_lord_jesus))
         }
     }
-
-    repeat(3) {
-        beads += Bead(index++, BeadType.SMALL)
-    }
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.LARGE)
-
-    return beads
 }
-
-@Suppress("MagicNumber")
-fun generateChotkaBeads(): List<Bead> {
-    val beads = mutableListOf<Bead>()
-    var index = 0
-
-    beads += Bead(index++, BeadType.CROSS)
-    beads += Bead(index++, BeadType.LARGE)
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-    beads += Bead(index++, BeadType.SMALL)
-
-    repeat(50) {
-        beads += Bead(index++, BeadType.SMALL)
-    }
-
-    return beads
-}
-
-suspend fun loadPrayerTextMap(context: Context, @RawRes rawResId: Int) =
-    withContext(Dispatchers.IO) {
-        val inputStream = context.resources.openRawResource(rawResId)
-        val reader = InputStreamReader(inputStream)
-        val text = reader.readText()
-        reader.close()
-
-        val rawMap = Json.decodeFromString<Map<String, String>>(text)
-        rawMap.mapNotNull { (key, value) ->
-            println("loadPrayerTextMap: $key $value")
-            try {
-                BeadRole.valueOf(key) to value
-            } catch (e: IllegalArgumentException) {
-                Log.e("pl.rk.rosario", "[ERROR] ${e.message}")
-                null // Skip unknown keys
-            }
-        }.toMap()
-    }

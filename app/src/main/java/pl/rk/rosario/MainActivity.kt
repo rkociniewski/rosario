@@ -42,10 +42,9 @@ class MainActivity : ComponentActivity() {
                 }
 
                 RosarioTheme(darkTheme) {
-                    RosaryScreen()
+                    RosaryScreen(viewModel = viewModel)
                 }
             }
         }
     }
 }
-

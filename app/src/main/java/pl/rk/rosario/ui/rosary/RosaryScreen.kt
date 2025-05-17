@@ -7,7 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
-import androidx.compose.material.icons.outlined.DoNotDisturbOn
+import androidx.compose.material.icons.outlined.RemoveCircle
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,19 +27,29 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.NavigationMode
-import pl.rk.rosario.ui.parts.localRosaryViewModel
 import pl.rk.rosario.viewModel.RosaryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RosaryScreen(
     modifier: Modifier = Modifier,
-    rosaryViewModel: RosaryViewModel = viewModel()
+    viewModel: RosaryViewModel = viewModel()
 ) {
-    val viewModel = localRosaryViewModel.current
     val settings by viewModel.settings.collectAsState()
-    val currentIndex by rosaryViewModel.currentIndex.collectAsState()
-    val currentPrayer by rosaryViewModel.currentPrayer.collectAsState()
+    val beads by viewModel.beads.collectAsState()
+    val currentIndex by viewModel.currentIndex.collectAsState()
+    val currentPrayer by viewModel.currentPrayer.collectAsState()
+
+    // Add safety check for beads
+    if (beads.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(Modifier.align(Alignment.Center))
+        }
+        return
+    }
 
     Scaffold(
         topBar = {
@@ -46,14 +57,14 @@ fun RosaryScreen(
                 title = { Text(stringResource(R.string.app_name)) },
                 actions = {
                     if (settings.allowRewind) {
-                        IconButton(onClick = { rosaryViewModel.previous() }) {
+                        IconButton(onClick = { viewModel.previous() }) {
                             Icon(
-                                imageVector = Icons.Outlined.DoNotDisturbOn,
+                                imageVector = Icons.Outlined.RemoveCircle,
                                 contentDescription = stringResource(R.string.action_previous)
                             )
                         }
                     }
-                    IconButton(onClick = { rosaryViewModel.next() }) {
+                    IconButton(onClick = { viewModel.next() }) {
                         Icon(
                             imageVector = Icons.Outlined.AddCircle,
                             contentDescription = stringResource(R.string.action_next)
@@ -84,20 +95,19 @@ fun RosaryScreen(
                     detectTapGestures { offset ->
                         if (settings.navigationMode != NavigationMode.BUTTON) {
                             if (offset.x < size.width / 2) {
-                                if (settings.allowRewind) rosaryViewModel.previous()
+                                if (settings.allowRewind) viewModel.previous()
                             } else {
-                                rosaryViewModel.next()
+                                viewModel.next()
                             }
                         }
                     }
                 }
         ) {
             RosaryCanvas(
+                beads = beads,
                 currentIndex = currentIndex,
                 modifier = Modifier.fillMaxSize()
             )
         }
     }
 }
-
-

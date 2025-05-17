@@ -33,4 +33,20 @@
     <string name="settings_label_display_mode">Display mode</string>
     <string name="action_previous">Previous</string>
     <string name="action_next">Next</string>
+
+    <string name="prayer_in_the_name">In the name of the Father and of the Son and of the Holy Spirit. Amen.</string>
+    <string name="prayer_apostles_creed">I believe in God, the Father almighty, creator of heaven and earth, and in Jesus Christ, His only Son, our Lord. He was conceived by the Holy Spirit, and born of the Virgin Mary. He suffered under Pontius Pilate, was crucified, died and was buried. He descended to the dead. On the third day He rose again. He ascended into heaven, and is seated at the right hand the Father. He will come again to judge the living and the dead. I believe in the Holy Spirit, the Holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.</string>
+    <string name="prayer_our_father">Our Father, Who art in heaven, Hallowed be Thy Name. Thy Kingdom come. Thy Will be done, on earth as it is in Heaven. Give us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.</string>
+    <string name="prayer_faith">For Faith</string>
+    <string name="prayer_hope">For Hope</string>
+    <string name="prayer_love">For Love</string>
+    <string name="prayer_hail_mary">Hail Mary, full of Grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the Fruit of thy womb, Jesus. Holy Mary, mother of God pray for us sinners, now and in the hour of our death. Amen.</string>
+    <string name="prayer_glory_be">Glory to the Father, and to the Son, and to the Holy Spirit, both now and always, and unto the ages of ages. Amen.</string>
+    <string name="prayer_o_my_jesus">O my Jesus, forgive us our sins,  save us from the fires of Hell, and lead all souls to Heaven, especially those in most need of Thy mercy.</string>
+    <string name="prayer_ethernal_father">Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your Dearly Beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world.</string>
+    <string name="prayer_for_the_sake">For the sake of His sorrowful Passion, have mercy on us and on the whole world.</string>
+    <string name="prayer_holy_god">Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world.</string>
+    <string name="prayer_o_blood_and_water">O Blood and Water, that gushed forth from the Heart of Jesus as a fountain of mercy for us, I trust in You!</string>
+    <string name="prayer_jesus_I_trust">Jesus, I trust you!</string>
+    <string name="prayer_lord_jesus">Lord Jesus Christ, Son of God, have mercy on me, a sinner.</string>
 </resources>

@@ -1,11 +1,13 @@
 package pl.rk.rosario.storage
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.enums.Language
@@ -32,13 +34,18 @@ object SettingsStore {
 
     fun read(context: Context): Flow<Settings> {
         return context.dataStore.data.map {
-            Settings(
+            val settings = Settings(
                 safeEnumValueOf(it[LANGUAGE], Language.EN),
                 safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
                 safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
                 safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
                 it[ALLOW_REWIND] ?: false
             )
+            Log.d("SettingsStore", "Loaded settings: $settings")
+            settings
+        }.catch {
+            Log.e("SettingsStore", "Error reading settings", it)
+            emit(Settings()) // Fallback
         }
     }
 

@@ -13,85 +13,100 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-@Suppress("MagicNumber")
+const val TAIL_SPACING = 48f
+const val TWO_AND_HALF = 2.5f
+const val THREE = 3f
+const val FIVE = 5f
+const val SIX_AND_HALF = 6.5f
+const val SIX = 6f
+const val TEN = 10f
+const val FOURTEEN = 14f
+const val CROSS_RADIUS = 16f
+
 @Composable
 fun RosaryCanvas(
     currentIndex: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    beads: List<Bead>
 ) {
-    val rosary = buildList {
-        add(Bead(0, BeadType.CROSS))
-        add(Bead(1, BeadType.LARGE))
-        add(Bead(2, BeadType.SMALL))
-        add(Bead(3, BeadType.SMALL))
-        add(Bead(4, BeadType.SMALL))
+    // Safety check - don't draw if beads are empty or currentIndex is invalid
+    if (beads.isEmpty() || currentIndex >= beads.size) {
+        return
+    }
 
-        var actualIndex = 5
-        repeat(5) {
-            add(Bead(actualIndex++, BeadType.LARGE))
-            repeat(10) {
-                add(Bead(actualIndex++, BeadType.SMALL))
-            }
-        }
+    val currentBead = beads[currentIndex]
+
+    val color = when {
+        currentBead.type.name.endsWith("small", true) -> Color.DarkGray
+        else -> Color.Black
     }
 
     Canvas(modifier = modifier.fillMaxSize()) {
         val centerX = size.width / 2f
         val centerY = size.height / 2f
-        val radius = size.minDimension / 3f
-        val tailSpacing = 48f
+        val radius = size.minDimension / THREE
 
-        val crossY = centerY + radius + tailSpacing * 6.5f
-        drawBead(rosary[0], currentIndex, Offset(centerX, crossY.toFloat()))
-
-        rosary.subList(1, 5).forEachIndexed { index, bead ->
-            val x = centerX
-            val y = centerY + radius + tailSpacing * (5 - (index + 1))
-            drawBead(bead, currentIndex, Offset(x, y))
+        beads.filterBead(currentBead) { it.type == BeadType.CROSS }.forEach {
+            val crossY = centerY + radius + TAIL_SPACING * SIX_AND_HALF
+            drawCross(it, currentBead, color, Offset(centerX, crossY.toFloat()))
         }
 
-        val circularBeads = rosary.drop(5)
-        val angleStep = (2 * PI / circularBeads.size).toFloat()
+        beads.filterBead(currentBead) { it.type.name.startsWith("tail", true) }.forEach {
+            val x = centerX
+            val y = centerY + radius + TAIL_SPACING * (SIX - (it.index + 1))
+            drawBead(it, currentBead, color, Offset(x.toFloat(), y.toFloat()))
+        }
+
+        val circularBeads =
+            beads.filterBead(currentBead) { it.type.name.startsWith("bead", true) }
+        val angleStep = (2 * PI / circularBeads.distinctBy { it.index }.size).toFloat()
         val startAngle = -PI / 2
 
-        circularBeads.forEachIndexed { index, bead ->
+        circularBeads.forEach {
+            val index = it.index - FIVE
             val angle = startAngle - angleStep * index
             val x = centerX - radius * cos(angle)
             val y = centerY - radius * sin(angle)
-            drawBead(bead, currentIndex, Offset(x.toFloat(), y.toFloat()))
+            drawBead(it, currentBead, color, Offset(x.toFloat(), y.toFloat()))
         }
     }
 }
 
-@Suppress("MagicNumber")
-private fun DrawScope.drawBead(bead: Bead, currentIndex: Int, center: Offset) {
-    val color = when {
-        bead.index == currentIndex -> Color.Magenta
-        bead.type == BeadType.SMALL -> Color.DarkGray
-        else -> Color.Black
-    }
+private fun Iterable<Bead>.filterBead(currentBead: Bead, predicate: (Bead) -> Boolean) =
+    this.asSequence().filter(predicate).sortedBy { it == currentBead }.toList()
 
-    val radius = when (bead.type) {
-        BeadType.CROSS -> 16f
-        BeadType.LARGE -> 14f
-        BeadType.SMALL -> 10f
-    }
+private fun DrawScope.drawCross(bead: Bead, currentBead: Bead, color: Color, center: Offset) {
+    val beadColor = if (bead == currentBead) Color.Magenta else color
 
-    if (bead.type == BeadType.CROSS) {
-        drawLine(
-            color = color,
-            start = Offset(center.x, center.y - radius * 5f),
-            end = Offset(center.x, center.y + radius * 5f),
-            strokeWidth = 15f
-        )
+    drawLine(
+        color = beadColor,
+        start = Offset(center.x, center.y - CROSS_RADIUS * FIVE),
+        end = Offset(center.x, center.y + CROSS_RADIUS * FIVE),
+        strokeWidth = 15f
+    )
 
-        drawLine(
-            color = color,
-            start = Offset(center.x - radius * 2.5f, center.y - radius * 2.5f),
-            end = Offset(center.x + radius * 2.5f, center.y - radius * 2.5f),
-            strokeWidth = 15f
-        )
+    drawLine(
+        color = beadColor,
+        start = Offset(
+            center.x - CROSS_RADIUS * TWO_AND_HALF,
+            center.y - CROSS_RADIUS * TWO_AND_HALF
+        ),
+        end = Offset(
+            center.x + CROSS_RADIUS * TWO_AND_HALF,
+            center.y - CROSS_RADIUS * TWO_AND_HALF
+        ),
+        strokeWidth = 15f
+    )
+}
+
+private fun DrawScope.drawBead(bead: Bead, currentBead: Bead, color: Color, offset: Offset) {
+    val radius = if (bead.type.name.endsWith("large", true)) {
+        FOURTEEN
     } else {
-        drawCircle(color = color, radius = radius, center = center)
+        TEN
     }
+
+    val beadColor = if (bead == currentBead) Color.Magenta else color
+
+    drawCircle(color = beadColor, radius = radius, center = offset)
 }

@@ -1,6 +1,5 @@
 package pl.rk.rosario.viewModel
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -10,13 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pl.rk.rosario.R
-import pl.rk.rosario.enums.BeadRole
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Bead
 import pl.rk.rosario.model.Settings
 import pl.rk.rosario.storage.SettingsStore
-import pl.rk.rosario.ui.parts.generateChapletBeads
 import pl.rk.rosario.ui.parts.generateChotkaBeads
+import pl.rk.rosario.ui.parts.generateDivineMercyBeads
 import pl.rk.rosario.ui.parts.generateRosaryBeads
 
 class RosaryViewModel(app: Application) : AndroidViewModel(app) {
@@ -30,37 +28,33 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
     val settings: StateFlow<Settings> = _settings
 
     /** Public state flow exposing the current configuration */
-    private val _beads = MutableStateFlow<List<Bead>>(emptyList())
+    private val _beads = MutableStateFlow<List<Bead>>(generateRosaryBeads()) // Initialize with default beads
     val beads: StateFlow<List<Bead>> = _beads.asStateFlow()
 
     private val _currentPrayer = MutableStateFlow("")
     val currentPrayer: StateFlow<String> = _currentPrayer.asStateFlow()
 
-    private val _prayers = MutableStateFlow<Map<BeadRole, String>>(emptyMap())
-    val prayers: StateFlow<Map<BeadRole, String>> = _prayers.asStateFlow()
-
-    // Use a cached mapping of prayer resource IDs to avoid looking them up repeatedly
-    private val prayerResourceCache = mutableMapOf<String, Int?>()
-
     init {
         viewModelScope.launch {
-            // Collect settings changes once and handle downstream effects
             SettingsStore.read(context).collect { settings ->
-                beads.collect {
-                    _beads.value = when (settings.prayer) {
-                        PrayerType.ROSARY -> generateRosaryBeads()
-                        PrayerType.DIVINE_MERCY -> generateChapletBeads()
-                        PrayerType.JESUS_PRAYER -> generateChotkaBeads()
-                    }
-                }
-
                 _settings.value = settings
-                updateForSettings(settings)
+                updateBeadsFromSettings(settings)
             }
         }
     }
 
-    private fun updateForSettings(settings: Settings) {
+    private fun updateBeadsFromSettings(settings: Settings) {
+        _beads.value = when (settings.prayer) {
+            PrayerType.ROSARY -> generateRosaryBeads()
+            PrayerType.DIVINE_MERCY -> generateDivineMercyBeads()
+            PrayerType.JESUS_PRAYER -> generateChotkaBeads()
+        }
+        _currentIndex.value = 0
+    }
+
+    fun updateSettings(settings: Settings) {
+        println("updateSettings started")
+
         Log.d(
             "rk.gac",
             "[DEBUG] ${context.getString(R.string.log_debug_settings_updated, settings)}"
@@ -70,43 +64,42 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
 
         viewModelScope.launch {
             SettingsStore.write(context, settings)
-
-            _beads.value = when (settings.prayer) {
-                PrayerType.ROSARY -> generateRosaryBeads()
-                PrayerType.DIVINE_MERCY -> generateChapletBeads()
-                PrayerType.JESUS_PRAYER -> generateChotkaBeads()
-            }
+            println("updateSettings viewModelScope")
+            updateBeadsFromSettings(settings)
         }
     }
 
     fun next() {
         val currentBeads = _beads.value
-        if (_currentIndex.value < currentBeads.lastIndex) {
+        if (currentBeads.isNotEmpty() && _currentIndex.value < currentBeads.lastIndex) {
             _currentIndex.value += 1
+            updateCurrentPrayer()
         }
     }
 
     fun previous() {
-        if (_currentIndex.value > 0) {
+        if (_beads.value.isNotEmpty() && _currentIndex.value > 0) {
             _currentIndex.value -= 1
+            updateCurrentPrayer()
         }
     }
 
     fun reset() {
         _currentIndex.value = 0
+        updateCurrentPrayer()
     }
 
-    fun updateSettings(newSettings: Settings) {
-        if (_settings.value == newSettings) return
-        viewModelScope.launch {
-            SettingsStore.write(context, newSettings)
-            // Note: no need to update _settings.value here as it will be updated by the collection from SettingsStore
+    private fun updateCurrentPrayer() {
+        val beadsList = _beads.value
+        val index = _currentIndex.value
+
+        if (beadsList.isNotEmpty() && index < beadsList.size) {
+            val bead = beadsList[index]
+            _currentPrayer.value = if (bead.prayerId != 0) {
+                context.getString(bead.prayerId)
+            } else {
+                ""
+            }
         }
-    }
-
-    @SuppressLint("DiscouragedApi")
-    private fun getRawRes(name: String): Int? {
-        val resId = context.resources.getIdentifier(name, "raw", context.packageName)
-        return if (resId != 0) resId else null
     }
 }

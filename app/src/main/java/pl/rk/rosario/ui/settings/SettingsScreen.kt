@@ -26,8 +26,8 @@ import pl.rk.rosario.ui.parts.localRosaryViewModel
 
 @Composable
 fun SettingsScreen() {
-    val mainViewModel = localRosaryViewModel.current
-    val settings by mainViewModel.settings.collectAsState()
+    val viewModel = localRosaryViewModel.current
+    val settings by viewModel.settings.collectAsState()
 
     Column(Modifier.padding(16.dp)) {
         Text(
@@ -35,7 +35,7 @@ fun SettingsScreen() {
             style = MaterialTheme.typography.titleMedium
         )
         EnumSelector(Language.entries, settings.language) {
-            mainViewModel.updateSettings(settings.copy(language = it))
+            viewModel.updateSettings(settings.copy(language = it))
         }
 
         HorizontalDivider()
@@ -45,7 +45,7 @@ fun SettingsScreen() {
             style = MaterialTheme.typography.titleMedium
         )
         EnumSelector(NavigationMode.entries, settings.navigationMode) {
-            mainViewModel.updateSettings(settings.copy(navigationMode = it))
+            viewModel.updateSettings(settings.copy(navigationMode = it))
         }
 
         HorizontalDivider()
@@ -55,7 +55,7 @@ fun SettingsScreen() {
             stringResource(R.string.tooltip_display_mode)
         )
         EnumSelector(DisplayMode.entries, settings.displayMode) {
-            mainViewModel.updateSettings(settings.copy(displayMode = it))
+            viewModel.updateSettings(settings.copy(displayMode = it))
         }
 
         HorizontalDivider()
@@ -63,7 +63,7 @@ fun SettingsScreen() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = settings.allowRewind,
-                onCheckedChange = { mainViewModel.updateSettings(settings.copy(allowRewind = it)) }
+                onCheckedChange = { viewModel.updateSettings(settings.copy(allowRewind = it)) }
             )
             Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.settings_allow_rewind))
