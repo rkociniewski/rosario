@@ -2,6 +2,7 @@ package pl.rk.rosario.ui.rosary
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -36,10 +37,8 @@ fun RosaryCanvas(
 
     val currentBead = beads[currentIndex]
 
-    val color = when {
-        currentBead.type.name.endsWith("small", true) -> Color.DarkGray
-        else -> Color.Black
-    }
+    val primary = MaterialTheme.colorScheme.primary
+    val onSurface = MaterialTheme.colorScheme.onSurface
 
     Canvas(modifier = modifier.fillMaxSize()) {
         val centerX = size.width / 2f
@@ -48,13 +47,27 @@ fun RosaryCanvas(
 
         beads.filterBead(currentBead) { it.type == BeadType.CROSS }.forEach {
             val crossY = centerY + radius + TAIL_SPACING * SIX_AND_HALF
-            drawCross(it, currentBead, color, Offset(centerX, crossY.toFloat()))
+
+            val color = if (it == currentBead) {
+                primary
+            } else {
+                onSurface
+            }
+
+            drawCross(color, Offset(centerX, crossY.toFloat()))
         }
 
         beads.filterBead(currentBead) { it.type.name.startsWith("tail", true) }.forEach {
             val x = centerX
             val y = centerY + radius + TAIL_SPACING * (SIX - (it.index + 1))
-            drawBead(it, currentBead, color, Offset(x.toFloat(), y.toFloat()))
+
+            val color = if (it == currentBead) {
+                primary
+            } else {
+                onSurface
+            }
+
+            drawBead(it, color, Offset(x.toFloat(), y.toFloat()))
         }
 
         val circularBeads =
@@ -65,9 +78,17 @@ fun RosaryCanvas(
         circularBeads.forEach {
             val index = it.index - FIVE
             val angle = startAngle - angleStep * index
+
             val x = centerX - radius * cos(angle)
             val y = centerY - radius * sin(angle)
-            drawBead(it, currentBead, color, Offset(x.toFloat(), y.toFloat()))
+
+            val color = if (it == currentBead) {
+                primary
+            } else {
+                onSurface
+            }
+
+            drawBead(it, color, Offset(x.toFloat(), y.toFloat()))
         }
     }
 }
@@ -75,18 +96,16 @@ fun RosaryCanvas(
 private fun Iterable<Bead>.filterBead(currentBead: Bead, predicate: (Bead) -> Boolean) =
     this.asSequence().filter(predicate).sortedBy { it == currentBead }.toList()
 
-private fun DrawScope.drawCross(bead: Bead, currentBead: Bead, color: Color, center: Offset) {
-    val beadColor = if (bead == currentBead) Color.Magenta else color
-
+private fun DrawScope.drawCross(color: Color, center: Offset) {
     drawLine(
-        color = beadColor,
+        color = color,
         start = Offset(center.x, center.y - CROSS_RADIUS * FIVE),
         end = Offset(center.x, center.y + CROSS_RADIUS * FIVE),
         strokeWidth = 15f
     )
 
     drawLine(
-        color = beadColor,
+        color = color,
         start = Offset(
             center.x - CROSS_RADIUS * TWO_AND_HALF,
             center.y - CROSS_RADIUS * TWO_AND_HALF
@@ -99,14 +118,12 @@ private fun DrawScope.drawCross(bead: Bead, currentBead: Bead, color: Color, cen
     )
 }
 
-private fun DrawScope.drawBead(bead: Bead, currentBead: Bead, color: Color, offset: Offset) {
+private fun DrawScope.drawBead(bead: Bead, color: Color, offset: Offset) {
     val radius = if (bead.type.name.endsWith("large", true)) {
         FOURTEEN
     } else {
         TEN
     }
 
-    val beadColor = if (bead == currentBead) Color.Magenta else color
-
-    drawCircle(color = beadColor, radius = radius, center = offset)
+    drawCircle(color = color, radius = radius, center = offset)
 }

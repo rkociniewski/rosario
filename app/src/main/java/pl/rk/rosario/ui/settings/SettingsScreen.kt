@@ -3,15 +3,15 @@ package pl.rk.rosario.ui.settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,32 +20,44 @@ import pl.rk.rosario.R
 import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.enums.Language
 import pl.rk.rosario.enums.NavigationMode
+import pl.rk.rosario.model.Settings
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
-import pl.rk.rosario.ui.parts.localRosaryViewModel
 
+/**
+ * A composable function that displays the configuration section in a modal dialog.
+ *
+ * This component provides UI controls for all application settings including additional mode options,
+ * display mode preferences, and draw mode settings.
+ *
+ * @param settings The current configuration being edited
+ * @param updateSettings Callback to update the configuration when changes are made
+ * @param onClose Callback to close the configuration dialog
+ */
 @Composable
-fun SettingsScreen() {
-    val viewModel = localRosaryViewModel.current
-    val settings by viewModel.settings.collectAsState()
-
+fun SettingsScreen(
+    settings: Settings,
+    updateSettings: (Settings) -> Unit,
+    onClose: () -> Unit
+) {
     Column(Modifier.padding(16.dp)) {
-        Text(
-            stringResource(R.string.settings_label_lang),
-            style = MaterialTheme.typography.titleMedium
+        HelpLabel(
+            stringResource(R.string.settings_label_language),
+            stringResource(R.string.tooltip_language)
+
         )
         EnumSelector(Language.entries, settings.language) {
-            viewModel.updateSettings(settings.copy(language = it))
+            updateSettings(settings.copy(language = it))
         }
 
         HorizontalDivider()
 
-        Text(
-            stringResource(R.string.settings_label_mode_change),
-            style = MaterialTheme.typography.titleMedium
+        HelpLabel(
+            stringResource(R.string.settings_label_navigation_change),
+            stringResource(R.string.tooltip_label_navigation_change),
         )
         EnumSelector(NavigationMode.entries, settings.navigationMode) {
-            viewModel.updateSettings(settings.copy(navigationMode = it))
+            updateSettings(settings.copy(navigationMode = it))
         }
 
         HorizontalDivider()
@@ -55,7 +67,7 @@ fun SettingsScreen() {
             stringResource(R.string.tooltip_display_mode)
         )
         EnumSelector(DisplayMode.entries, settings.displayMode) {
-            viewModel.updateSettings(settings.copy(displayMode = it))
+            updateSettings(settings.copy(displayMode = it))
         }
 
         HorizontalDivider()
@@ -63,10 +75,21 @@ fun SettingsScreen() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = settings.allowRewind,
-                onCheckedChange = { viewModel.updateSettings(settings.copy(allowRewind = it)) }
+                onCheckedChange = { updateSettings(settings.copy(allowRewind = it)) }
             )
             Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.settings_allow_rewind))
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = onClose,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+        ) {
+            Text(stringResource(R.string.close))
         }
     }
 }

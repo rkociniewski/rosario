@@ -28,7 +28,8 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
     val settings: StateFlow<Settings> = _settings
 
     /** Public state flow exposing the current configuration */
-    private val _beads = MutableStateFlow<List<Bead>>(generateRosaryBeads()) // Initialize with default beads
+    private val _beads =
+        MutableStateFlow<List<Bead>>(generateRosaryBeads()) // Initialize with default beads
     val beads: StateFlow<List<Bead>> = _beads.asStateFlow()
 
     private val _currentPrayer = MutableStateFlow("")
@@ -39,6 +40,7 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
             SettingsStore.read(context).collect { settings ->
                 _settings.value = settings
                 updateBeadsFromSettings(settings)
+                updateCurrentPrayer()
             }
         }
     }

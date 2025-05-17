@@ -1,32 +1,23 @@
 package pl.rk.rosario.ui.rosary
 
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddCircle
-import androidx.compose.material.icons.outlined.RemoveCircle
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import pl.rk.rosario.R
-import pl.rk.rosario.enums.NavigationMode
+import pl.rk.rosario.ui.settings.SettingsDialog
 import pl.rk.rosario.viewModel.RosaryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,10 +26,13 @@ fun RosaryScreen(
     modifier: Modifier = Modifier,
     viewModel: RosaryViewModel = viewModel()
 ) {
-    val settings by viewModel.settings.collectAsState()
+    val initialSettings by viewModel.settings.collectAsState()
+    var currentSetting by remember { mutableStateOf(initialSettings) }
     val beads by viewModel.beads.collectAsState()
     val currentIndex by viewModel.currentIndex.collectAsState()
     val currentPrayer by viewModel.currentPrayer.collectAsState()
+    var showSettingsDialog by remember { mutableStateOf(false) }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     // Add safety check for beads
     if (beads.isEmpty()) {
@@ -52,62 +46,43 @@ fun RosaryScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackBarHostState) },
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.app_name)) },
-                actions = {
-                    if (settings.allowRewind) {
-                        IconButton(onClick = { viewModel.previous() }) {
-                            Icon(
-                                imageVector = Icons.Outlined.RemoveCircle,
-                                contentDescription = stringResource(R.string.action_previous)
-                            )
-                        }
-                    }
-                    IconButton(onClick = { viewModel.next() }) {
-                        Icon(
-                            imageVector = Icons.Outlined.AddCircle,
-                            contentDescription = stringResource(R.string.action_next)
-                        )
-                    }
-                }
+            RosaryTopAppBar(
+                currentSetting = currentSetting,
+                onSettingsClick = { showSettingsDialog = true },
+                onPreviousClick = { viewModel.previous() },
+                onNextClick = { viewModel.next() }
             )
         },
         bottomBar = {
-            Surface(tonalElevation = 4.dp) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(currentPrayer)
-                }
-            }
+            RosaryBottomAppBar(
+                prayer = currentPrayer
+            )
         },
         modifier = modifier
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .pointerInput(settings.navigationMode) {
-                    detectTapGestures { offset ->
-                        if (settings.navigationMode != NavigationMode.BUTTON) {
-                            if (offset.x < size.width / 2) {
-                                if (settings.allowRewind) viewModel.previous()
-                            } else {
-                                viewModel.next()
-                            }
-                        }
-                    }
-                }
-        ) {
-            RosaryCanvas(
-                beads = beads,
-                currentIndex = currentIndex,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+        RosaryContent(
+            beads = beads,
+            currentSetting = currentSetting,
+            currentIndex = currentIndex,
+            modifier = Modifier.padding(padding),
+            onPreviousClick = { viewModel.previous() },
+            onNextClick = { viewModel.next() }
+        )
+    }
+
+    if (showSettingsDialog) {
+        SettingsDialog(
+            initialSettings = initialSettings,
+            onSettingsUpdate = {
+                currentSetting = it
+                viewModel.updateSettings(it)
+            },
+            onDismiss = {
+                showSettingsDialog = false
+                viewModel.updateSettings(currentSetting)
+            }
+        )
     }
 }

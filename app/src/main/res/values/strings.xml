@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Rosario</string>
 
+    <string name="settings">Setings</string>
+    <string name="close">Close</string>
+
     <string name="navigation_mode_both">Both</string>
     <string name="navigation_mode_tap">Tap</string>
     <string name="navigation_mode_button">Button</string>
@@ -11,8 +14,8 @@
     <string name="lang_it">Italiano</string>
     <string name="lang_es">Español</string>
 
-    <string name="settings_label_lang">Language</string>
-    <string name="settings_label_mode_change">Change mode</string>
+    <string name="settings_label_language">Language</string>
+    <string name="settings_label_navigation_change">Navigation mode</string>
     <string name="settings_allow_rewind">Allow rewind</string>
     <string name="tooltip_display_mode">Defines how the app is displayed: light, dark, or system</string>
 
@@ -49,4 +52,6 @@
     <string name="prayer_o_blood_and_water">O Blood and Water, that gushed forth from the Heart of Jesus as a fountain of mercy for us, I trust in You!</string>
     <string name="prayer_jesus_I_trust">Jesus, I trust you!</string>
     <string name="prayer_lord_jesus">Lord Jesus Christ, Son of God, have mercy on me, a sinner.</string>
+    <string name="tooltip_language">Select application language</string>
+    <string name="tooltip_label_navigation_change">Set mode for bead navigation</string>
 </resources>
