@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.enums.Language
 import pl.rk.rosario.enums.NavigationMode
+import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Settings
 
@@ -31,6 +32,7 @@ object SettingsStore {
     private val PRAYER_TYPE = stringPreferencesKey("prayer_type")
     private val DISPLAY_MODE = stringPreferencesKey("display_mode")
     private val ALLOW_REWIND = booleanPreferencesKey("allow_rewind")
+    private val PRAYER_LOCATION = stringPreferencesKey("prayer_location")
 
     fun read(context: Context): Flow<Settings> {
         return context.dataStore.data.map {
@@ -39,7 +41,8 @@ object SettingsStore {
                 safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
                 safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
                 safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
-                it[ALLOW_REWIND] ?: false
+                it[ALLOW_REWIND] == true,
+                safeEnumValueOf(it[PRAYER_LOCATION], PrayerLocation.BOTTOM),
             )
             Log.d("SettingsStore", "Loaded settings: $settings")
             settings
@@ -49,14 +52,20 @@ object SettingsStore {
         }
     }
 
-    suspend fun write(context: Context, settings: Settings) {
-        context.dataStore.edit {
-            it[LANGUAGE] = settings.language.name
-            it[NAVIGATION_MODE] = settings.navigationMode.name
-            it[PRAYER_TYPE] = settings.prayer.name
-            it[DISPLAY_MODE] = settings.displayMode.name
-            it[ALLOW_REWIND] = settings.allowRewind
+    @Suppress("TooGenericExceptionCaught")
+    suspend fun write(context: Context, settings: Settings) = try {
+        context.dataStore.edit { preferences ->
+            preferences[LANGUAGE] = settings.language.name
+            preferences[NAVIGATION_MODE] = settings.navigationMode.name
+            preferences[PRAYER_TYPE] = settings.prayer.name
+            preferences[DISPLAY_MODE] = settings.displayMode.name
+            preferences[ALLOW_REWIND] = settings.allowRewind
+            preferences[PRAYER_LOCATION] = settings.prayerLocation.name
         }
+        true // Zapisywanie powiodło się
+    } catch (e: Exception) {
+        Log.e("SettingsStore", "Error writing settings", e)
+        false // Zapisywanie nie powiodło się
     }
 }
 

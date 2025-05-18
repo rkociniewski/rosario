@@ -12,6 +12,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,7 +21,9 @@ import pl.rk.rosario.R
 import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.enums.Language
 import pl.rk.rosario.enums.NavigationMode
+import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.model.Settings
+import pl.rk.rosario.ui.parts.BooleanSelector
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
 
@@ -40,6 +43,7 @@ fun SettingsScreen(
     updateSettings: (Settings) -> Unit,
     onClose: () -> Unit
 ) {
+
     Column(Modifier.padding(16.dp)) {
         HelpLabel(
             stringResource(R.string.settings_label_language),
@@ -72,13 +76,18 @@ fun SettingsScreen(
 
         HorizontalDivider()
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(
-                checked = settings.allowRewind,
-                onCheckedChange = { updateSettings(settings.copy(allowRewind = it)) }
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(stringResource(R.string.settings_allow_rewind))
+        BooleanSelector(settings.allowRewind, stringResource(R.string.settings_allow_rewind)) {
+            updateSettings(settings.copy(allowRewind = it))
+        }
+
+        HorizontalDivider()
+
+        HelpLabel(
+            stringResource(R.string.settings_label_prayer_location),
+            stringResource(R.string.tooltip_prayer_location)
+        )
+        EnumSelector(PrayerLocation.entries, settings.prayerLocation) {
+            updateSettings(settings.copy(prayerLocation = it))
         }
 
         Spacer(modifier = Modifier.height(8.dp))

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -95,6 +96,22 @@ fun HelpLabel(label: String, tooltip: String) {
                     }, MaterialTheme.colorScheme.primary
             )
         }
+    }
+}
+
+@Composable
+fun BooleanSelector(
+    boolean: Boolean,
+    label: String,
+    onCheckedChange: ((Boolean) -> Unit)?
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Checkbox(
+            checked = boolean,
+            onCheckedChange = onCheckedChange
+        )
+        Spacer(Modifier.width(8.dp))
+        Text(label)
     }
 }
 

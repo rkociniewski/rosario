@@ -55,19 +55,21 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun updateSettings(settings: Settings) {
-        println("updateSettings started")
-
-        Log.d(
-            "rk.gac",
-            "[DEBUG] ${context.getString(R.string.log_debug_settings_updated, settings)}"
-        )
-
-        _settings.value = settings
-
         viewModelScope.launch {
-            SettingsStore.write(context, settings)
-            println("updateSettings viewModelScope")
-            updateBeadsFromSettings(settings)
+            val writeSuccess = SettingsStore.write(context, settings)
+
+            Log.d(
+                "rk.gac",
+                "[DEBUG] ${context.getString(R.string.log_debug_settings_updated, settings)}"
+            )
+
+            if (writeSuccess) {
+                _settings.value = settings
+                updateBeadsFromSettings(settings)
+                Log.d("RosaryViewModel", "Settings updated successfully")
+            } else {
+                Log.e("RosaryViewModel", "Failed to persist settings")
+            }
         }
     }
 

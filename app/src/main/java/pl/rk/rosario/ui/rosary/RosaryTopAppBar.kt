@@ -22,7 +22,7 @@ fun RosaryTopAppBar(
     currentSetting: Settings,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(

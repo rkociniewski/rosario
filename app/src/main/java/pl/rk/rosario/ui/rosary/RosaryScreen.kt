@@ -1,6 +1,7 @@
 package pl.rk.rosario.ui.rosary
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -9,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.ui.settings.SettingsDialog
 import pl.rk.rosario.viewModel.RosaryViewModel
 
@@ -45,20 +48,32 @@ fun RosaryScreen(
         return
     }
 
+    LaunchedEffect(initialSettings) {
+        currentSetting = initialSettings
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
         topBar = {
-            RosaryTopAppBar(
-                currentSetting = currentSetting,
-                onSettingsClick = { showSettingsDialog = true },
-                onPreviousClick = { viewModel.previous() },
-                onNextClick = { viewModel.next() }
-            )
+            Column {
+                RosaryTopAppBar(
+                    currentSetting = currentSetting,
+                    onSettingsClick = { showSettingsDialog = true },
+                    onPreviousClick = { viewModel.previous() },
+                    onNextClick = { viewModel.next() },
+                )
+
+                if (currentSetting.prayerLocation == PrayerLocation.TOP) {
+                    RosaryBottomAppBar(prayer = currentPrayer)
+                }
+            }
         },
         bottomBar = {
-            RosaryBottomAppBar(
-                prayer = currentPrayer
-            )
+            if (currentSetting.prayerLocation == PrayerLocation.BOTTOM) {
+                RosaryBottomAppBar(
+                    prayer = currentPrayer
+                )
+            }
         },
         modifier = modifier
     ) { padding ->
