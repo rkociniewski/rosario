@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Rosario</string>
+    <string name="close">Chiudi</string>
+
+    <string name="navigation_mode_both">Entrambi</string>
+    <string name="navigation_mode_tap">Tocca</string>
+    <string name="navigation_mode_button">Pulsante</string>
+
+    <string name="lang_pl">Polski</string>
+    <string name="lang_en">English</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_es">Español</string>
+
+    <string name="settings">Impostazioni</string>
+    <string name="settings_label_language">Lingua</string>
+    <string name="settings_label_navigation_change">Modalità di navigazione</string>
+    <string name="settings_allow_rewind">Consenti riavvolgimento</string>
+    <string name="settings_label_prayer_type">Tipo di preghiera</string>
+    <string name="settings_label_display_mode">Modalità di visualizzazione</string>
+    <string name="settings_label_prayer_location">Posizione della preghiera</string>
+
+    <string name="display_mode_light">Chiaro</string>
+    <string name="display_mode_dark">Scuro</string>
+    <string name="display_mode_system">Sistema</string>
+
+    <string name="log_debug_settings_updated">Impostazioni aggiornate: %1$s</string>
+
+    <string name="tooltip_icon_description">Mostra la descrizione dell\'impostazione</string>
+    <string name="tooltip_label_prayer_type">Determina il tipo di preghiera ciclica che verrà recitata</string>
+    <string name="tooltip_prayer_location">Definisce se la preghiera viene visualizzata in alto o in basso.</string>
+    <string name="tooltip_display_mode">Definisce la modalità di visualizzazione dell\'app: chiara, scura o sistema</string>
+    <string name="tooltip_language">Seleziona la lingua dell\'applicazione</string>
+    <string name="tooltip_label_navigation_change">Imposta la modalità per Navigazione perline</string>
+
+    <string name="action_previous">Precedente</string>
+    <string name="action_next">Successivo</string>
+
+    <string name="prayer_type_rosary">Rosario</string>
+    <string name="prayer_type_divine_mercy">Coroncina della Divina Misericordia</string>
+    <string name="prayer_type_jesus_prayer">Preghiera di Gesù (Chotka)</string>
+    <string name="prayer_in_the_name">Nel nome del Padre e del Figlio e dello Spirito Santo. Amen.</string>
+    <string name="prayer_apostles_creed">Io credo in Dio Padre onnipotente, Creatore del cielo e della terra; e in Gesù Cristo, suo unico Figlio, nostro Signore, il quale fu concepito di Spirito Santo, nacque da Maria Vergine, patì sotto Ponzio Pilato, fu crocifisso, morì e fu sepolto; discese agli inferi; il terzo giorno risuscitò da morte; salì al cielo, siede alla destra di Dio Padre onnipotente: di là verrà a giudicare i vivi e i morti. Credo nello Spirito Santo, la santa Chiesa cattolica, la comunione dei santi, la remissione dei peccati, la risurrezione della carne, la vita eterna. Amen.</string>
+    <string name="prayer_our_father">Padre Nostro che sei nei cieli, sia santificato il tuo nome, venga il tuo regno, sia fatta la tua volontà, come in cielo così in terra. Dacci oggi il nostro pane quotidiano, e rimetti a noi i nostri debiti come anche noi li rimettiamo ai nostri debitori, e non abbandonarci alla tentazione, ma liberaci dal male. Amen.</string>
+    <string name="prayer_faith">Per la fede: Ave Maria, piena di grazia, il Signore è con te. Tu sei benedetta fra le donne e benedetto è il frutto del tuo seno, Gesù. Santa Maria, madre di Dio, prega per noi peccatori, adesso e nell\'ora della nostra morte. Amen.</string>
+    <string name="prayer_hope">Per la speranza: Ave Maria, piena di grazia, il Signore è con te. Tu sei benedetta fra le donne e benedetto è il frutto del tuo seno, Gesù. Santa Maria, madre di Dio, prega per noi peccatori, adesso e nell\'ora della nostra morte. Amen.</string>
+    <string name="prayer_love">Per l\'amore: Ave Maria, piena di grazia, il Signore è con te. Tu sei benedetta fra le donne e benedetto è il frutto del tuo seno, Gesù. Santa Maria, madre di Dio, prega per noi peccatori, adesso e nell\'ora della nostra morte. Amen.</string>
+    <string name="prayer_hail_mary">Ave Maria, piena di grazia, il Signore è con te. Tu sei benedetta fra le donne e benedetto è il frutto del tuo seno, Gesù. Santa Maria, madre di Dio, prega per noi peccatori, adesso e nell\'ora della nostra morte. Amen.</string>
+    <string name="prayer_glory_be">Gloria al Padre e al Figlio e allo Spirito Santo. Come era nel principio e ora e sempre, nei secoli dei secoli. Amen.</string>
+    <string name="prayer_o_my_jesus">O Gesù, perdone le nostre colpe, preservace dal fuoco dell’inferno, porta in cielo tutte le anime, specialmente le più bisognose della vostra misercordia. Amen.</string>
+    <string name="prayer_ethernal_father">Eterno Padre, Ti offro il Corpo e il Sangue, l\'Anima e la Divinita del Tuo dilettissimo Figlio e Signore nostro Gesu Cristo in espiazione dei nostri peccati e di quelli del mondo intero.</string>
+    <string name="prayer_for_the_sake">Per la Sua dolorosa Passione, abbi misericordia di noi e del mondo intero.</string>
+    <string name="prayer_holy_god">Santo Dio, Santo Forte, Santo Immortale, abbi pieta di noi e del mondo intero.</string>
+    <string name="prayer_o_blood_and_water">O Sangue e Acqua, che scaturisti dal Cuore di Gesù come sorgente di Misericordia per noi, confido in Te.</string>
+    <string name="prayer_jesus_I_trust">Gesù, confido in Te!</string>
+    <string name="prayer_lord_jesus">Signore Gesù Cristo, Figlio di Dio, abbi pietà di me, peccatore!</string>
+
+    <string name="location_top">In alto</string>
+    <string name="location_botom">In basso</string>
+</resources>

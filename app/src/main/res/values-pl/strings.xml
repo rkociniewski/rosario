@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Różaniec</string>
+    <string name="close">Zamknij</string>
+
+    <string name="navigation_mode_both">Oba</string>
+    <string name="navigation_mode_tap">Stuk</string>
+    <string name="navigation_mode_button">Przycisk</string>
+
+    <string name="lang_pl">Polski</string>
+    <string name="lang_en">English</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_es">Español</string>
+
+    <string name="settings">Ustawienia</string>
+    <string name="settings_label_language">Język</string>
+    <string name="settings_label_navigation_change">Tryb nawigacji</string>
+    <string name="settings_allow_rewind">Zezwól na przewijanie</string>
+    <string name="settings_label_prayer_type">Typ modlitwy</string>
+    <string name="settings_label_display_mode">Tryb wyświetlania</string>
+    <string name="settings_label_prayer_location">Pozycja modlitwy</string>
+
+    <string name="display_mode_light">Jasny</string>
+    <string name="display_mode_dark">Ciemny</string>
+    <string name="display_mode_system">System</string>
+
+    <string name="log_debug_settings_updated">Aktualizacja ustawień: %1$s</string>
+
+    <string name="tooltip_icon_description">Pokaż opis ustawienia</string>
+    <string name="tooltip_label_prayer_type">Określa typ cyklicznej modlitwy, która będzie odmawiana</string>
+    <string name="tooltip_prayer_location">Określa, czy modlitwa jest wyświetlana na górze czy na dole.</string>
+    <string name="tooltip_display_mode">Określa sposób wyświetlania aplikacji: jasny, ciemny lub systemowy</string>
+    <string name="tooltip_language">Wybierz język aplikacji</string>
+    <string name="tooltip_label_navigation_change">Ustaw tryb nawigacji paciorków</string>
+
+    <string name="action_previous">Poprzedni</string>
+    <string name="action_next">Następny</string>
+
+    <string name="prayer_type_rosary">Różaniec</string>
+    <string name="prayer_type_divine_mercy">Koronka do Miłosierdzia Bożego</string>
+    <string name="prayer_type_jesus_prayer">Modlitwa Jezusowa (Czotka)</string>
+    <string name="prayer_in_the_name">W imię Ojca i Syna, i Ducha Świętego. Amen.</string>
+    <string name="prayer_apostles_creed">Wierzę w Boga Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego Jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion, zstąpił do piekieł, trzeciego dnia zmartwychwstał, wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego, stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.</string>
+    <string name="prayer_our_father">Ojcze nasz, któryś jest w niebie, święć się imię Twoje; przyjdź królestwo Twoje; bądź wola Twoja, jako w niebie tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy, jako i my odpuszczamy naszym winowajcom. I nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.</string>
+    <string name="prayer_faith">O wiarę: Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi teraz i w godzinę śmierci naszej. Amen.</string>
+    <string name="prayer_hope">O nadzieję: Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi teraz i w godzinę śmierci naszej. Amen.</string>
+    <string name="prayer_love">O miłość: Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi teraz i w godzinę śmierci naszej. Amen.</string>
+    <string name="prayer_hail_mary">Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi teraz i w godzinę śmierci naszej. Amen.</string>
+    <string name="prayer_glory_be">Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen.</string>
+    <string name="prayer_o_my_jesus">O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego, zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym, którzy najbardziej potrzebują Twojego miłosierdzia. Amen.</string>
+    <string name="prayer_ethernal_father">Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.</string>
+    <string name="prayer_for_the_sake">Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.</string>
+    <string name="prayer_holy_god">Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem.</string>
+    <string name="prayer_o_blood_and_water">O Krwi i Wodo, któraś wytrysnęła z Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie.</string>
+    <string name="prayer_jesus_I_trust">Jezu, ufam Tobie!</string>
+    <string name="prayer_lord_jesus">Panie Jezu Chryste, Synu Boga Żywego, zmiłuj się nade mną, grzesznikiem!</string>
+
+    <string name="location_top">Na górze</string>
+    <string name="location_botom">Na dole</string>
+</resources>

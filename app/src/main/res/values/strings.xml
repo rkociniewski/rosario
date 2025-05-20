@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rosario</string>
+    <string name="app_name">Rosary</string>
     <string name="close">Close</string>
 
     <string name="navigation_mode_both">Both</string>
@@ -12,7 +12,7 @@
     <string name="lang_it">Italiano</string>
     <string name="lang_es">Español</string>
 
-    <string name="settings">Setings</string>
+    <string name="settings">Settings</string>
     <string name="settings_label_language">Language</string>
     <string name="settings_label_navigation_change">Navigation mode</string>
     <string name="settings_allow_rewind">Allow rewind</string>
@@ -47,11 +47,11 @@
     <string name="prayer_love">For Love: Hail Mary, full of Grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the Fruit of thy womb, Jesus. Holy Mary, mother of God pray for us sinners, now and in the hour of our death. Amen.</string>
     <string name="prayer_hail_mary">Hail Mary, full of Grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the Fruit of thy womb, Jesus. Holy Mary, mother of God pray for us sinners, now and in the hour of our death. Amen.</string>
     <string name="prayer_glory_be">Glory to the Father, and to the Son, and to the Holy Spirit, both now and always, and unto the ages of ages. Amen.</string>
-    <string name="prayer_o_my_jesus">O my Jesus, forgive us our sins,  save us from the fires of Hell, and lead all souls to Heaven, especially those in most need of Thy mercy.</string>
+    <string name="prayer_o_my_jesus">O my Jesus, forgive us our sins, save us from the fires of Hell, and lead all souls to Heaven, especially those in most need of Thy mercy. Amen.</string>
     <string name="prayer_ethernal_father">Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your Dearly Beloved Son, Our Lord, Jesus Christ, in atonement for our sins and those of the whole world.</string>
     <string name="prayer_for_the_sake">For the sake of His sorrowful Passion, have mercy on us and on the whole world.</string>
     <string name="prayer_holy_god">Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world.</string>
-    <string name="prayer_o_blood_and_water">O Blood and Water, that gushed forth from the Heart of Jesus as a fountain of mercy for us, I trust in You!</string>
+    <string name="prayer_o_blood_and_water">O Blood and Water, which gushed forth from the Heart of Jesus as a fountain of Mercy for us, I trust in You!</string>
     <string name="prayer_jesus_I_trust">Jesus, I trust you!</string>
     <string name="prayer_lord_jesus">Lord Jesus Christ, Son of God, have mercy on me, a sinner.</string>
 

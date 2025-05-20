@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Rosario</string>
+    <string name="close">Cerrar</string>
+
+    <string name="navigation_mode_both">Ambos</string>
+    <string name="navigation_mode_tap">Tocar</string>
+    <string name="navigation_mode_button">Botón</string>
+
+    <string name="lang_pl">Polski</string>
+    <string name="lang_en">English</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_es">Español</string>
+
+    <string name="settings">Ajustes</string>
+    <string name="settings_label_language">Idioma</string>
+    <string name="settings_label_navigation_change">Modo de navegación</string>
+    <string name="settings_allow_rewind">Permitir Rebobinar</string>
+    <string name="settings_label_prayer_type">Tipo de oración</string>
+    <string name="settings_label_display_mode">Modo de visualización</string>
+    <string name="settings_label_prayer_location">Ubicación de la oración</string>
+
+    <string name="display_mode_light">Claro</string>
+    <string name="display_mode_dark">Oscuro</string>
+    <string name="display_mode_system">Sistema</string>
+
+    <string name="log_debug_settings_updated">Configuración actualizada: %1$s</string>
+
+    <string name="tooltip_icon_description">Mostrar descripción de la configuración</string>
+    <string name="tooltip_label_prayer_type">Determina el tipo de oración cíclica que se recitará</string>
+    <string name="tooltip_prayer_location">Define si la oración se muestra arriba o abajo.</string>
+    <string name="tooltip_display_mode">Define cómo se muestra la aplicación: claro, oscuro o sistema</string>
+    <string name="tooltip_language">Seleccionar idioma de la aplicación</string>
+    <string name="tooltip_label_navigation_change">Establecer modo de navegación de cuentas</string>
+
+    <string name="action_previous">Anterior</string>
+    <string name="action_next">Siguiente</string>
+
+    <string name="prayer_type_rosary">Rosario</string>
+    <string name="prayer_type_divine_mercy">La coronilla a la Divina Misericordia</string>
+    <string name="prayer_type_jesus_prayer">Oración de Jesús (Chotka)</string>
+    <string name="prayer_in_the_name">En el nombre del Padre y del Hijo y del Espíritu Santo. Amén.</string>
+    <string name="prayer_apostles_creed">Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Y en Jesucristo, su único Hijo, nuestro Senor. Que fue concebido por obra y gracia del Espíritu Santo. Nacío de Santa María Virgen. Padecío bajo el poder de Poncio Pilato. Fue crucificado, muerto y sepultado. Descendió a los infiernos. Al tercer día resucíto de entre los muertos. Subió a los cielos. Está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos. Creoen el Espíritu Santo, la santa Iglesia católica, la comunión de los antos, el perdón de los pecados, la resurrección de la carne y la vida perdurable. Amén.</string>
+    <string name="prayer_our_father">Padre nuestro, que estás en el cielo, santificado sea tu nombre, venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día, perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén.</string>
+    <string name="prayer_faith">Por la fe: Dios te salve, María, llena eres de gracia; el Senor es contigo, bendita eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros pecadores, ahora y en la hora de nuestra muerte. Amén.</string>
+    <string name="prayer_hope">Por la esperanza: Dios te salve, María, llena eres de gracia; el Senor es contigo, bendita eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros pecadores, ahora y en la hora de nuestra muerte. Amén.</string>
+    <string name="prayer_love">Por el amor: Dios te salve, María, llena eres de gracia; el Senor es contigo, bendita eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros pecadores, ahora y en la hora de nuestra muerte. Amén.</string>
+    <string name="prayer_hail_mary">Dios te salve, María, llena eres de gracia; el Senor es contigo, bendita eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús. Santa María, Madre de Dios, ruega por nosotros pecadores, ahora y en la hora de nuestra muerte. Amén.</string>
+    <string name="prayer_glory_be">Gloria al Padre, al Hijo y al Espíritu Santo, ahora y siempre, y por los siglos de los siglos. Amén.</string>
+    <string name="prayer_o_my_jesus">Oh Jesús mío, perdona nuestros pecados, líbranos del fuego del infierno y lleva a todas las almas al Cielo, especialmente a las más necesitadas de tu misericordia. Amén.</string>
+    <string name="prayer_ethernal_father">Padre eterno, te ofrezco el Cuerpo y la Sangre, el Alma y la Divinidad de tu amadísimo Hijo, nuestro Senor Jesucristo, como propiciación de nuestros pecados y los del mundo entero.</string>
+    <string name="prayer_for_the_sake">Por su dolorosa Pasión, ten misericordia de nosotros y del mundo entero.</string>
+    <string name="prayer_holy_god">Santo Dios, Santo Fuerte, Santo Immortal, ten piedad de nosotros y del mundo entero</string>
+    <string name="prayer_o_blood_and_water">Oh Sangre y Agua que brotaste del Corazón de Jesús como una Fuente de Misericordia para nosotros, en Ti confío.</string>
+    <string name="prayer_jesus_I_trust">Jesús, en Ti confío!</string>
+    <string name="prayer_lord_jesus">Señor Jesucristo, Hijo de Dios, ten piedad de mí, que soy pecador!</string>
+
+    <string name="location_top">Arriba</string>
+    <string name="location_botom">Abajo</string>
+</resources>
