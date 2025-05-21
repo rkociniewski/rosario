@@ -24,8 +24,6 @@
     <string name="display_mode_dark">Oscuro</string>
     <string name="display_mode_system">Sistema</string>
 
-    <string name="log_debug_settings_updated">Configuración actualizada: %1$s</string>
-
     <string name="tooltip_icon_description">Mostrar descripción de la configuración</string>
     <string name="tooltip_label_prayer_type">Determina el tipo de oración cíclica que se recitará</string>
     <string name="tooltip_prayer_location">Define si la oración se muestra arriba o abajo.</string>

@@ -11,19 +11,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
-import pl.rk.rosario.ui.parts.localRosaryViewModel
+import pl.rk.rosario.util.Dimensions
+import pl.rk.rosario.viewModel.RosaryViewModel
 
 @Composable
-fun PrayerTypeScreen() {
-    val viewModel = localRosaryViewModel.current
+fun PrayerTypeScreen(viewModel: RosaryViewModel) {
     val settings by viewModel.settings.collectAsState()
 
-    Column(Modifier.padding(16.dp)) {
+    Column(Modifier.padding(Dimensions.dialogPadding)) {
         HelpLabel(
             stringResource(R.string.settings_label_prayer_type),
             stringResource(R.string.tooltip_label_prayer_type)
@@ -32,7 +31,7 @@ fun PrayerTypeScreen() {
             stringResource(R.string.settings_label_prayer_type),
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimensions.height))
 
         EnumSelector(
             options = PrayerType.entries,

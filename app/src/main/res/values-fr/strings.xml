@@ -24,8 +24,6 @@
     <string name="display_mode_dark">Sombre</string>
     <string name="display_mode_system">Système</string>
 
-    <string name="log_debug_settings_updated">Paramètres mis à jour: %1$s</string>
-
     <string name="tooltip_icon_description">Afficher la description du paramètre</string>
     <string name="tooltip_label_prayer_type">Détermine le type de prière cyclique qui sera récitée</string>
     <string name="tooltip_prayer_location">Définit si la prière est affichée en haut ou en bas.</string>

@@ -1,8 +1,17 @@
 package pl.rk.rosario.ui.parts
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.Configuration
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.BeadType
+import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.model.Bead
+import java.util.Locale
 
 private const val THREE = 3
 private const val FOUR = 4
@@ -86,4 +95,26 @@ fun generateChotkaBeads() = buildList {
             add(Bead(actualIndex++, BeadType.BEAD_SMALL, R.string.prayer_lord_jesus))
         }
     }
+}
+
+@SuppressLint("LocalContextConfigurationRead")
+@Composable
+fun rememberLocalizedContext(languageCode: String): Context {
+    val baseContext = LocalContext.current
+    return remember(languageCode) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = Configuration(baseContext.resources.configuration)
+        config.setLocale(locale)
+
+        baseContext.createConfigurationContext(config)
+    }
+}
+
+@Composable
+fun DisplayMode.isDarkTheme() = when (this) {
+    DisplayMode.SYSTEM -> isSystemInDarkTheme()
+    DisplayMode.DARK -> true
+    DisplayMode.LIGHT -> false
 }

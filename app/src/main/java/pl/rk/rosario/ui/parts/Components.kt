@@ -29,18 +29,16 @@ import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionPr
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.DisplayText
 import pl.rk.rosario.enums.Language
-import pl.rk.rosario.viewModel.RosaryViewModel
+import pl.rk.rosario.util.Dimensions
 import kotlin.enums.EnumEntries
 
 /**
@@ -59,15 +57,22 @@ fun <T> EnumSelector(
     options: EnumEntries<T>,
     selected: T,
     onSelect: (T) -> Unit
-) where T : Enum<T>, T : DisplayText = Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-    options.forEach { opt ->
-        FilterChip(
-            selected = selected == opt,
-            onClick = { onSelect(opt) },
-            label = { Text(stringResource(opt.label)) }
-        )
+) where T : Enum<T>, T : DisplayText =
+    Row(horizontalArrangement = Arrangement.spacedBy(Dimensions.height)) {
+        options.forEach {
+            FilterChip(
+                selected == it,
+                { onSelect(it) },
+                { Text(stringResource(it.label)) },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    labelColor = MaterialTheme.colorScheme.onSurface,
+                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            )
+        }
     }
-}
 
 /**
  * A composable function that displays a label with an information tooltip.
@@ -86,15 +91,16 @@ fun HelpLabel(label: String, tooltip: String) {
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(label, style = MaterialTheme.typography.titleMedium)
-        Spacer(Modifier.width(4.dp))
+        Spacer(Modifier.width(Dimensions.minHeight))
         TooltipBox(
             rememberPlainTooltipPositionProvider(), {
                 PlainTooltip { Text(tooltip) }
             }, tooltipState
         ) {
             Icon(
-                Icons.Outlined.Info, stringResource(R.string.tooltip_icon_description), Modifier
-                    .padding(4.dp)
+                Icons.Outlined.Info, stringResource(R.string.tooltip_icon_description),
+                Modifier
+                    .padding(Dimensions.minHeight)
                     .clickable {
                         scope.launch {
                             if (!tooltipState.isVisible) {
@@ -103,7 +109,8 @@ fun HelpLabel(label: String, tooltip: String) {
                                 tooltipState.dismiss()
                             }
                         }
-                    }, MaterialTheme.colorScheme.primary
+                    },
+                MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -115,11 +122,8 @@ fun BooleanSelector(
     label: String,
     onCheckedChange: ((Boolean) -> Unit)?
 ) = Row(verticalAlignment = Alignment.CenterVertically) {
-    Checkbox(
-        checked = boolean,
-        onCheckedChange = onCheckedChange
-    )
-    Spacer(Modifier.width(8.dp))
+    Checkbox(boolean, onCheckedChange)
+    Spacer(Modifier.width(Dimensions.height))
     Text(label)
 }
 
@@ -131,54 +135,45 @@ fun LanguageSelector(
     onSelect: (Language) -> Unit
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 64.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
+        GridCells.Adaptive(minSize = Dimensions.adaptiveMinSize), Modifier
             .fillMaxWidth()
-            .heightIn(max = 200.dp)
+            .heightIn(max = Dimensions.maxHeightIn),
+        verticalArrangement = Arrangement.spacedBy(Dimensions.height),
+        horizontalArrangement = Arrangement.spacedBy(Dimensions.height)
     ) {
-        items(options.size) { i ->
-            val opt = options[i]
+        items(options.size) {
+            val opt = options[it]
 
             FilterChip(
-                border = null,
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color.Transparent,
-                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                    labelColor = MaterialTheme.colorScheme.onSurface,
-                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                ),
-                shape = RoundedCornerShape(16.dp),
-                selected = selected == opt,
-                onClick = { onSelect(opt) },
-                label = {
+                selected == opt, { onSelect(opt) }, {
                     TooltipBox(
-                        positionProvider = rememberPlainTooltipPositionProvider(),
-                        tooltip = { Text(stringResource(opt.label)) },
-                        state = rememberTooltipState()
+                        rememberPlainTooltipPositionProvider(),
+                        { Text(stringResource(opt.label)) },
+                        rememberTooltipState()
                     ) {
                         Box(
-                            modifier = Modifier
+                            Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            contentAlignment = Alignment.Center
+                                .padding(vertical = Dimensions.minHeight),
+                            Alignment.Center
                         ) {
                             Icon(
-                                painter = painterResource(opt.flagIcon),
-                                contentDescription = stringResource(opt.label),
-                                modifier = Modifier.size(20.dp),
-                                tint = Color.Unspecified
+                                painterResource(opt.flagIcon),
+                                stringResource(opt.label),
+                                Modifier.size(Dimensions.size),
+                                Color.Unspecified
                             )
                         }
                     }
-                }
+                }, colors = FilterChipDefaults.filterChipColors(
+                    MaterialTheme.colorScheme.surfaceVariant,
+                    MaterialTheme.colorScheme.onSurface,
+                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ),
+                border = null,
+                shape = RoundedCornerShape(Dimensions.dialogPadding)
             )
         }
     }
-}
-
-
-val localRosaryViewModel = staticCompositionLocalOf<RosaryViewModel> {
-    error("RosaryViewModel not provided")
 }

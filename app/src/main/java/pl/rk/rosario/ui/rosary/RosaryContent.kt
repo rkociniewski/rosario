@@ -14,7 +14,7 @@ import pl.rk.rosario.model.Settings
 @Composable
 fun RosaryContent(
     beads: List<Bead>,
-    currentSetting: Settings,
+    settings: Settings,
     currentIndex: Int,
     modifier: Modifier,
     onPreviousClick: () -> Unit,
@@ -22,11 +22,11 @@ fun RosaryContent(
 ) {
     Box(
         modifier = modifier
-            .pointerInput(currentSetting.navigationMode) {
+            .pointerInput(settings.navigationMode) {
                 detectTapGestures { offset ->
-                    if (currentSetting.navigationMode != NavigationMode.BUTTON) {
+                    if (settings.navigationMode != NavigationMode.BUTTON) {
                         if (offset.x < size.width / 2) {
-                            if (currentSetting.allowRewind) onPreviousClick
+                            if (settings.allowRewind) onPreviousClick
                         } else {
                             onNextClick
                         }

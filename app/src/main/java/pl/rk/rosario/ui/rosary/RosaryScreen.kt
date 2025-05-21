@@ -1,5 +1,6 @@
 package pl.rk.rosario.ui.rosary
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.ui.settings.SettingsDialog
 import pl.rk.rosario.viewModel.RosaryViewModel
@@ -27,13 +27,13 @@ import pl.rk.rosario.viewModel.RosaryViewModel
 @Composable
 fun RosaryScreen(
     modifier: Modifier = Modifier,
-    viewModel: RosaryViewModel = viewModel()
+    viewModel: RosaryViewModel = hiltViewModel(),
+    localizedContext: Context
 ) {
-    val initialSettings by viewModel.settings.collectAsState()
-    var currentSetting by remember { mutableStateOf(initialSettings) }
+    val settings by viewModel.settings.collectAsState()
     val beads by viewModel.beads.collectAsState()
     val currentIndex by viewModel.currentIndex.collectAsState()
-    val currentPrayer by viewModel.currentPrayer.collectAsState()
+    val currentPrayerId by viewModel.currentPrayerId.collectAsState()
     var showSettingsDialog by remember { mutableStateOf(false) }
     val snackBarHostState = remember { SnackbarHostState() }
 
@@ -48,56 +48,36 @@ fun RosaryScreen(
         return
     }
 
-    LaunchedEffect(initialSettings) {
-        currentSetting = initialSettings
-    }
+    Scaffold(modifier, {
+        Column {
+            RosaryTopAppBar(
+                settings, { viewModel.previous() }, { viewModel.next() },
+                { showSettingsDialog = true }
+            )
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackBarHostState) },
-        topBar = {
-            Column {
-                RosaryTopAppBar(
-                    currentSetting = currentSetting,
-                    onSettingsClick = { showSettingsDialog = true },
-                    onPreviousClick = { viewModel.previous() },
-                    onNextClick = { viewModel.next() },
-                )
-
-                if (currentSetting.prayerLocation == PrayerLocation.TOP) {
-                    RosaryBottomAppBar(prayer = currentPrayer)
-                }
+            if (settings.prayerLocation == PrayerLocation.TOP) {
+                RosaryBottomAppBar(prayerId = currentPrayerId)
             }
-        },
-        bottomBar = {
-            if (currentSetting.prayerLocation == PrayerLocation.BOTTOM) {
-                RosaryBottomAppBar(
-                    prayer = currentPrayer
-                )
-            }
-        },
-        modifier = modifier
-    ) { padding ->
+        }
+    }, {
+        if (settings.prayerLocation == PrayerLocation.BOTTOM) {
+            RosaryBottomAppBar(currentPrayerId)
+        }
+    }, { SnackbarHost(snackBarHostState) }) {
         RosaryContent(
-            beads = beads,
-            currentSetting = currentSetting,
-            currentIndex = currentIndex,
-            modifier = Modifier.padding(padding),
-            onPreviousClick = { viewModel.previous() },
-            onNextClick = { viewModel.next() }
+            beads, settings, currentIndex, Modifier.padding(it),
+            { viewModel.previous() }, { viewModel.next() }
         )
     }
 
     if (showSettingsDialog) {
         SettingsDialog(
-            initialSettings = initialSettings,
-            onSettingsUpdate = {
-                currentSetting = it
-                viewModel.updateSettings(it)
-            },
-            onDismiss = {
+            settings, { viewModel.updateSettings(it) },
+            {
                 showSettingsDialog = false
-                viewModel.updateSettings(currentSetting)
-            }
+                viewModel.updateSettings(settings)
+            },
+            localizedContext
         )
     }
 }

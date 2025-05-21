@@ -1,5 +1,6 @@
 package pl.rk.rosario.ui.settings
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,9 +10,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.DisplayMode
 import pl.rk.rosario.enums.Language
@@ -22,6 +23,7 @@ import pl.rk.rosario.ui.parts.BooleanSelector
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
 import pl.rk.rosario.ui.parts.LanguageSelector
+import pl.rk.rosario.util.Dimensions
 
 /**
  * A composable function that displays the configuration section in a modal dialog.
@@ -37,10 +39,13 @@ import pl.rk.rosario.ui.parts.LanguageSelector
 fun SettingsScreen(
     settings: Settings,
     updateSettings: (Settings) -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
 ) {
-
-    Column(Modifier.padding(16.dp)) {
+    Column(
+        Modifier.padding(Dimensions.dialogPadding),
+        Arrangement.Center,
+        Alignment.CenterHorizontally
+    ) {
         HelpLabel(
             stringResource(R.string.settings_label_language),
             stringResource(R.string.tooltip_language)
@@ -86,13 +91,13 @@ fun SettingsScreen(
             updateSettings(settings.copy(prayerLocation = it))
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(Modifier.height(Dimensions.height))
 
         Button(
-            onClick = onClose,
-            modifier = Modifier
+            onClose,
+            Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(top = Dimensions.height)
         ) {
             Text(stringResource(R.string.close))
         }

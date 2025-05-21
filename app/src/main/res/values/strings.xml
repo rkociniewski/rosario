@@ -24,8 +24,6 @@
     <string name="display_mode_dark">Dark</string>
     <string name="display_mode_system">System</string>
 
-    <string name="log_debug_settings_updated">Settings updated: %1$s</string>
-
     <string name="tooltip_icon_description">Show setting description</string>
     <string name="tooltip_label_prayer_type">Determines the type of cyclic prayer that will be recited</string>
     <string name="tooltip_prayer_location">Defines if prayer is displayed on top or bottom.</string>

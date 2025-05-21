@@ -1,7 +1,6 @@
-package pl.rk.rosario.storage
+package pl.rk.rosario.util
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -27,6 +26,8 @@ private val Context.dataStore by preferencesDataStore("settings")
  * Uses Android's DataStore preferences for persisting configuration values.
  */
 object SettingsStore {
+    private val logger = AppLogger(this::class.simpleName ?: LogTags.SETTINGS_STORE)
+
     private val LANGUAGE = stringPreferencesKey("language")
     private val NAVIGATION_MODE = stringPreferencesKey("navigation_mode")
     private val PRAYER_TYPE = stringPreferencesKey("prayer_type")
@@ -34,22 +35,20 @@ object SettingsStore {
     private val ALLOW_REWIND = booleanPreferencesKey("allow_rewind")
     private val PRAYER_LOCATION = stringPreferencesKey("prayer_location")
 
-    fun read(context: Context): Flow<Settings> {
-        return context.dataStore.data.map {
-            val settings = Settings(
-                safeEnumValueOf(it[LANGUAGE], Language.EN),
-                safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
-                safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
-                safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
-                it[ALLOW_REWIND] == true,
-                safeEnumValueOf(it[PRAYER_LOCATION], PrayerLocation.BOTTOM),
-            )
-            Log.d("SettingsStore", "Loaded settings: $settings")
-            settings
-        }.catch {
-            Log.e("SettingsStore", "Error reading settings", it)
-            emit(Settings()) // Fallback
-        }
+    fun read(context: Context): Flow<Settings> = context.dataStore.data.map {
+        val settings = Settings(
+            safeEnumValueOf(it[LANGUAGE], Language.EN),
+            safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
+            safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
+            safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
+            it[ALLOW_REWIND] == true,
+            safeEnumValueOf(it[PRAYER_LOCATION], PrayerLocation.BOTTOM),
+        )
+        logger.debug("Loaded settings: $settings")
+        settings
+    }.catch {
+        logger.error("Error reading settings", it)
+        emit(Settings())
     }
 
     @Suppress("TooGenericExceptionCaught")
@@ -61,11 +60,14 @@ object SettingsStore {
             preferences[DISPLAY_MODE] = settings.displayMode.name
             preferences[ALLOW_REWIND] = settings.allowRewind
             preferences[PRAYER_LOCATION] = settings.prayerLocation.name
+            context.getSharedPreferences("settings", Context.MODE_PRIVATE).edit()
+                .putString("language", settings.language.name.lowercase())
+                .apply()
         }
-        true // Zapisywanie powiodło się
+        true
     } catch (e: Exception) {
-        Log.e("SettingsStore", "Error writing settings", e)
-        false // Zapisywanie nie powiodło się
+        logger.error("Error writing settings", e)
+        false
     }
 }
 

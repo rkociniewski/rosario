@@ -19,7 +19,7 @@ import pl.rk.rosario.model.Settings
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RosaryTopAppBar(
-    currentSetting: Settings,
+    settings: Settings,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
     onSettingsClick: () -> Unit,
@@ -31,7 +31,7 @@ fun RosaryTopAppBar(
         ),
         title = { Text(stringResource(R.string.app_name)) },
         actions = {
-            if (currentSetting.allowRewind) {
+            if (settings.allowRewind) {
                 IconButton(onClick = onPreviousClick) {
                     Icon(
                         imageVector = Icons.Outlined.RemoveCircle,

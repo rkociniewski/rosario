@@ -13,6 +13,8 @@ plugins {
     alias(libs.plugins.manes)
     alias(libs.plugins.dokka)
     alias(libs.plugins.test.logger)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -59,6 +61,7 @@ android {
 }
 
 dependencies {
+    ksp(libs.hilt.android.compiler)
     detektPlugins(libs.detekt)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
@@ -72,6 +75,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -134,6 +139,10 @@ dokka {
 private fun isNonStable(version: String): Boolean {
     return listOf("alpha", "beta", "rc", "cr", "m", "preview", "snapshot", "dev")
         .any { version.lowercase().contains(it) }
+}
+
+hilt {
+    enableAggregatingTask = false
 }
 
 testlogger {

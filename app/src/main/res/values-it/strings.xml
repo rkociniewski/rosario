@@ -24,8 +24,6 @@
     <string name="display_mode_dark">Scuro</string>
     <string name="display_mode_system">Sistema</string>
 
-    <string name="log_debug_settings_updated">Impostazioni aggiornate: %1$s</string>
-
     <string name="tooltip_icon_description">Mostra la descrizione dell\'impostazione</string>
     <string name="tooltip_label_prayer_type">Determina il tipo di preghiera ciclica che verrà recitata</string>
     <string name="tooltip_prayer_location">Definisce se la preghiera viene visualizzata in alto o in basso.</string>

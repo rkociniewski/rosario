@@ -1,24 +1,28 @@
 package pl.rk.rosario.viewModel
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import pl.rk.rosario.R
+import pl.rk.rosario.di.SettingsRepository
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Bead
 import pl.rk.rosario.model.Settings
-import pl.rk.rosario.storage.SettingsStore
 import pl.rk.rosario.ui.parts.generateChotkaBeads
 import pl.rk.rosario.ui.parts.generateDivineMercyBeads
 import pl.rk.rosario.ui.parts.generateRosaryBeads
+import pl.rk.rosario.util.AppLogger
+import pl.rk.rosario.util.LogTags
 
-class RosaryViewModel(app: Application) : AndroidViewModel(app) {
-    private val context = getApplication<Application>()
+@HiltViewModel
+class RosaryViewModel @Inject constructor(
+    private val settingsRepository: SettingsRepository
+) : ViewModel() {
+    private val logger = AppLogger(this::class.simpleName ?: LogTags.ROSARY_VIEW_MODEL)
 
     private val _currentIndex = MutableStateFlow(0)
     val currentIndex: StateFlow<Int> = _currentIndex.asStateFlow()
@@ -32,12 +36,12 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
         MutableStateFlow<List<Bead>>(generateRosaryBeads()) // Initialize with default beads
     val beads: StateFlow<List<Bead>> = _beads.asStateFlow()
 
-    private val _currentPrayer = MutableStateFlow("")
-    val currentPrayer: StateFlow<String> = _currentPrayer.asStateFlow()
+    private val _currentPrayerId = MutableStateFlow(0)
+    val currentPrayerId: StateFlow<Int> = _currentPrayerId.asStateFlow()
 
     init {
         viewModelScope.launch {
-            SettingsStore.read(context).collect { settings ->
+            settingsRepository.settingsFlow.collect { settings ->
                 _settings.value = settings
                 updateBeadsFromSettings(settings)
                 updateCurrentPrayer()
@@ -56,19 +60,15 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
 
     fun updateSettings(settings: Settings) {
         viewModelScope.launch {
-            val writeSuccess = SettingsStore.write(context, settings)
-
-            Log.d(
-                "rk.gac",
-                "[DEBUG] ${context.getString(R.string.log_debug_settings_updated, settings)}"
-            )
+            val writeSuccess = settingsRepository.updateSettings(settings)
 
             if (writeSuccess) {
                 _settings.value = settings
                 updateBeadsFromSettings(settings)
-                Log.d("RosaryViewModel", "Settings updated successfully")
+
+                logger.debug("Settings updated: $settings")
             } else {
-                Log.e("RosaryViewModel", "Failed to persist settings")
+                logger.error("Failed to persist settings")
             }
         }
     }
@@ -99,11 +99,9 @@ class RosaryViewModel(app: Application) : AndroidViewModel(app) {
 
         if (beadsList.isNotEmpty() && index < beadsList.size) {
             val bead = beadsList[index]
-            _currentPrayer.value = if (bead.prayerId != 0) {
-                context.getString(bead.prayerId)
-            } else {
-                ""
-            }
+            _currentPrayerId.value = bead.prayerId
+        } else {
+            _currentPrayerId.value = 0
         }
     }
 }

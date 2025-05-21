@@ -24,8 +24,6 @@
     <string name="display_mode_dark">Ciemny</string>
     <string name="display_mode_system">System</string>
 
-    <string name="log_debug_settings_updated">Aktualizacja ustawień: %1$s</string>
-
     <string name="tooltip_icon_description">Pokaż opis ustawienia</string>
     <string name="tooltip_label_prayer_type">Określa typ cyklicznej modlitwy, która będzie odmawiana</string>
     <string name="tooltip_prayer_location">Określa, czy modlitwa jest wyświetlana na górze czy na dole.</string>
