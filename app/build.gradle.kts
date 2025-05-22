@@ -19,12 +19,12 @@ plugins {
 
 android {
     namespace = "pl.rk.rosario"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "pl.rk.rosario"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 

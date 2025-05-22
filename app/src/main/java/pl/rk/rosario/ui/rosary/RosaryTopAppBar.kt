@@ -35,7 +35,7 @@ fun RosaryTopAppBar(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         ),
-        title = { Text(stringResource(settings.prayer.label)) },
+        title = { Text(stringResource(R.string.app_name)) },
         actions = {
             IconButton(onClick = onReset) {
                 Icon(

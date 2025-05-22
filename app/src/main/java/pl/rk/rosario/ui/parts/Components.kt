@@ -90,7 +90,7 @@ fun <T> EnumSelector(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HelpLabel(label: String, tooltip: String) {
-    val tooltipState = rememberTooltipState()
+    val tooltipState = rememberTooltipState(isPersistent = true)
     val scope = rememberCoroutineScope()
 
     Row(verticalAlignment = Alignment.CenterVertically) {
