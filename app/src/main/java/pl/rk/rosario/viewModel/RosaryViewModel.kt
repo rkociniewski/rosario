@@ -39,9 +39,9 @@ class RosaryViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            settingsRepository.settingsFlow.collect { settings ->
-                _settings.value = settings
-                updateBeadsFromSettings(settings)
+            settingsRepository.settingsFlow.collect {
+                _settings.value = it
+                updateBeadsFromSettings(it)
                 updateCurrentPrayer()
             }
         }

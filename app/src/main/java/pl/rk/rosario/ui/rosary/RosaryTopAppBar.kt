@@ -16,6 +16,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import pl.rk.rosario.R
+import pl.rk.rosario.enums.NavigationMode
 import pl.rk.rosario.model.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,21 +51,23 @@ fun RosaryTopAppBar(
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
-            if (settings.allowRewind) {
-                IconButton(onClick = onPreviousClick) {
+            if (settings.navigationMode != NavigationMode.TAP) {
+                if (settings.allowRewind) {
+                    IconButton(onClick = onPreviousClick) {
+                        Icon(
+                            imageVector = Icons.Outlined.RemoveCircle,
+                            contentDescription = stringResource(R.string.action_previous),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+                IconButton(onClick = onNextClick) {
                     Icon(
-                        imageVector = Icons.Outlined.RemoveCircle,
-                        contentDescription = stringResource(R.string.action_previous),
+                        imageVector = Icons.Outlined.AddCircle,
+                        contentDescription = stringResource(R.string.action_next),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
-            }
-            IconButton(onClick = onNextClick) {
-                Icon(
-                    imageVector = Icons.Outlined.AddCircle,
-                    contentDescription = stringResource(R.string.action_next),
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
             }
             IconButton(onClick = onSettingsClick) {
                 Icon(

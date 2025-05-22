@@ -37,7 +37,7 @@ fun PrayerResetScreen(
             text = stringResource(R.string.restart_prayer_message),
             style = MaterialTheme.typography.bodyMedium
         )
-        Spacer(Modifier.height(Dimensions.spacerHeigt))
+        Spacer(Modifier.height(Dimensions.spacerHeight))
         Row(
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth()

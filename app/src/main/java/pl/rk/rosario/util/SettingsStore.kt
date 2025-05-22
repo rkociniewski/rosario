@@ -14,6 +14,7 @@ import pl.rk.rosario.enums.NavigationMode
 import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Settings
+import pl.rk.rosario.model.resolveDefaultLanguage
 
 /**
  * Manages configuration data persistence using Jetpack DataStore preferences.
@@ -37,7 +38,7 @@ object SettingsStore {
 
     fun read(context: Context): Flow<Settings> = context.dataStore.data.map {
         val settings = Settings(
-            safeEnumValueOf(it[LANGUAGE], Language.EN),
+            safeEnumValueOf(it[LANGUAGE], resolveDefaultLanguage()),
             safeEnumValueOf(it[NAVIGATION_MODE], NavigationMode.TAP),
             safeEnumValueOf(it[PRAYER_TYPE], PrayerType.ROSARY),
             safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
@@ -53,13 +54,13 @@ object SettingsStore {
 
     @Suppress("TooGenericExceptionCaught")
     suspend fun write(context: Context, settings: Settings) = try {
-        context.dataStore.edit { preferences ->
-            preferences[LANGUAGE] = settings.language.name
-            preferences[NAVIGATION_MODE] = settings.navigationMode.name
-            preferences[PRAYER_TYPE] = settings.prayer.name
-            preferences[DISPLAY_MODE] = settings.displayMode.name
-            preferences[ALLOW_REWIND] = settings.allowRewind
-            preferences[PRAYER_LOCATION] = settings.prayerLocation.name
+        context.dataStore.edit {
+            it[LANGUAGE] = settings.language.name
+            it[NAVIGATION_MODE] = settings.navigationMode.name
+            it[PRAYER_TYPE] = settings.prayer.name
+            it[DISPLAY_MODE] = settings.displayMode.name
+            it[ALLOW_REWIND] = settings.allowRewind
+            it[PRAYER_LOCATION] = settings.prayerLocation.name
             context.getSharedPreferences("settings", Context.MODE_PRIVATE).edit()
                 .putString("language", settings.language.name.lowercase())
                 .apply()

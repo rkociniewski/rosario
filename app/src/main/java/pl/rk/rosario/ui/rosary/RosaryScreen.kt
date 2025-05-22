@@ -82,12 +82,12 @@ fun RosaryScreen(
 
         if (showSettingsDialog) {
             SettingsDialog(
-                settings, { viewModel.updateSettings(it) },
-                {
+                settings = settings, onSettingsUpdate = { viewModel.updateSettings(it) },
+                onDismiss = {
                     showSettingsDialog = false
                     viewModel.updateSettings(settings)
                 },
-                localizedContext
+                localizedContext = localizedContext
             )
         }
 
