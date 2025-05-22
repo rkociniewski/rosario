@@ -9,12 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import pl.rk.rosario.di.SettingsRepository
-import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Bead
 import pl.rk.rosario.model.Settings
-import pl.rk.rosario.ui.parts.generateChotkaBeads
-import pl.rk.rosario.ui.parts.generateDivineMercyBeads
-import pl.rk.rosario.ui.parts.generateRosaryBeads
+import pl.rk.rosario.ui.parts.generateBeads
 import pl.rk.rosario.util.AppLogger
 import pl.rk.rosario.util.LogTags
 
@@ -27,17 +24,18 @@ class RosaryViewModel @Inject constructor(
     private val _currentIndex = MutableStateFlow(0)
     val currentIndex: StateFlow<Int> = _currentIndex.asStateFlow()
 
-    /** Mutable state flow for the current configuration */
     private val _settings = MutableStateFlow(Settings())
     val settings: StateFlow<Settings> = _settings
 
-    /** Public state flow exposing the current configuration */
     private val _beads =
-        MutableStateFlow<List<Bead>>(generateRosaryBeads()) // Initialize with default beads
+        MutableStateFlow<List<Bead>>(settings.value.prayer.generateBeads()) // Initialize with default beads
     val beads: StateFlow<List<Bead>> = _beads.asStateFlow()
 
     private val _currentPrayerId = MutableStateFlow(0)
     val currentPrayerId: StateFlow<Int> = _currentPrayerId.asStateFlow()
+
+    private val _shouldShowRestartDialog = MutableStateFlow(false)
+    val shouldShowRestartDialog: StateFlow<Boolean> = _shouldShowRestartDialog.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -50,11 +48,7 @@ class RosaryViewModel @Inject constructor(
     }
 
     private fun updateBeadsFromSettings(settings: Settings) {
-        _beads.value = when (settings.prayer) {
-            PrayerType.ROSARY -> generateRosaryBeads()
-            PrayerType.DIVINE_MERCY -> generateDivineMercyBeads()
-            PrayerType.JESUS_PRAYER -> generateChotkaBeads()
-        }
+        _beads.value = settings.prayer.generateBeads()
         _currentIndex.value = _beads.value.first { it.prayerId != 0 }.index
     }
 
@@ -83,6 +77,8 @@ class RosaryViewModel @Inject constructor(
         if (nextIndex != null) {
             _currentIndex.value = nextIndex
             updateCurrentPrayer()
+        } else {
+            _shouldShowRestartDialog.value = true
         }
     }
 
@@ -100,9 +96,12 @@ class RosaryViewModel @Inject constructor(
         }
     }
 
-    fun reset() {
-        _currentIndex.value = 0
-        updateCurrentPrayer()
+    fun reset(confirmed: Boolean) {
+        if (confirmed) {
+            _currentIndex.value = _beads.value.first { it.prayerId != 0 }.index
+            updateCurrentPrayer()
+        }
+        _shouldShowRestartDialog.value = false
     }
 
     private fun updateCurrentPrayer() {
@@ -117,3 +116,5 @@ class RosaryViewModel @Inject constructor(
         }
     }
 }
+
+

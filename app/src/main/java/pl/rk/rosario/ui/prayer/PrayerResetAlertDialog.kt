@@ -1,4 +1,4 @@
-package pl.rk.rosario.ui.settings
+package pl.rk.rosario.ui.prayer
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -15,24 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import pl.rk.rosario.model.Settings
 import pl.rk.rosario.util.Dimensions
 
-/**
- * Configuration dialog for application settings.
- *
- * This composable displays a modal dialog containing configuration options for the application.
- * It shows the configuration section and any validation error messages.
- *
- * @param settings The original configuration before any changes
- * @param onSettingsUpdate Callback to update the configuration when changes are made
- * @param onDismiss Callback invoked when the dialog is dismissed
- */
 @Composable
-fun SettingsDialog(
-    settings: Settings,
-    onSettingsUpdate: (Settings) -> Unit,
+fun PrayerResetAlertDialog(
     onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
     localizedContext: Context
 ) {
     Dialog(onDismiss, DialogProperties(usePlatformDefaultWidth = false)) {
@@ -50,7 +38,7 @@ fun SettingsDialog(
                 Arrangement.spacedBy(Dimensions.itemSpacing)
             ) {
                 CompositionLocalProvider(LocalContext provides localizedContext) {
-                    SettingsScreen(settings, onSettingsUpdate, onDismiss)
+                    PrayerResetScreen(onConfirm, onDismiss)
                 }
             }
         }

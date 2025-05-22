@@ -2,6 +2,8 @@
     <string name="app_name">Różaniec</string>
     <string name="close">Zamknij</string>
     <string name="selected_item">Wybrano</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
 
     <string name="navigation_mode_both">Oba</string>
     <string name="navigation_mode_tap">Stuk</string>
@@ -31,7 +33,7 @@
 
     <string name="prayer_type_rosary">Różaniec</string>
     <string name="prayer_type_divine_mercy">Koronka do Miłosierdzia Bożego</string>
-    <string name="prayer_type_jesus_prayer">Modlitwa Jezusowa (Czotka)</string>
+    <string name="prayer_type_chotka">Czotka</string>
     <string name="prayer_in_the_name">W imię Ojca i Syna, i Ducha Świętego. Amen.</string>
     <string name="prayer_apostles_creed">Wierzę w Boga Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego Jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion, zstąpił do piekieł, trzeciego dnia zmartwychwstał, wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego, stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.</string>
     <string name="prayer_our_father">Ojcze nasz, któryś jest w niebie, święć się imię Twoje; przyjdź królestwo Twoje; bądź wola Twoja, jako w niebie tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy, jako i my odpuszczamy naszym winowajcom. I nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.</string>
@@ -47,6 +49,9 @@
     <string name="prayer_o_blood_and_water">O Krwi i Wodo, któraś wytrysnęła z Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie.</string>
     <string name="prayer_jesus_I_trust">Jezu, ufam Tobie!</string>
     <string name="prayer_lord_jesus">Panie Jezu Chryste, Synu Boga Żywego, zmiłuj się nade mną, grzesznikiem!</string>
+
+    <string name="restart_prayer_title">Modlitwa zakończona</string>
+    <string name="restart_prayer_message">Czy chcesz zacząć od nowa?</string>
 
     <string name="location_top">Na górze</string>
     <string name="location_botom">Na dole</string>

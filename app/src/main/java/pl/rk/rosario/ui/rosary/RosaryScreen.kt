@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import pl.rk.rosario.enums.PrayerLocation
+import pl.rk.rosario.ui.prayer.PrayerResetAlertDialog
 import pl.rk.rosario.ui.prayer.PrayerTypeBottomSheet
 import pl.rk.rosario.ui.settings.SettingsDialog
 import pl.rk.rosario.viewModel.RosaryViewModel
@@ -40,8 +41,8 @@ fun RosaryScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
+    val showRestartDialog by viewModel.shouldShowRestartDialog.collectAsState()
 
-    // Add safety check for beads
     if (beads.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -97,6 +98,14 @@ fun RosaryScreen(
                     viewModel.updateSettings(settings)
                 },
                 sheetState,
+                localizedContext
+            )
+        }
+
+        if (showRestartDialog) {
+            PrayerResetAlertDialog(
+                { viewModel.reset(false) },
+                { viewModel.reset(true) },
                 localizedContext
             )
         }

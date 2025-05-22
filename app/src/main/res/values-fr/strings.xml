@@ -2,6 +2,8 @@
     <string name="app_name">Rosaire</string>
     <string name="close">Fermer</string>
     <string name="selected_item">Sélectionné</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 
     <string name="navigation_mode_both">Les deux</string>
     <string name="navigation_mode_tap">Appuyer</string>
@@ -31,7 +33,6 @@
 
     <string name="prayer_type_rosary">Chapelet</string>
     <string name="prayer_type_divine_mercy">Chapelet de la Divine Miséricorde</string>
-    <string name="prayer_type_jesus_prayer">Prière de Jésus (Chotka)</string>
     <string name="prayer_in_the_name">Au nom du Père, du Fils et du Saint-Esprit. Amen.</string>
     <string name="prayer_apostles_creed">Je crois en Dieu, le Père Tout-Puissant, Créateur du ciel et de la terre. Et en Jésus-Christ, son Fils unique, notre Seigneur, qui a été conçu du Saint-Esprit, est né de la Vierge Marie, a souffert sous Ponce Pilate, a été crucifié, est mort et a été enseveli, est descendu aux enfers. Le troisième jour est ressuscité des morts, est monté aux cieux, est assis à la droite de Dieu le Père Tout-Puissant, d’où Il viendra juger les vivants et les morts. Je crois en l’Esprit Saint, à la sainte Église catholique, à la communion des saints, à la rémission des péchés, à la résurrection de la chair, à la vie éternelle. Amen.</string>
     <string name="prayer_our_father">Notre Père qui es aux cieux, que Ton Nom soit sanctifié, que Ton Règne vienne, que Ta volonté soit faite sur la terre comme au ciel. Donne-nous aujourd’hui notre pain de ce jour, pardonne-nous nos offenses comme nous pardonnons aussi à ceux qui nous ont offensés, et ne nous laisse pas entrer en tentation, mais délivre-nous du Mal. Amen.</string>
@@ -47,6 +48,9 @@
     <string name="prayer_o_blood_and_water">O Sang et Eau qui avez jailli du Coeur de Jésus comme source de miséricorde pour nous, nous avons confiance en Vous.</string>
     <string name="prayer_jesus_I_trust">Jésus, j\'ai confiance en toi!</string>
     <string name="prayer_lord_jesus">Panie Jezu Chryste, Synu Boga Żywego, zmiłuj się nade mną, grzesznikiem!</string>
+
+    <string name="restart_prayer_title">Modifier la commande</string>
+    <string name="restart_prayer_message">Voulez-vous le faire maintenant?</string>
 
     <string name="location_top">Haut</string>
     <string name="location_botom">Bas</string>

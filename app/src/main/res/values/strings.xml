@@ -2,6 +2,8 @@
     <string name="app_name">Rosary</string>
     <string name="close">Close</string>
     <string name="selected_item">Selected</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="navigation_mode_both">Both</string>
     <string name="navigation_mode_tap">Tap</string>
@@ -37,7 +39,7 @@
 
     <string name="prayer_type_rosary">Rosary</string>
     <string name="prayer_type_divine_mercy">Divine Mercy Chaplet</string>
-    <string name="prayer_type_jesus_prayer">Jesus Prayer (Chotka)</string>
+    <string name="prayer_type_chotka" translatable="false">Chotka</string>
     <string name="prayer_in_the_name">In the name of the Father and of the Son and of the Holy Spirit. Amen.</string>
     <string name="prayer_apostles_creed">I believe in God, the Father almighty, creator of heaven and earth, and in Jesus Christ, His only Son, our Lord. He was conceived by the Holy Spirit, and born of the Virgin Mary. He suffered under Pontius Pilate, was crucified, died and was buried. He descended to the dead. On the third day He rose again. He ascended into heaven, and is seated at the right hand the Father. He will come again to judge the living and the dead. I believe in the Holy Spirit, the Holy Catholic Church, the communion of saints, the forgiveness of sins, the resurrection of the body, and life everlasting. Amen.</string>
     <string name="prayer_our_father">Our Father, Who art in heaven, Hallowed be Thy Name. Thy Kingdom come. Thy Will be done, on earth as it is in Heaven. Give us this day our daily bread. And forgive us our trespasses, as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.</string>
@@ -53,6 +55,9 @@
     <string name="prayer_o_blood_and_water">O Blood and Water, which gushed forth from the Heart of Jesus as a fountain of Mercy for us, I trust in You!</string>
     <string name="prayer_jesus_I_trust">Jesus, I trust you!</string>
     <string name="prayer_lord_jesus">Lord Jesus Christ, Son of God, have mercy on me, a sinner.</string>
+
+    <string name="restart_prayer_title">Prayer completed</string>
+    <string name="restart_prayer_message">Would you like to start over?</string>
 
     <string name="location_top">Top</string>
     <string name="location_botom">Bottom</string>

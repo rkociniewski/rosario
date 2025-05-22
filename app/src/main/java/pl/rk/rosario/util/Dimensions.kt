@@ -8,8 +8,9 @@ object Dimensions {
     val dialogPadding = 16.dp
     val itemSpacing = 12.dp
     val size = 20.dp
+    val spacerHeigt = 24.dp
     val minHeightIn = 48.dp
     val adaptiveMinSize = 64.dp
     val maxHeightIn = 150.dp
-    val screenMargin = 0.9f
+    const val SCREEN_MARGI = 0.9f
 }

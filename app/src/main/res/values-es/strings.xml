@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Rosario</string>
     <string name="close">Cerrar</string>
-    <string name = "selected_item">Seleccionado</string>
+    <string name="selected_item">Seleccionado</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
 
     <string name="navigation_mode_both">Ambos</string>
     <string name="navigation_mode_tap">Tocar</string>
@@ -31,7 +33,6 @@
 
     <string name="prayer_type_rosary">Rosario</string>
     <string name="prayer_type_divine_mercy">La coronilla a la Divina Misericordia</string>
-    <string name="prayer_type_jesus_prayer">Oración de Jesús (Chotka)</string>
     <string name="prayer_in_the_name">En el nombre del Padre y del Hijo y del Espíritu Santo. Amén.</string>
     <string name="prayer_apostles_creed">Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Y en Jesucristo, su único Hijo, nuestro Senor. Que fue concebido por obra y gracia del Espíritu Santo. Nacío de Santa María Virgen. Padecío bajo el poder de Poncio Pilato. Fue crucificado, muerto y sepultado. Descendió a los infiernos. Al tercer día resucíto de entre los muertos. Subió a los cielos. Está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos. Creoen el Espíritu Santo, la santa Iglesia católica, la comunión de los antos, el perdón de los pecados, la resurrección de la carne y la vida perdurable. Amén.</string>
     <string name="prayer_our_father">Padre nuestro, que estás en el cielo, santificado sea tu nombre, venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo. Danos hoy nuestro pan de cada día, perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación y líbranos del mal. Amén.</string>
@@ -47,6 +48,9 @@
     <string name="prayer_o_blood_and_water">Oh Sangre y Agua que brotaste del Corazón de Jesús como una Fuente de Misericordia para nosotros, en Ti confío.</string>
     <string name="prayer_jesus_I_trust">Jesús, en Ti confío!</string>
     <string name="prayer_lord_jesus">Señor Jesucristo, Hijo de Dios, ten piedad de mí, que soy pecador!</string>
+
+    <string name="restart_prayer_title">Oración completada</string>
+    <string name="restart_prayer_message">¿Quieres empezar de nuevo?</string>
 
     <string name="location_top">Arriba</string>
     <string name="location_botom">Abajo</string>

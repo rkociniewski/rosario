@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.BeadType
 import pl.rk.rosario.enums.DisplayMode
+import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Bead
 import java.util.Locale
 
@@ -19,7 +20,7 @@ private const val FIVE = 5
 private const val SIX = 5
 private const val TEN = 10
 
-fun generateRosaryBeads() = buildList {
+private fun generateRosaryBeads() = buildList {
     add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
     add(Bead(0, BeadType.CROSS, R.string.prayer_apostles_creed))
     add(Bead(1, BeadType.TAIL_LARGE, R.string.prayer_our_father))
@@ -51,7 +52,7 @@ fun generateRosaryBeads() = buildList {
     add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
 }
 
-fun generateDivineMercyBeads() = buildList {
+private fun generateDivineMercyBeads() = buildList {
     add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
     add(Bead(1, BeadType.TAIL_LARGE))
     add(Bead(2, BeadType.TAIL_SMALL, R.string.prayer_our_father))
@@ -80,7 +81,7 @@ fun generateDivineMercyBeads() = buildList {
     add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
 }
 
-fun generateChotkaBeads() = buildList {
+private fun generateChotkaBeads() = buildList {
     add(Bead(0, BeadType.CROSS))
     add(Bead(1, BeadType.TAIL_LARGE))
     add(Bead(2, BeadType.TAIL_SMALL))
@@ -117,4 +118,10 @@ fun DisplayMode.isDarkTheme() = when (this) {
     DisplayMode.SYSTEM -> isSystemInDarkTheme()
     DisplayMode.DARK -> true
     DisplayMode.LIGHT -> false
+}
+
+fun PrayerType.generateBeads() = when (this) {
+    PrayerType.ROSARY -> generateRosaryBeads()
+    PrayerType.DIVINE_MERCY -> generateDivineMercyBeads()
+    PrayerType.JESUS_PRAYER -> generateChotkaBeads()
 }

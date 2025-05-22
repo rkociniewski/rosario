@@ -2,6 +2,8 @@
     <string name="app_name">Rosario</string>
     <string name="close">Chiudi</string>
     <string name="selected_item">Selezionato</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
 
     <string name="navigation_mode_both">Entrambi</string>
     <string name="navigation_mode_tap">Tocca</string>
@@ -31,7 +33,6 @@
 
     <string name="prayer_type_rosary">Rosario</string>
     <string name="prayer_type_divine_mercy">Coroncina della Divina Misericordia</string>
-    <string name="prayer_type_jesus_prayer">Preghiera di Gesù (Chotka)</string>
     <string name="prayer_in_the_name">Nel nome del Padre e del Figlio e dello Spirito Santo. Amen.</string>
     <string name="prayer_apostles_creed">Io credo in Dio Padre onnipotente, Creatore del cielo e della terra; e in Gesù Cristo, suo unico Figlio, nostro Signore, il quale fu concepito di Spirito Santo, nacque da Maria Vergine, patì sotto Ponzio Pilato, fu crocifisso, morì e fu sepolto; discese agli inferi; il terzo giorno risuscitò da morte; salì al cielo, siede alla destra di Dio Padre onnipotente: di là verrà a giudicare i vivi e i morti. Credo nello Spirito Santo, la santa Chiesa cattolica, la comunione dei santi, la remissione dei peccati, la risurrezione della carne, la vita eterna. Amen.</string>
     <string name="prayer_our_father">Padre Nostro che sei nei cieli, sia santificato il tuo nome, venga il tuo regno, sia fatta la tua volontà, come in cielo così in terra. Dacci oggi il nostro pane quotidiano, e rimetti a noi i nostri debiti come anche noi li rimettiamo ai nostri debitori, e non abbandonarci alla tentazione, ma liberaci dal male. Amen.</string>
@@ -47,6 +48,9 @@
     <string name="prayer_o_blood_and_water">O Sangue e Acqua, che scaturisti dal Cuore di Gesù come sorgente di Misericordia per noi, confido in Te.</string>
     <string name="prayer_jesus_I_trust">Gesù, confido in Te!</string>
     <string name="prayer_lord_jesus">Signore Gesù Cristo, Figlio di Dio, abbi pietà di me, peccatore!</string>
+
+    <string name="restart_prayer_title">Modalità di controllo</string>
+    <string name="restart_prayer_message">Cosa vuoi fare adesso?</string>
 
     <string name="location_top">In alto</string>
     <string name="location_botom">In basso</string>
