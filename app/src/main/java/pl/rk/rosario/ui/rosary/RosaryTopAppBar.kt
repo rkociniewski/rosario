@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.material.icons.outlined.Church
 import androidx.compose.material.icons.outlined.RemoveCircle
+import androidx.compose.material.icons.outlined.Replay
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,12 +20,14 @@ import pl.rk.rosario.model.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Suppress("LongParameterList")
 fun RosaryTopAppBar(
     settings: Settings,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onPrayerClick: () -> Unit,
+    onReset: () -> Unit,
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -33,6 +36,13 @@ fun RosaryTopAppBar(
         ),
         title = { Text(stringResource(settings.prayer.label)) },
         actions = {
+            IconButton(onClick = onReset) {
+                Icon(
+                    Icons.Outlined.Replay,
+                    contentDescription = stringResource(R.string.reset),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
             IconButton(onClick = onPrayerClick) {
                 Icon(
                     Icons.Outlined.Church,

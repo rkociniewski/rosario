@@ -59,7 +59,8 @@ fun RosaryScreen(
             Column {
                 RosaryTopAppBar(
                     settings, { viewModel.previous() }, { viewModel.next() },
-                    { showSettingsDialog = true }, { showBottomSheet = true }
+                    { showSettingsDialog = true }, { showBottomSheet = true },
+                    { viewModel.reset(true) }
                 )
 
                 if (settings.prayerLocation == PrayerLocation.TOP) {
