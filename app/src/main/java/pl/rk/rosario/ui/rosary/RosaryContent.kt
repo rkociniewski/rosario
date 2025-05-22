@@ -23,12 +23,12 @@ fun RosaryContent(
     Box(
         modifier = modifier
             .pointerInput(settings.navigationMode) {
-                detectTapGestures { offset ->
+                detectTapGestures {
                     if (settings.navigationMode != NavigationMode.BUTTON) {
-                        if (offset.x < size.width / 2) {
-                            if (settings.allowRewind) onPreviousClick
+                        if (it.x < size.width / 2) {
+                            if (settings.allowRewind) onPreviousClick()
                         } else {
-                            onNextClick
+                            onNextClick()
                         }
                     }
                 }
