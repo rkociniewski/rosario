@@ -2,6 +2,7 @@ package pl.rk.rosario.ui.rosary
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Church
 import androidx.compose.material.icons.outlined.RemoveCircle
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +24,7 @@ fun RosaryTopAppBar(
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    onPrayerClick: () -> Unit,
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -31,6 +33,13 @@ fun RosaryTopAppBar(
         ),
         title = { Text(stringResource(R.string.app_name)) },
         actions = {
+            IconButton(onClick = onPrayerClick) {
+                Icon(
+                    Icons.Outlined.Church,
+                    contentDescription = stringResource(R.string.settings_label_prayer_type),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
             if (settings.allowRewind) {
                 IconButton(onClick = onPreviousClick) {
                     Icon(

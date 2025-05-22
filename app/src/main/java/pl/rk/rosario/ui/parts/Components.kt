@@ -1,9 +1,11 @@
 package pl.rk.rosario.ui.parts
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,10 +13,12 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -174,6 +178,49 @@ fun LanguageSelector(
                 border = null,
                 shape = RoundedCornerShape(Dimensions.dialogPadding)
             )
+        }
+    }
+}
+
+@Composable
+fun <T> ColumnSelector(
+    options: EnumEntries<T>,
+    selected: T,
+    onSelect: (T) -> Unit
+) where T : Enum<T>, T : DisplayText {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(Dimensions.minHeight),
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(Dimensions.dialogPadding)
+    ) {
+        items(options.size) {
+            val option = options[it]
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onSelect(option) }
+                    .padding(Dimensions.itemSpacing)
+                    .background(
+                        if (option == selected) MaterialTheme.colorScheme.primaryContainer
+                        else Color.Transparent,
+                        RoundedCornerShape(Dimensions.minHeight)
+                    )
+            ) {
+                Text(
+                    text = stringResource(option.label),
+                    modifier = Modifier.weight(1f),
+                    color = if (option == selected) MaterialTheme.colorScheme.onPrimaryContainer
+                    else MaterialTheme.colorScheme.onSurface
+                )
+                if (option == selected) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = stringResource(R.string.selected_item),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
         }
     }
 }

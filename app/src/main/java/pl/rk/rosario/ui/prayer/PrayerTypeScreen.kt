@@ -1,42 +1,59 @@
 package pl.rk.rosario.ui.prayer
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import pl.rk.rosario.R
+import pl.rk.rosario.enums.DisplayMode
+import pl.rk.rosario.enums.Language
+import pl.rk.rosario.enums.NavigationMode
+import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.enums.PrayerType
+import pl.rk.rosario.model.Settings
+import pl.rk.rosario.ui.parts.BooleanSelector
+import pl.rk.rosario.ui.parts.ColumnSelector
 import pl.rk.rosario.ui.parts.EnumSelector
 import pl.rk.rosario.ui.parts.HelpLabel
+import pl.rk.rosario.ui.parts.LanguageSelector
 import pl.rk.rosario.util.Dimensions
-import pl.rk.rosario.viewModel.RosaryViewModel
 
 @Composable
-fun PrayerTypeScreen(viewModel: RosaryViewModel) {
-    val settings by viewModel.settings.collectAsState()
-
-    Column(Modifier.padding(Dimensions.dialogPadding)) {
+fun PrayerTypeScreen(
+    settings: Settings,
+    updateSettings: (Settings) -> Unit,
+    onClose: () -> Unit,
+) {
+    Column(
+        Modifier.padding(Dimensions.dialogPadding),
+        Arrangement.Center,
+        Alignment.CenterHorizontally
+    ) {
         HelpLabel(
             stringResource(R.string.settings_label_prayer_type),
             stringResource(R.string.tooltip_label_prayer_type)
-        )
-        Text(
-            stringResource(R.string.settings_label_prayer_type),
-            style = MaterialTheme.typography.titleMedium
-        )
-        Spacer(Modifier.height(Dimensions.height))
 
-        EnumSelector(
-            options = PrayerType.entries,
-            selected = settings.prayer,
-            onSelect = { viewModel.updateSettings(settings.copy(prayer = it)) }
         )
+        ColumnSelector(PrayerType.entries, settings.prayer) {
+            updateSettings(settings.copy(prayer = it))
+        }
+
+        Button(
+            onClose,
+            Modifier
+                .fillMaxWidth()
+                .padding(top = Dimensions.height)
+        ) {
+            Text(stringResource(R.string.close))
+        }
     }
 }

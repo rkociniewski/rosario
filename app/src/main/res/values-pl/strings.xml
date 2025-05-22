@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Różaniec</string>
     <string name="close">Zamknij</string>
+    <string name="selected_item">Wybrano</string>
 
     <string name="navigation_mode_both">Oba</string>
     <string name="navigation_mode_tap">Stuk</string>

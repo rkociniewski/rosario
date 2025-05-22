@@ -55,7 +55,7 @@ class RosaryViewModel @Inject constructor(
             PrayerType.DIVINE_MERCY -> generateDivineMercyBeads()
             PrayerType.JESUS_PRAYER -> generateChotkaBeads()
         }
-        _currentIndex.value = 0
+        _currentIndex.value = _beads.value.first { it.prayerId != 0 }.index
     }
 
     fun updateSettings(settings: Settings) {
@@ -75,15 +75,27 @@ class RosaryViewModel @Inject constructor(
 
     fun next() {
         val currentBeads = _beads.value
-        if (currentBeads.isNotEmpty() && _currentIndex.value < currentBeads.lastIndex) {
-            _currentIndex.value += 1
+        val startIndex = _currentIndex.value
+
+        val nextIndex =
+            (startIndex + 1..currentBeads.lastIndex).firstOrNull { currentBeads[it].prayerId != 0 }
+
+        if (nextIndex != null) {
+            _currentIndex.value = nextIndex
             updateCurrentPrayer()
         }
     }
 
     fun previous() {
-        if (_beads.value.isNotEmpty() && _currentIndex.value > 0) {
-            _currentIndex.value -= 1
+        val currentBeads = _beads.value
+        val startIndex = _currentIndex.value
+
+        val previousIndex = (startIndex - 1 downTo 0).firstOrNull {
+            currentBeads[it].prayerId != 0
+        }
+
+        if (previousIndex != null) {
+            _currentIndex.value = previousIndex
             updateCurrentPrayer()
         }
     }

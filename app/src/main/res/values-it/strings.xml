@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Rosario</string>
     <string name="close">Chiudi</string>
+    <string name="selected_item">Selezionato</string>
 
     <string name="navigation_mode_both">Entrambi</string>
     <string name="navigation_mode_tap">Tocca</string>

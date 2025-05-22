@@ -69,13 +69,13 @@ fun generateDivineMercyBeads() = buildList {
 
     add(Bead(FOUR, BeadType.TAIL_SMALL, R.string.prayer_holy_god))
     add(Bead(THREE, BeadType.TAIL_SMALL, R.string.prayer_holy_god))
-    add(Bead(2, BeadType.TAIL_LARGE, R.string.prayer_holy_god))
+    add(Bead(2, BeadType.TAIL_SMALL, R.string.prayer_holy_god))
 
     add(Bead(1, BeadType.TAIL_LARGE, R.string.prayer_o_blood_and_water))
 
-    add(Bead(FOUR, BeadType.TAIL_LARGE, R.string.prayer_jesus_I_trust))
-    add(Bead(THREE, BeadType.TAIL_LARGE, R.string.prayer_jesus_I_trust))
-    add(Bead(2, BeadType.TAIL_LARGE, R.string.prayer_jesus_I_trust))
+    add(Bead(FOUR, BeadType.TAIL_SMALL, R.string.prayer_jesus_I_trust))
+    add(Bead(THREE, BeadType.TAIL_SMALL, R.string.prayer_jesus_I_trust))
+    add(Bead(2, BeadType.TAIL_SMALL, R.string.prayer_jesus_I_trust))
 
     add(Bead(0, BeadType.CROSS, R.string.prayer_in_the_name))
 }

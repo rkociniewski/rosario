@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Rosary</string>
     <string name="close">Close</string>
+    <string name="selected_item">Selected</string>
 
     <string name="navigation_mode_both">Both</string>
     <string name="navigation_mode_tap">Tap</string>

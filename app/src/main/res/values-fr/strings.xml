@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Rosaire</string>
     <string name="close">Fermer</string>
+    <string name="selected_item">Sélectionné</string>
 
     <string name="navigation_mode_both">Les deux</string>
     <string name="navigation_mode_tap">Appuyer</string>
