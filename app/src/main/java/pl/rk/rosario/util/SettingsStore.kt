@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import pl.rk.rosario.enums.DisplayMode
-import pl.rk.rosario.enums.Language
 import pl.rk.rosario.enums.NavigationMode
 import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.enums.PrayerType

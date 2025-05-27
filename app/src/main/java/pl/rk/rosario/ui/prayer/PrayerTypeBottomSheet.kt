@@ -29,7 +29,7 @@ fun PrayerTypeBottomSheet(
     ModalBottomSheet(onDismiss, sheetState = sheetState) {
         Surface(
             Modifier
-                .fillMaxWidth(Dimensions.SCREEN_MARGI)
+                .fillMaxWidth(Dimensions.SCREEN_MARGIN)
                 .padding(Dimensions.dialogPadding),
             MaterialTheme.shapes.medium,
             tonalElevation = Dimensions.height

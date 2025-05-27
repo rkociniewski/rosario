@@ -26,7 +26,7 @@ fun PrayerResetAlertDialog(
     Dialog(onDismiss, DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(
             Modifier
-                .fillMaxWidth(Dimensions.SCREEN_MARGI)
+                .fillMaxWidth(Dimensions.SCREEN_MARGIN)
                 .padding(Dimensions.dialogPadding),
             MaterialTheme.shapes.medium,
             tonalElevation = Dimensions.height

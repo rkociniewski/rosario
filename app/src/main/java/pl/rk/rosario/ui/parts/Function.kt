@@ -1,11 +1,11 @@
 package pl.rk.rosario.ui.parts
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.BeadType
@@ -92,15 +92,18 @@ private fun generateChotkaBeads() = buildList {
     }
 }
 
-@SuppressLint("LocalContextConfigurationRead")
 @Composable
 fun rememberLocalizedContext(languageCode: String): Context {
     val baseContext = LocalContext.current
+    val localConfiguration = LocalConfiguration.current
     return remember(languageCode) {
-        val locale = Locale(languageCode)
+        val locale = Locale.Builder()
+            .setLanguage(languageCode)
+            .build()
+
         Locale.setDefault(locale)
 
-        val config = Configuration(baseContext.resources.configuration)
+        val config = Configuration(localConfiguration)
         config.setLocale(locale)
 
         baseContext.createConfigurationContext(config)
