@@ -10,8 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import pl.rk.rosario.ui.parts.isDarkTheme
-import pl.rk.rosario.ui.parts.rememberLocalizedContext
+import pl.rk.rosario.ui.helper.isDarkTheme
+import pl.rk.rosario.ui.helper.rememberLocalizedContext
 import pl.rk.rosario.ui.rosary.RosaryScreen
 import pl.rk.rosario.ui.theme.RosarioTheme
 import pl.rk.rosario.viewModel.RosaryViewModel

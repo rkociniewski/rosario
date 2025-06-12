@@ -54,4 +54,5 @@
 
     <string name="location_top">Haut</string>
     <string name="location_botom">Bas</string>
+    <string name="selected_prayer">Prière sélectionnée</string>
 </resources>

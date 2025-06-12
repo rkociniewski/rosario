@@ -1,6 +1,5 @@
-package pl.rk.rosario.ui.parts
+package pl.rk.rosario.ui.helper
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -131,7 +130,7 @@ fun BooleanSelector(
     Text(label)
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LanguageSelector(
     options: EnumEntries<Language>,

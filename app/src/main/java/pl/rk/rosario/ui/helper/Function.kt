@@ -1,4 +1,4 @@
-package pl.rk.rosario.ui.parts
+package pl.rk.rosario.ui.helper
 
 import android.content.Context
 import android.content.res.Configuration

@@ -54,11 +54,10 @@ fun RosaryCanvas(
                 onSurface
             }
 
-            drawCross(color, Offset(centerX, crossY.toFloat()))
+            drawCross(color, Offset(centerX, crossY))
         }
 
         beads.filterBead(currentBead) { it.type.name.startsWith("tail", true) }.forEach {
-            val x = centerX
             val y = centerY + radius + TAIL_SPACING * (SIX - (it.index + 1))
 
             val color = if (it == currentBead) {
@@ -67,7 +66,7 @@ fun RosaryCanvas(
                 onSurface
             }
 
-            drawBead(it, color, Offset(x.toFloat(), y.toFloat()))
+            drawBead(it, color, Offset(centerX, y))
         }
 
         val circularBeads =

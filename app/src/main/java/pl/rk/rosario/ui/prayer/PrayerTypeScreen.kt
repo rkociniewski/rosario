@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import pl.rk.rosario.R
 import pl.rk.rosario.enums.PrayerType
 import pl.rk.rosario.model.Settings
-import pl.rk.rosario.ui.parts.ColumnSelector
-import pl.rk.rosario.ui.parts.HelpLabel
+import pl.rk.rosario.ui.helper.ColumnSelector
+import pl.rk.rosario.ui.helper.HelpLabel
 import pl.rk.rosario.util.Dimensions
 
 @Composable

@@ -55,4 +55,5 @@
 
     <string name="location_top">Na górze</string>
     <string name="location_botom">Na dole</string>
+    <string name="selected_prayer">Wybrana modlitwa</string>
 </resources>

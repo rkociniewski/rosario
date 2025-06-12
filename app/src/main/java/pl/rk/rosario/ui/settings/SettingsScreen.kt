@@ -19,10 +19,10 @@ import pl.rk.rosario.enums.Language
 import pl.rk.rosario.enums.NavigationMode
 import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.model.Settings
-import pl.rk.rosario.ui.parts.BooleanSelector
-import pl.rk.rosario.ui.parts.EnumSelector
-import pl.rk.rosario.ui.parts.HelpLabel
-import pl.rk.rosario.ui.parts.LanguageSelector
+import pl.rk.rosario.ui.helper.BooleanSelector
+import pl.rk.rosario.ui.helper.EnumSelector
+import pl.rk.rosario.ui.helper.HelpLabel
+import pl.rk.rosario.ui.helper.LanguageSelector
 import pl.rk.rosario.util.Dimensions
 
 /**

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import pl.rk.rosario.di.SettingsRepository
 import pl.rk.rosario.model.Bead
 import pl.rk.rosario.model.Settings
-import pl.rk.rosario.ui.parts.generateBeads
+import pl.rk.rosario.ui.helper.generateBeads
 import pl.rk.rosario.util.AppLogger
 import pl.rk.rosario.util.LogTags
 
@@ -28,7 +28,7 @@ class RosaryViewModel @Inject constructor(
     val settings: StateFlow<Settings> = _settings
 
     private val _beads =
-        MutableStateFlow<List<Bead>>(settings.value.prayer.generateBeads()) // Initialize with default beads
+        MutableStateFlow(settings.value.prayer.generateBeads()) // Initialize with default beads
     val beads: StateFlow<List<Bead>> = _beads.asStateFlow()
 
     private val _currentPrayerId = MutableStateFlow(0)

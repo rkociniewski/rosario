@@ -2,7 +2,6 @@ package pl.rk.rosario.ui.rosary
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -42,6 +41,6 @@ fun RosaryBottomAppBar(@StringRes prayerId: Int) {
 }
 
 @Composable
-private fun BoxScope.getText(prayerId: Int) =
+private fun getText(prayerId: Int) =
     if (prayerId != 0) stringResource(id = prayerId) else ""
 

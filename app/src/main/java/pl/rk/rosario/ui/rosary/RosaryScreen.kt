@@ -72,10 +72,15 @@ fun RosaryScreen(
         {
             Column {
                 RosaryTopAppBar(
-                    settings, { viewModel.previous() }, { viewModel.next() },
-                    { showSettingsDialog = true }, { showBottomSheet = true },
-                    { viewModel.reset(true) }
+                    settings = settings,
+                    onPreviousClick = { viewModel.previous() },
+                    onNextClick = { viewModel.next() },
+                    onSettingsClick = { showSettingsDialog = true },
+                    onPrayerClick = { showBottomSheet = true },
+                    onReset = { viewModel.reset(true) }
                 )
+
+                PrayerTitle(settings)
 
                 if (settings.prayerLocation == PrayerLocation.TOP) {
                     RosaryBottomAppBar(prayerId = currentPrayerId)
@@ -88,9 +93,9 @@ fun RosaryScreen(
             }
         },
         { SnackbarHost(snackBarHostState) },
-    ) {
+    ) { padding ->
         RosaryContent(
-            beads, settings, currentIndex, Modifier.padding(it),
+            beads, settings, currentIndex, Modifier.padding(padding),
             { viewModel.previous() }, { viewModel.next() }
         )
 
