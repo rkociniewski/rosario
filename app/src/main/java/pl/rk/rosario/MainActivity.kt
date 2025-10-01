@@ -8,7 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import pl.rk.rosario.ui.helper.isDarkTheme
 import pl.rk.rosario.ui.helper.rememberLocalizedContext
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val viewModel: RosaryViewModel = hiltViewModel()
+            val viewModel = hiltViewModel<RosaryViewModel>()
             val settings by viewModel.settings.collectAsState()
 
             val darkTheme = settings.displayMode.isDarkTheme()

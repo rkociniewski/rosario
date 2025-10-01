@@ -7,7 +7,7 @@ import pl.rk.rosario.R
 /**
  * @property label Resource ID for the display label of this mode
  */
-enum class Language(@StringRes override val label: Int, @DrawableRes val flagIcon: Int) :
+enum class Language(@param:StringRes override val label: Int, @param:DrawableRes val flagIcon: Int) :
     DisplayText {
     PL(R.string.lang_pl, R.drawable.flag_pl),
     EN(R.string.lang_en, R.drawable.flag_uk),

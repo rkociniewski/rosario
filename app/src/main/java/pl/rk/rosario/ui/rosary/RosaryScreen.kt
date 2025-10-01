@@ -23,7 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import pl.rk.rosario.enums.PrayerLocation
 import pl.rk.rosario.ui.prayer.PrayerResetAlertDialog
 import pl.rk.rosario.ui.prayer.PrayerTypeBottomSheet
@@ -34,7 +34,7 @@ import pl.rk.rosario.viewModel.RosaryViewModel
 @Composable
 fun RosaryScreen(
     modifier: Modifier = Modifier,
-    viewModel: RosaryViewModel = hiltViewModel(),
+    viewModel: RosaryViewModel = hiltViewModel<RosaryViewModel>(),
     localizedContext: Context
 ) {
     val settings by viewModel.settings.collectAsState()
