@@ -18,7 +18,7 @@ cat > "$SCRIPTS_DIR/commit-msg" << 'EOF'
 # Validates commit message format (Conventional Commits)
 
 commit_msg=$(cat "$1")
-pattern="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,}"
+pattern="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|update|add|remove|improve)(\(.+\))?: .{1,}"
 
 # Allow merge commits
 if echo "$commit_msg" | grep -qE "^Merge"; then
@@ -37,7 +37,7 @@ if ! echo "$commit_msg" | grep -qE "$pattern"; then
     echo "Your commit message should follow Conventional Commits:"
     echo "  <type>[optional scope]: <description>"
     echo ""
-    echo "Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert"
+    echo "Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert, update, add, remove, improve"
     echo ""
     echo "Examples:"
     echo "  ✅ feat: Add user authentication"
