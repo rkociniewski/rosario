@@ -32,6 +32,14 @@ fun RosaryCanvas(
     val primary = MaterialTheme.colorScheme.primary
     val onSurface = MaterialTheme.colorScheme.onSurface
 
+    val beadColorFor: (Bead) -> Color = {
+        when {
+            it.index < currentBead.index -> primary.copy(Dimensions.PREVIOUS_BEAD)
+            it.index == currentBead.index -> primary
+            else -> onSurface
+        }
+    }
+
     Canvas(modifier.fillMaxSize()) {
         val centerX = size.width / Dimensions.CENTER
         val centerY = size.height / Dimensions.CENTER
@@ -40,25 +48,13 @@ fun RosaryCanvas(
         beads.filterBead(currentBead) { it.type == BeadType.CROSS }.forEach {
             val crossY = centerY + radius + Dimensions.TAIL_SPACING * Dimensions.CROSS_STEP
 
-            val color = if (it == currentBead) {
-                primary
-            } else {
-                onSurface
-            }
-
-            drawCross(color, Offset(centerX, crossY))
+            drawCross(beadColorFor(it), Offset(centerX, crossY))
         }
 
         beads.filterBead(currentBead) { it.type.name.startsWith("tail", true) }.forEach {
             val y = centerY + radius + Dimensions.TAIL_SPACING * (Dimensions.BEAD_STEP - (it.index + Numbers.ONE))
 
-            val color = if (it == currentBead) {
-                primary
-            } else {
-                onSurface
-            }
-
-            drawBead(it, color, Offset(centerX, y))
+            drawBead(it, beadColorFor(it), Offset(centerX, y))
         }
 
         val circularBeads =
@@ -73,13 +69,7 @@ fun RosaryCanvas(
             val x = centerX - radius * cos(angle)
             val y = centerY - radius * sin(angle)
 
-            val color = if (it == currentBead) {
-                primary
-            } else {
-                onSurface
-            }
-
-            drawBead(it, color, Offset(x.toFloat(), y.toFloat()))
+            drawBead(it, beadColorFor(it), Offset(x.toFloat(), y.toFloat()))
         }
     }
 }
