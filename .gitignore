@@ -65,3 +65,14 @@ gradle-app.setting
 
 # Ignore Gradle build output directory
 build
+
+# Git hooks (keep scripts, ignore symlinks)
+.git/hooks/*
+!.githooks/
+
+# Keep the hooks directory in version control
+!.githooks/commit-msg
+!.githooks/pre-commit
+!.githooks/prepare-commit-msg
+!.githooks/post-commit
+!.githooks/pre-push
