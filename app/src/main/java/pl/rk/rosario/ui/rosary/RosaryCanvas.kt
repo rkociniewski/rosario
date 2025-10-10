@@ -10,19 +10,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import pl.rk.rosario.enums.BeadType
 import pl.rk.rosario.model.Bead
+import pl.rk.rosario.util.Dimensions
+import pl.rk.rosario.util.Numbers
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-
-const val TAIL_SPACING = 48f
-const val TWO_AND_HALF = 2.5f
-const val THREE = 3f
-const val FIVE = 5f
-const val SIX_AND_HALF = 6.5f
-const val SIX = 6f
-const val TEN = 10f
-const val FOURTEEN = 14f
-const val CROSS_RADIUS = 16f
 
 @Composable
 fun RosaryCanvas(
@@ -40,13 +32,13 @@ fun RosaryCanvas(
     val primary = MaterialTheme.colorScheme.primary
     val onSurface = MaterialTheme.colorScheme.onSurface
 
-    Canvas(modifier = modifier.fillMaxSize()) {
-        val centerX = size.width / 2f
-        val centerY = size.height / 2f
-        val radius = size.minDimension / THREE
+    Canvas(modifier.fillMaxSize()) {
+        val centerX = size.width / Dimensions.CENTER
+        val centerY = size.height / Dimensions.CENTER
+        val radius = size.minDimension / Dimensions.RADIUS
 
         beads.filterBead(currentBead) { it.type == BeadType.CROSS }.forEach {
-            val crossY = centerY + radius + TAIL_SPACING * SIX_AND_HALF
+            val crossY = centerY + radius + Dimensions.TAIL_SPACING * Dimensions.CROSS_STEP
 
             val color = if (it == currentBead) {
                 primary
@@ -58,7 +50,7 @@ fun RosaryCanvas(
         }
 
         beads.filterBead(currentBead) { it.type.name.startsWith("tail", true) }.forEach {
-            val y = centerY + radius + TAIL_SPACING * (SIX - (it.index + 1))
+            val y = centerY + radius + Dimensions.TAIL_SPACING * (Dimensions.BEAD_STEP - (it.index + Numbers.ONE))
 
             val color = if (it == currentBead) {
                 primary
@@ -71,11 +63,11 @@ fun RosaryCanvas(
 
         val circularBeads =
             beads.filterBead(currentBead) { it.type.name.startsWith("bead", true) }
-        val angleStep = (2 * PI / circularBeads.distinctBy { it.index }.size).toFloat()
-        val startAngle = -PI / 2
+        val angleStep = (Numbers.TWO * PI / circularBeads.distinctBy { it.index }.size).toFloat()
+        val startAngle = -PI / Numbers.TWO
 
         circularBeads.forEach {
-            val index = it.index - FIVE
+            val index = it.index - Dimensions.VERTICAL_BEAM
             val angle = startAngle - angleStep * index
 
             val x = centerX - radius * cos(angle)
@@ -97,32 +89,32 @@ private fun Iterable<Bead>.filterBead(currentBead: Bead, predicate: (Bead) -> Bo
 
 private fun DrawScope.drawCross(color: Color, center: Offset) {
     drawLine(
-        color = color,
-        start = Offset(center.x, center.y - CROSS_RADIUS * FIVE),
-        end = Offset(center.x, center.y + CROSS_RADIUS * FIVE),
-        strokeWidth = 15f
+        color,
+        Offset(center.x, center.y - Dimensions.CROSS_RADIUS * Dimensions.VERTICAL_BEAM),
+        Offset(center.x, center.y + Dimensions.CROSS_RADIUS * Dimensions.VERTICAL_BEAM),
+        Dimensions.LINE,
     )
 
     drawLine(
-        color = color,
-        start = Offset(
-            center.x - CROSS_RADIUS * TWO_AND_HALF,
-            center.y - CROSS_RADIUS * TWO_AND_HALF
+        color,
+        Offset(
+            center.x - Dimensions.CROSS_RADIUS * Dimensions.HORIZONTAL_BEAM,
+            center.y - Dimensions.CROSS_RADIUS * Dimensions.HORIZONTAL_BEAM,
         ),
-        end = Offset(
-            center.x + CROSS_RADIUS * TWO_AND_HALF,
-            center.y - CROSS_RADIUS * TWO_AND_HALF
+        Offset(
+            center.x + Dimensions.CROSS_RADIUS * Dimensions.HORIZONTAL_BEAM,
+            center.y - Dimensions.CROSS_RADIUS * Dimensions.HORIZONTAL_BEAM,
         ),
-        strokeWidth = 15f
+        Dimensions.LINE,
     )
 }
 
 private fun DrawScope.drawBead(bead: Bead, color: Color, offset: Offset) {
     val radius = if (bead.type.name.endsWith("large", true)) {
-        FOURTEEN
+        Dimensions.LARGE_BEAD
     } else {
-        TEN
+        Dimensions.SMALL_BEAD
     }
 
-    drawCircle(color = color, radius = radius, center = offset)
+    drawCircle(color, radius, offset)
 }
