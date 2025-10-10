@@ -14,6 +14,7 @@ data class Settings(
     val displayMode: DisplayMode = DisplayMode.SYSTEM,
     val allowRewind: Boolean = true,
     val prayerLocation: PrayerLocation = PrayerLocation.BOTTOM,
+    val showBeadNumber: Boolean = false,
 )
 
 fun resolveDefaultLanguage(): Language {

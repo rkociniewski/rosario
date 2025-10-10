@@ -23,6 +23,7 @@
     <string name="settings_label_prayer_type">Prayer type</string>
     <string name="settings_label_display_mode">Display mode</string>
     <string name="settings_label_prayer_location">Prayer location</string>
+    <string name="settings_show_bead_number">Show bead number</string>
 
     <string name="display_mode_light">Light</string>
     <string name="display_mode_dark">Dark</string>

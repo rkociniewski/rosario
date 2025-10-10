@@ -91,6 +91,12 @@ fun SettingsScreen(
             updateSettings(settings.copy(prayerLocation = it))
         }
 
+        HorizontalDivider()
+
+        BooleanSelector(settings.showBeadNumber, stringResource(R.string.settings_show_bead_number)) {
+            updateSettings(settings.copy(showBeadNumber = it))
+        }
+
         Spacer(Modifier.height(Dimensions.height))
 
         Button(

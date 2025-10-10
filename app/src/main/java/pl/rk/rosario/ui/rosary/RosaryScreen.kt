@@ -95,7 +95,7 @@ fun RosaryScreen(
         { SnackbarHost(snackBarHostState) },
     ) { padding ->
         RosaryContent(
-            beads, settings, currentIndex, Modifier.padding(padding),
+            beads, settings, currentIndex, Modifier.padding(padding).fillMaxSize(),
             { viewModel.previous() }, { viewModel.next() }
         )
 

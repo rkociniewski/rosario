@@ -16,6 +16,7 @@
     <string name="settings_label_prayer_type">Tipo de oración</string>
     <string name="settings_label_display_mode">Modo de visualización</string>
     <string name="settings_label_prayer_location">Ubicación de la oración</string>
+    <string name="settings_show_bead_number">Mostrar número de cuenta</string>
 
     <string name="display_mode_light">Claro</string>
     <string name="display_mode_dark">Oscuro</string>

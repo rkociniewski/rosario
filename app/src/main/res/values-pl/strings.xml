@@ -16,6 +16,7 @@
     <string name="settings_label_prayer_type">Typ modlitwy</string>
     <string name="settings_label_display_mode">Tryb wyświetlania</string>
     <string name="settings_label_prayer_location">Pozycja modlitwy</string>
+    <string name="settings_show_bead_number">Pokaż numer paciorka</string>
 
     <string name="display_mode_light">Jasny</string>
     <string name="display_mode_dark">Ciemny</string>

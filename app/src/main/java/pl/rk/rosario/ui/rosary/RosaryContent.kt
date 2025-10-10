@@ -2,10 +2,13 @@ package pl.rk.rosario.ui.rosary
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.style.TextAlign
 import pl.rk.rosario.enums.NavigationMode
 import pl.rk.rosario.model.Bead
 import pl.rk.rosario.model.Settings
@@ -31,6 +34,19 @@ fun RosaryContent(
             }
         }
     }) {
-        RosaryCanvas(currentIndex, Modifier.fillMaxSize(), beads)
+        if (settings.showBeadNumber) {
+            Text(
+                text = (currentIndex + 1).toString(),
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center,
+                modifier = modifier.align(Alignment.Center)
+            )
+        }
+
+        // Safety check - don't draw if beads are empty or currentIndex is invalid
+        if (beads.isNotEmpty() && currentIndex < beads.size) {
+            RosaryCanvas(currentIndex, modifier, beads)
+        }
     }
 }

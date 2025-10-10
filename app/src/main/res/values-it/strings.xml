@@ -16,6 +16,7 @@
     <string name="settings_label_prayer_type">Tipo di preghiera</string>
     <string name="settings_label_display_mode">Modalità di visualizzazione</string>
     <string name="settings_label_prayer_location">Posizione della preghiera</string>
+    <string name="settings_show_bead_number">Mostra il numero di perline</string>
 
     <string name="display_mode_light">Chiaro</string>
     <string name="display_mode_dark">Scuro</string>

@@ -34,6 +34,7 @@ object SettingsStore {
     private val DISPLAY_MODE = stringPreferencesKey("display_mode")
     private val ALLOW_REWIND = booleanPreferencesKey("allow_rewind")
     private val PRAYER_LOCATION = stringPreferencesKey("prayer_location")
+    private val SHOW_BEAD_CAPTION = booleanPreferencesKey("show_bead_caption")
 
     fun read(context: Context): Flow<Settings> = context.dataStore.data.map {
         val settings = Settings(
@@ -43,6 +44,7 @@ object SettingsStore {
             safeEnumValueOf(it[DISPLAY_MODE], DisplayMode.SYSTEM),
             it[ALLOW_REWIND] == true,
             safeEnumValueOf(it[PRAYER_LOCATION], PrayerLocation.BOTTOM),
+            it[SHOW_BEAD_CAPTION] == true,
         )
         logger.debug("Loaded settings: $settings")
         settings
@@ -63,6 +65,7 @@ object SettingsStore {
             context.getSharedPreferences("settings", Context.MODE_PRIVATE).edit()
                 .putString("language", settings.language.name.lowercase())
                 .apply()
+            it[SHOW_BEAD_CAPTION] = settings.showBeadNumber
         }
         true
     } catch (e: Exception) {

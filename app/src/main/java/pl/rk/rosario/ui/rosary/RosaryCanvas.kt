@@ -22,11 +22,6 @@ fun RosaryCanvas(
     modifier: Modifier = Modifier,
     beads: List<Bead>
 ) {
-    // Safety check - don't draw if beads are empty or currentIndex is invalid
-    if (beads.isEmpty() || currentIndex >= beads.size) {
-        return
-    }
-
     val currentBead = beads[currentIndex]
 
     val primary = MaterialTheme.colorScheme.primary
@@ -40,7 +35,7 @@ fun RosaryCanvas(
         }
     }
 
-    Canvas(modifier.fillMaxSize()) {
+    Canvas(modifier) {
         val centerX = size.width / Dimensions.CENTER
         val centerY = size.height / Dimensions.CENTER
         val radius = size.minDimension / Dimensions.RADIUS
@@ -100,11 +95,6 @@ private fun DrawScope.drawCross(color: Color, center: Offset) {
 }
 
 private fun DrawScope.drawBead(bead: Bead, color: Color, offset: Offset) {
-    val radius = if (bead.type.name.endsWith("large", true)) {
-        Dimensions.LARGE_BEAD
-    } else {
-        Dimensions.SMALL_BEAD
-    }
-
+    val radius = if (bead.type.name.endsWith("large", true)) Dimensions.LARGE_BEAD else Dimensions.SMALL_BEAD
     drawCircle(color, radius, offset)
 }
