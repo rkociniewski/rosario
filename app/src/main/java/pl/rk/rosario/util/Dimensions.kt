@@ -12,6 +12,7 @@ object Dimensions {
     val minHeightIn = 48.dp
     val adaptiveMinSize = 64.dp
     val maxHeightIn = 150.dp
+    const val PREVIOUS_BEAD = 0.6f
     const val SCREEN_MARGIN = 0.9f
     const val CENTER = 2f
     const val HORIZONTAL_BEAM = 2.5f

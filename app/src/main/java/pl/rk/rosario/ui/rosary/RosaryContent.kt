@@ -20,24 +20,17 @@ fun RosaryContent(
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .pointerInput(settings.navigationMode) {
-                detectTapGestures {
-                    if (settings.navigationMode != NavigationMode.BUTTON) {
-                        if (it.x < size.width / 2) {
-                            if (settings.allowRewind) onPreviousClick()
-                        } else {
-                            onNextClick()
-                        }
-                    }
+    Box(modifier.pointerInput(settings.navigationMode) {
+        detectTapGestures {
+            if (settings.navigationMode != NavigationMode.BUTTON) {
+                if (it.x < size.width / 2) {
+                    if (settings.allowRewind) onPreviousClick()
+                } else {
+                    onNextClick()
                 }
             }
-    ) {
-        RosaryCanvas(
-            beads = beads,
-            currentIndex = currentIndex,
-            modifier = Modifier.fillMaxSize()
-        )
+        }
+    }) {
+        RosaryCanvas(currentIndex, Modifier.fillMaxSize(), beads)
     }
 }
