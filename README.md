@@ -5,7 +5,7 @@
 [![Build](https://github.com/rkociniewski/prime-checker/actions/workflows/main.yml/badge.svg)](https://github.com/rkociniewski/prime-checker/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/rkociniewski/prime-checker/branch/main/graph/badge.svg)](https://codecov.io/gh/rkociniewski/prime-checker)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.21-blueviolet?logo=kotlin)](https://kotlinlang.org/)
-[![Gradle](https://img.shields.io/badge/Gradle-8.14.1-blue?logo=gradle)](https://gradle.org/)
+[![Gradle](https://img.shields.io/badge/Gradle-9.1.0-blue?logo=gradle)](https://gradle.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-greem.svg)](https://opensource.org/licenses/MIT)
 
 Rosario is a modern Android application built with Kotlin and Jetpack Compose, offering an intuitive and accessible
@@ -29,12 +29,14 @@ Each prayer type defines a list of `Bead` objects, which form the prayer sequenc
 ```kotlin
 data class Bead(
     val index: Int,
-    val role: BeadRole,
-    val prayerId: Int
+    val type: BeadType,
+    @get:StringRes
+    val prayerId: Int = 0
 )
 ```
 
-* `role` – Describes the function and appearance of the bead (e.g. `LARGE`, `SMALL`, `CROSS`, `INTRO`, `OUTRO`)
+* `type` – Describes the function and appearance of the bead (e.g. `CROSS`, `BEAD_LARGE`, `BEAD_SMALL`, `TAIL_LARGE`,
+  `TAIL_SMALL`)
 * `prayerId` – A non-zero ID links the bead to a specific prayer text
 * Beads with `prayerId = 0` are skipped in navigation
 
@@ -46,20 +48,19 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
 
 * Android Studio Hedgehog or later
 * Android 8.0+ (API 26+)
-* Kotlin 2.1.21
-* Gradle 8.14.1
+* Kotlin 2.2.20
+* Gradle 9.10
 
 ### Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/rosario.git
+   git clone git@github.com:rkociniewski/rosario.git
    cd rosario
    ```
 
 2. Open in Android Studio
-
 3. Sync Gradle and run the app on an emulator or physical device
 
 ## 🔧 Architecture
