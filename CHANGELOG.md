@@ -7,6 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.7.1] - 2025-10-11
 
+### FIXED
+
+- Set `android:allowBackup` to false
+
+## [1.7.1] - 2025-10-11
+
 ### ADDED
 
 - Documentation for contributing (CONTRIBUTING.md)
