@@ -71,11 +71,12 @@ if [ ! -f "app/build.gradle" ] && [ ! -f "app/build.gradle.kts" ]; then
     exit 0
 fi
 
-# 1. Check for debug statements
+# 1. Check for debug statements (exclude logger classes and test files)
 echo "📝 Checking for debug statements..."
-if git diff --cached --name-only | grep -E '\.(kt|java)$' | xargs grep -nE '(System\.out\.println|Log\.[dev]|console\.log|debugger|TODO|FIXME)' 2>/dev/null; then
+if git diff --cached --name-only | grep -E '\.(kt|java)$' | grep -v -E '(AppLogger|Logger|Log\.kt|Test\.kt|test/)' | xargs grep -nE '(System\.out\.println|Log\.[dev]|console\.log|debugger|TODO|FIXME)' 2>/dev/null; then
     echo -e "${YELLOW}⚠️  Warning: Debug statements found${NC}"
     echo "Consider removing them before committing"
+    echo "Note: Logger/AppLogger classes are excluded from this check"
     # Uncomment to make this blocking:
     # exit 1
 fi
@@ -94,7 +95,7 @@ for file in $(git diff --cached --name-only); do
     fi
 done
 
-# 3. Check for secrets/API keys
+# 3. Check for secrets/API keys (exclude documentation files)
 echo "🔐 Checking for secrets..."
 SECRET_PATTERNS=(
     'api[_-]?key\s*=\s*["\047][^"\047]{10,}'
@@ -105,15 +106,22 @@ SECRET_PATTERNS=(
     'private[_-]?key'
 )
 
-for pattern in "${SECRET_PATTERNS[@]}"; do
-    if git diff --cached -- . ':!test-hooks.sh' | grep -iE "$pattern" >/dev/null 2>&1; then
-        echo -e "${RED}❌ Potential secret detected!${NC}"
-        echo "Pattern: $pattern"
-        echo "Make sure you're not committing sensitive data"
-        echo "Consider using local.properties or environment variables"
-        exit 1
-    fi
-done
+# Get staged files, excluding documentation and test files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -v -E '\.(md|txt)$' | grep -v -E '(test/|Test\.kt|spec\.)')
+
+if [ -n "$STAGED_FILES" ]; then
+    for pattern in "${SECRET_PATTERNS[@]}"; do
+        if echo "$STAGED_FILES" | xargs grep -iE "$pattern" 2>/dev/null; then
+            echo -e "${RED}❌ Potential secret detected!${NC}"
+            echo "Pattern: $pattern"
+            echo "Make sure you're not committing sensitive data"
+            echo "Consider using local.properties or environment variables"
+            echo ""
+            echo "Files excluded from check: *.md, *.txt, *test*, *Test.kt, *spec.*"
+            exit 1
+        fi
+    done
+fi
 
 # 4. Check for merge conflict markers
 echo "🔀 Checking for merge conflicts..."
@@ -148,10 +156,10 @@ echo -e "${GREEN}✅ All pre-commit checks passed!${NC}"
 exit 0
 EOF
 
-# Create prepare-commit-msg hook (for version check)
+# Create prepare-commit-msg hook
 cat > "$SCRIPTS_DIR/prepare-commit-msg" << 'EOF'
 #!/bin/bash
-# Adds branch name to commit message and checks version bump
+# Adds branch name to commit message
 
 COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
@@ -175,7 +183,7 @@ if [ -z "$COMMIT_SOURCE" ]; then
 fi
 EOF
 
-# Create post-commit hook (for version warning)
+# Create post-commit hook
 cat > "$SCRIPTS_DIR/post-commit" << 'EOF'
 #!/bin/bash
 # Post-commit hook to check version bump on main/release branches
@@ -210,7 +218,7 @@ fi
 exit 0
 EOF
 
-# Create pre-push hook (version bump check)
+# Create pre-push hook
 cat > "$SCRIPTS_DIR/pre-push" << 'EOF'
 #!/bin/bash
 # Pre-push hook to verify version bump on main/release branches
@@ -301,11 +309,11 @@ echo ""
 echo "🎉 Git hooks installed successfully!"
 echo ""
 echo "Installed hooks:"
-echo "  • commit-msg       - Validates commit message format"
-echo "  • pre-commit       - Checks code quality, secrets, conflicts"
+echo "  • commit-msg         - Validates commit message format"
+echo "  • pre-commit         - Checks code quality, secrets, conflicts"
 echo "  • prepare-commit-msg - Adds issue numbers to commits"
-echo "  • post-commit      - Warns about version bumps"
-echo "  • pre-push         - Enforces version bump on main/release"
+echo "  • post-commit        - Warns about version bumps"
+echo "  • pre-push           - Enforces version bump on main/release"
 echo ""
 echo "To bypass hooks (use with caution):"
 echo "  git commit --no-verify"

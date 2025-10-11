@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.4] - 2025-10-10
+## [1.6.5] - 2025-10-11
+
+### CHANGED
+- change Java folder to Kotlin
+- improve git hooks scripts
+- update InstallGitHooksTask and UninstallGitHooksTask to their own abstract classes
+
+## [1.6.4] - 2025-10-11
 
 ### CHANGED
 - Update Gradle Wrapper

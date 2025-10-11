@@ -5,22 +5,28 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
 }
 
-tasks.register("installGitHooks") {
-    description = "Install Git hooks"
-    group = "git hooks"
+// build.gradle.kts (root level)
+abstract class InstallGitHooksTask : Exec() {
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val scriptsDir: DirectoryProperty
 
-    doLast {
-        val hooksDir = File(rootDir, ".git/hooks")
-        val scriptsDir = File(rootDir, ".githooks")
+    @get:OutputDirectory
+    abstract val hooksDir: DirectoryProperty
 
-        if (!hooksDir.exists()) {
+    @TaskAction
+    fun installHooks() {
+        val scriptsDirFile = scriptsDir.get().asFile
+        val hooksDirFile = hooksDir.get().asFile
+
+        if (!hooksDirFile.exists()) {
             println("⚠️  .git/hooks directory not found")
-            return@doLast
+            return
         }
 
-        if (!scriptsDir.exists()) {
+        if (!scriptsDirFile.exists()) {
             println("⚠️  .githooks directory not found")
-            return@doLast
+            return
         }
 
         val hooks = listOf(
@@ -31,13 +37,13 @@ tasks.register("installGitHooks") {
             "pre-push"
         )
 
-        hooks.forEach {
-            val source = File(scriptsDir, it)
-            val target = File(hooksDir, it)
+        hooks.forEach { hookName ->
+            val source = File(scriptsDirFile, hookName)
+            val target = File(hooksDirFile, hookName)
 
             if (source.exists()) {
                 // Create relative symlink
-                val relativePath = "../../.githooks/$it"
+                val relativePath = "../../.githooks/$hookName"
                 target.delete()
 
                 // Make source executable
@@ -50,12 +56,12 @@ tasks.register("installGitHooks") {
                         .start()
 
                     process.waitFor()
-                    println("✅ Installed $it")
+                    println("✅ Installed $hookName")
                 } catch (_: Exception) {
                     // Fallback: copy file on Windows
                     source.copyTo(target, overwrite = true)
                     target.setExecutable(true)
-                    println("✅ Copied $it")
+                    println("✅ Copied $hookName")
                 }
             }
         }
@@ -64,12 +70,22 @@ tasks.register("installGitHooks") {
     }
 }
 
-tasks.register("uninstallGitHooks") {
-    description = "Uninstall Git hooks"
+tasks.register<InstallGitHooksTask>("installGitHooks") {
+    description = "Install Git hooks"
     group = "git hooks"
 
-    doLast {
-        val hooksDir = File(rootDir, ".git/hooks")
+    scriptsDir.set(layout.projectDirectory.dir(".githooks"))
+    hooksDir.set(layout.projectDirectory.dir(".git/hooks"))
+}
+
+abstract class UninstallGitHooksTask : Exec() {
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val hooksDir: DirectoryProperty
+
+    @TaskAction
+    fun uninstallHooks() {
+        val hooksDirFile = hooksDir.get().asFile
 
         val hooks = listOf(
             "commit-msg",
@@ -79,11 +95,11 @@ tasks.register("uninstallGitHooks") {
             "pre-push"
         )
 
-        hooks.forEach { hook ->
-            val target = File(hooksDir, hook)
+        hooks.forEach { hookName ->
+            val target = File(hooksDirFile, hookName)
             if (target.exists()) {
                 target.delete()
-                println("🗑️  Removed $hook")
+                println("🗑️  Removed $hookName")
             }
         }
 
@@ -91,12 +107,14 @@ tasks.register("uninstallGitHooks") {
     }
 }
 
-// Auto-install hooks after project sync
-tasks.named("prepareKotlinBuildScriptModel") {
-    dependsOn("installGitHooks")
+tasks.register<UninstallGitHooksTask>("uninstallGitHooks") {
+    description = "Uninstall Git hooks"
+    group = "git hooks"
+
+    hooksDir.set(layout.projectDirectory.dir(".git/hooks"))
 }
 
-// Or install on first build
-afterEvaluate {
-    tasks.getByPath(":app:preBuild").dependsOn(":installGitHooks")
+// Auto-install hooks on first build (optional)
+tasks.matching { it.name == "preBuild" }.configureEach {
+    dependsOn("installGitHooks")
 }

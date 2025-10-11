@@ -60,8 +60,10 @@ Validates that commit messages follow [Conventional Commits](https://www.convent
 
 **Checks for:**
 - 🐛 Debug statements (`println`, `Log.d`, `TODO`, `FIXME`)
+    - **Excluded**: Logger classes (AppLogger, Logger, Log.kt), test files
 - 📦 Large files (>5MB)
 - 🔐 Potential secrets (API keys, passwords, tokens)
+    - **Excluded**: Documentation files (*.md, *.txt), test files
 - 🔀 Merge conflict markers
 - 🎨 Code style (ktlint, if installed)
 - 🔍 Code issues (detekt, if configured)

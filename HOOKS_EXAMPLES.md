@@ -1,6 +1,7 @@
 # Git Hooks - Usage Examples
 
 ## 📋 Table of Contents
+
 1. [Installation](#installation)
 2. [Commit Message Examples](#commit-message-examples)
 3. [Versioning Workflow](#versioning-workflow)
@@ -11,35 +12,89 @@
 
 ## Installation
 
-### Method 1: Automatic (via Gradle)
+### Method 1: Automatic (via Gradle) - Configuration Cache Compatible
 
 Add to `build.gradle.kts` (root):
 
 ```kotlin
-// Automatic installation on first build
-tasks.register("installGitHooks") {
-    doLast {
-        exec {
-            commandLine("bash", "setup-git-hooks.sh")
+// Option A: Use shell script (Recommended - Simple)
+tasks.register<Exec>("installGitHooks") {
+    description = "Install Git hooks"
+    group = "git hooks"
+
+    commandLine("bash", "setup-git-hooks.sh")
+    onlyIf { file("setup-git-hooks.sh").exists() }
+    isIgnoreExitValue = true
+}
+
+// Auto-install on first build
+tasks.matching { it.name == "preBuild" }.configureEach {
+    dependsOn("installGitHooks")
+}
+
+// Option B: Custom task (More control, configuration cache safe)
+import org . gradle . api . DefaultTask
+    import org . gradle . api . file . DirectoryProperty
+    import org . gradle . api . tasks . *
+
+    abstract class InstallGitHooksTask : DefaultTask() {
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val scriptsDir: DirectoryProperty
+
+    @get:OutputDirectory
+    abstract val hooksDir: DirectoryProperty
+
+    @TaskAction
+    fun installHooks() {
+        val scriptsDirFile = scriptsDir.get().asFile
+        val hooksDirFile = hooksDir.get().asFile
+
+        if (!hooksDirFile.exists() || !scriptsDirFile.exists()) {
+            println("⚠️  Hooks directories not found")
+            return
+        }
+
+        listOf("commit-msg", "pre-commit", "prepare-commit-msg", "post-commit", "pre-push").forEach { hook ->
+            val source = File(scriptsDirFile, hook)
+            val target = File(hooksDirFile, hook)
+
+            if (source.exists()) {
+                target.delete()
+                source.setExecutable(true)
+
+                try {
+                    ProcessBuilder("ln", "-sf", "../../.githooks/$hook", target.absolutePath)
+                        .start().waitFor()
+                    println("✅ Installed $hook")
+                } catch (e: Exception) {
+                    source.copyTo(target, overwrite = true)
+                    target.setExecutable(true)
+                    println("✅ Copied $hook")
+                }
+            }
         }
     }
 }
 
-tasks.named("preBuild") {
-    dependsOn("installGitHooks")
+tasks.register<InstallGitHooksTask>("installGitHooks") {
+    scriptsDir.set(layout.projectDirectory.dir(".githooks"))
+    hooksDir.set(layout.projectDirectory.dir(".git/hooks"))
 }
 ```
 
 Then:
+
 ```bash
 ./gradlew build  # Automatically installs hooks
+# Or manually: ./gradlew installGitHooks
 ```
 
 ### Method 2: Manual
 
 ```bash
 # 1. Download setup script
-curl -o setup-git-hooks.sh https://raw.githubusercontent.com/rkociniewski/rosario/setup-git-hooks.sh
+curl -o setup-git-hooks.sh https://raw.githubusercontent.com/your-repo/setup-git-hooks.sh
 
 # 2. Make executable
 chmod +x setup-git-hooks.sh
@@ -405,18 +460,18 @@ Shortcuts:
 
 ```xml
 <!-- Template: "commitfeat" -->
-feat($SCOPE$): $DESCRIPTION$
+    feat($SCOPE$): $DESCRIPTION$
 
-$BODY$
+    $BODY$
 
-$END$
+    $END$
 
-<!-- Template: "commitfix" -->
-fix($SCOPE$): $DESCRIPTION$
+    <!-- Template: "commitfix" -->
+    fix($SCOPE$): $DESCRIPTION$
 
-Fixes #$ISSUE$
+    Fixes #$ISSUE$
 
-$END$
+    $END$
 ```
 
 ### Run Hooks in Android Studio
@@ -450,6 +505,7 @@ Shortcut: Add in **Keymap** → External Tools
 ### versionCode Strategy
 
 **Option 1: Semantic**
+
 ```kotlin
 // versionCode = MAJOR * 10000 + MINOR * 100 + PATCH
 versionCode = 1 * 10000 + 2 * 100 + 3 = 10203  // 1.2.3
@@ -457,6 +513,7 @@ versionCode = 2 * 10000 + 0 * 100 + 0 = 20000  // 2.0.0
 ```
 
 **Option 2: Incremental**
+
 ```kotlin
 versionCode = 1, 2, 3, 4, 5...
 ```
@@ -502,7 +559,7 @@ versionName = "1.2.3"           // Production
 
 ## 📚 Additional Tools
 
-### Commitizen - Interactive Commit Messages
+### Commitment - Interactive Commit Messages
 
 ```bash
 npm install -g commitizen

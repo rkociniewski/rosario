@@ -1,5 +1,5 @@
 #!/bin/bash
-# Adds branch name to commit message and checks version bump
+# Adds branch name to commit message
 
 COMMIT_MSG_FILE=$1
 COMMIT_SOURCE=$2
