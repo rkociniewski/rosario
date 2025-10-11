@@ -23,7 +23,7 @@ android {
         applicationId = "pl.rk.rosario"
         minSdk = 28
         targetSdk = 36
-        versionCode = 31
+        versionCode = 32
         versionName = "1.7.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

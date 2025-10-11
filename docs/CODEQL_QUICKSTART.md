@@ -400,7 +400,7 @@ Add to `.github/workflows/codeql.yml`:
 ```yaml
 jobs:
     analyze:
-        timeout-minutes: 60  # Zwiększ z 30 do 60
+        timeout-minutes: 60
 ```
 
 **Option 2: Use security-only queries** (RECOMMENDED)
@@ -408,7 +408,7 @@ jobs:
 ```yaml
 -   uses: github/codeql-action/init@v3
     with:
-        queries: security-only  # Zamiast security-extended
+        queries: security-extended
 ```
 
 **Option 3: Exclude more paths**
@@ -418,11 +418,11 @@ jobs:
 paths-ignore:
     - '**/build/**'
     - '**/test/**'
-    - '**/res/**'  # Dodaj resources
+    - '**/res/**'
     - '**/assets/**'
 
 paths:
-    - 'app/src/main/kotlin/**'  # Tylko główny kod
+    - 'app/src/main/kotlin/**'
 ```
 
 **Option 4: Use lite workflow**
@@ -437,8 +437,8 @@ paths:
 ```yaml
 -   uses: github/codeql-action/analyze@v3
     with:
-        threads: 4  # Więcej wątków
-        ram: 6144   # Więcej RAM (6GB)
+        threads: 4
+        ram: 6144
 ```
 
 ### No Results Shown

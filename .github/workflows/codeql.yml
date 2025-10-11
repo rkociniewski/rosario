@@ -1,76 +1,148 @@
-# CodeQL Configuration
-# Advanced configuration for custom queries and exclusions
+name: CodeQL Security Analysis
 
-name: "CodeQL Config for Android"
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'release/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  schedule:
+    # Run at 2 AM every Monday
+    -
+      cron: '0 2 * * 1'
+  workflow_dispatch:
 
-# Query suites to run
-queries:
-  - uses: security-extended
-  - uses: security-and-quality
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
 
-# Paths to exclude from analysis
-paths-ignore:
-  - '**/build/**'
-  - '**/generated/**'
-  - '**/test/**'
-  - '**/androidTest/**'
-  - '**/*.gradle'
-  - '**/*.gradle.kts'
-  - '**/proguard-rules.pro'
-  - '**/*.md'
-  - '**/docs/**'
-  - '**/res/**'  # Exclude resources (XML, etc.)
-  - '**/assets/**'
-  - '**/.gradle/**'
-  - '**/gradle/**'
-  - '**/buildSrc/**'
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+  pull-requests: read
 
-# Paths to include
-paths:
-  - 'app/src/main/kotlin/**'
-  - 'app/src/main/java/**'
+jobs:
+  analyze:
+    name: Analyze Code
+    runs-on: ubuntu-latest
+    timeout-minutes: 60  # Zwiększony z 30 do 60 minut
 
-# Query filters - exclude low-priority queries
-query-filters:
-  # Exclude informational findings
-  -
-    exclude:
-      problem.severity: recommendation
-  # Exclude specific Android queries that may timeout
-  -
-    exclude:
-      id: java/android/implicit-pendingintent
-  -
-    exclude:
-      id: java/android/unsafe-android-webview-fetch
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java-kotlin' ]
 
-# Additional configuration for Android
-android:
-  # Enable Android-specific security checks
-  security-checks: true
+    steps:
+      -
+        name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  # Minimum API level to consider
-  min-api-level: 24
+      -
+        name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
 
-# Java/Kotlin specific settings
-java:
-  # Java version
-  version: 21
+      -
+        name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
 
-  # Enable Kotlin analysis
-  kotlin: true
+      -
+        name: Make gradlew executable
+        run: chmod +x gradlew
 
-# Performance tuning
-performance:
-  # Threads for analysis
-  threads: 0  # 0 = auto-detect
+      # Initialize CodeQL tools
+      -
+        name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # Queries to run: default, security-extended, security-and-quality
+          queries: security-extended
+          # Custom queries (optional)
+          config-file: .github/codeql/codeql-config.yml
 
-  # Memory limit (MB)
-  ram: 6144
+      # Build the project for CodeQL analysis
+      # CodeQL needs to see how code is used
+      -
+        name: Build project
+        run: |
+          ./gradlew assembleDebug \
+            --no-daemon \
+            --no-build-cache \
+            --stacktrace \
+            -x lint \
+            -x lintVitalRelease \
+            -x test \
+            -x detekt
 
-  # Timeout for queries (seconds)
-  timeout: 1800
+      # Perform CodeQL Analysis
+      -
+        name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
+          # Upload results even if there are no findings
+          upload: true
+          # SARIF output directory
+          output: codeql-results
+          # Threads for analysis (default: auto)
+          threads: 4
+          # Used RAM
+          ram: 6144
 
-# Severity levels to report
-# Options: error, warning, recommendation, note
-min-severity: warning
+      # Upload SARIF file as artifact (optional)
+      -
+        name: Upload CodeQL results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-results-${{ matrix.language }}
+          path: codeql-results
+          retention-days: 30
+
+      # Post comment on PR with results summary (optional)
+      -
+        name: Comment PR with security findings
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const message = `## 🔒 CodeQL Security Analysis
+
+            ⚠️ **Security issues detected!**
+
+            CodeQL found potential security vulnerabilities in this PR.
+
+            📊 **View detailed results**:
+            - Go to the [Security tab](https://github.com/${{ github.repository }}/security/code-scanning)
+            - Filter by this PR or commit
+
+            **Action required**: Please review and fix security issues before merging.
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });
