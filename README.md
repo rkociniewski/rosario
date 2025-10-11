@@ -1,12 +1,14 @@
 # 📿 Rosario – Android Prayer App
 
-[![version](https://img.shields.io/badge/version-1.0.0-yellow.svg)](https://semver.org)
+[![version](https://img.shields.io/badge/version-1.7.1-yellow.svg)](https://semver.org)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
-[![Build](https://github.com/rkociniewski/prime-checker/actions/workflows/main.yml/badge.svg)](https://github.com/rkociniewski/prime-checker/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/rkociniewski/prime-checker/branch/main/graph/badge.svg)](https://codecov.io/gh/rkociniewski/prime-checker)
+[![Build](https://github.com/rkociniewski/rosario/actions/workflows/main.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/main.yml)
+[![CodeQL](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml)
+[![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-success?logo=dependabot)](https://github.com/rkociniewski/rosario/network/updates)
+[![codecov](https://codecov.io/gh/rkociniewski/rosario/branch/main/graph/badge.svg)](https://codecov.io/gh/rkociniewski/rosario)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.21-blueviolet?logo=kotlin)](https://kotlinlang.org/)
 [![Gradle](https://img.shields.io/badge/Gradle-9.1.0-blue?logo=gradle)](https://gradle.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-greem.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 Rosario is a modern Android application built with Kotlin and Jetpack Compose, offering an intuitive and accessible
 interface for praying the **Rosary**, **Divine Mercy Chaplet**, and **Jesus Prayer (Chotka)**. It supports multiple
@@ -21,6 +23,7 @@ languages and personalization options, while keeping a clean and distraction-fre
 * 🧭 **Custom prayer text positioning**: Top or Bottom
 * 🧠 **State persistence**: Saves current position and preferences using `DataStore`
 * 🌱 **Jetpack Compose** UI and modern Android architecture (ViewModel, Hilt, Coroutines)
+* 🔒 **Security-first**: CodeQL scanning and automated security updates
 
 ## 🧬 Bead Structure
 
@@ -61,7 +64,14 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
    ```
 
 2. Open in Android Studio
-3. Sync Gradle and run the app on an emulator or physical device
+
+3. Install Git hooks (for commit validation):
+
+   ```bash
+   ./scripts/setup-git-hooks.sh
+   ```
+
+4. Sync Gradle and run the app on an emulator or physical device
 
 ## 🔧 Architecture
 
@@ -91,18 +101,169 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
     * Add corresponding `.json` files in `res/raw/`
     * Add the language to the `Language` enum and map its locale
 
-## License
+## 🔐 Security
 
-This project is licensed under the MIT License.
+This project implements multiple security measures:
 
-## Built With
+* **CodeQL Analysis** - Automated security vulnerability scanning on every PR
+* **Dependabot** - Automatic dependency updates and security patches
+* **Git Hooks** - Pre-commit checks for secrets, code quality, and conventional commits
+* **Secret Scanning** - Prevents accidental credential commits
 
-* [Gradle](https://gradle.org/) - Dependency Management
+For security issues, please see [SECURITY.md](SECURITY.md)
 
-## Versioning
+## 🤖 CI/CD Pipeline
 
-We use [SemVer](http://semver.org/) for versioning.
+### Automated Workflows
 
-## Authors
+* **Build & Test** - Runs on every push and PR
+* **CodeQL Security Scan** - Weekly security analysis (Mondays 2 AM)
+* **Dependabot** - Weekly dependency updates (Mondays 9 AM)
+* **UI Tests** - Automated on device emulators (API 28, 33, 34)
+* **Release** - Automatic version tagging and GitHub releases
 
-* **Rafał Kociniewski**: [PowerMilk](https://github.com/rkociniewski)
+### Git Workflow
+
+This project follows [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/) with automated checks:
+
+```bash
+main         # Production releases
+  ↑
+release/*    # Release candidates
+  ↑
+develop      # Development branch
+  ↑
+feature/*    # Feature branches
+```
+
+**Commit Message Format**: We use [Conventional Commits](https://www.conventionalcommits.org/)
+
+```bash
+feat: Add new prayer type
+fix: Resolve crash on rotation
+docs: Update README
+ci: Update GitHub Actions workflows
+```
+
+See [GIT_HOOKS.md](docs/GIT_HOOKS.md) for details.
+
+## 🛠️ Development
+
+### Running Tests
+
+```bash
+# Unit tests
+./gradlew test
+
+# UI tests (requires emulator/device)
+./gradlew connectedCheck
+
+# Code quality
+./gradlew detekt
+./gradlew ktlintCheck
+```
+
+### Code Quality
+
+* **ktlint** - Kotlin code style
+* **detekt** - Static code analysis
+* **CodeQL** - Security vulnerability detection
+
+### Pre-commit Checks
+
+Git hooks automatically check:
+- ✅ Commit message format (Conventional Commits)
+- ✅ No debug statements (excluding Logger classes)
+- ✅ No secrets in code
+- ✅ No large files (>5MB)
+- ✅ No merge conflicts
+
+Bypass only in emergencies:
+```bash
+git commit --no-verify -m "hotfix: Critical fix"
+```
+
+## 📦 Dependencies
+
+Major dependencies are automatically updated by Dependabot:
+
+* **Jetpack Compose** - Modern Android UI
+* **Hilt** - Dependency injection
+* **DataStore** - Settings persistence
+* **Coroutines** - Async operations
+* **Material 3** - Material Design components
+
+See [DEPENDABOT.md](docs/DEPENDABOT.md) for dependency management details.
+
+## 📊 Project Status
+
+![Build Status](https://github.com/rkociniewski/rosario/actions/workflows/main.yml/badge.svg)
+![Security](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml/badge.svg)
+![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-success)
+
+**Latest Release**: v1.0.0
+**Development Status**: Active
+**Code Coverage**: ![codecov](https://codecov.io/gh/rkociniewski/rosario/branch/main/graph/badge.svg)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Follow commit conventions (`feat: Add amazing feature`)
+4. Ensure all tests pass
+5. Submit a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🏗️ Built With
+
+* [Kotlin](https://kotlinlang.org/) - Programming language
+* [Jetpack Compose](https://developer.android.com/jetpack/compose) - Modern UI toolkit
+* [Hilt](https://dagger.dev/hilt/) - Dependency injection
+* [Gradle](https://gradle.org/) - Build system
+* [GitHub Actions](https://github.com/features/actions) - CI/CD
+
+## 📋 Versioning
+
+We use [Semantic Versioning](http://semver.org/) for versioning.
+
+Version format: `MAJOR.MINOR.PATCH`
+- **MAJOR**: Breaking changes
+- **MINOR**: New features (backward compatible)
+- **PATCH**: Bug fixes
+
+## 👨‍💻 Authors
+
+* **Rafał Kociniewski** - [rkociniewski](https://github.com/rkociniewski)
+
+See also the list of [contributors](https://github.com/rkociniewski/rosario/contributors) who participated in this project.
+
+## 🙏 Acknowledgments
+
+* Prayer texts sourced from traditional Catholic sources
+* Icons and design inspired by traditional rosary beads
+* Built with modern Android best practices
+
+## 📚 Documentation
+
+* [Git Hooks Guide](docs/GIT_HOOKS.md)
+* [CodeQL Security](docs/CODEQL.md)
+* [Dependabot Configuration](docs/DEPENDABOT.md)
+* [Security Policy](SECURITY.md)
+* [API Documentation](docs/API.md)
+
+## 📞 Support
+
+* **Issues**: [GitHub Issues](https://github.com/rkociniewski/rosario/issues)
+* **Discussions**: [GitHub Discussions](https://github.com/rkociniewski/rosario/discussions)
+* **Security**: [Security Policy](SECURITY.md)
+
+---
+
+Made with ❤️ and 🙏 by [Rafał Kociniewski](https://github.com/rkociniewski)
