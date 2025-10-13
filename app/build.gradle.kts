@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
@@ -13,7 +15,10 @@ plugins {
     alias(libs.plugins.test.logger)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.ksp)
+    jacoco
 }
+
+val javaVersion: JavaVersion = JavaVersion.VERSION_21
 
 android {
     namespace = "pl.rk.rosario"
@@ -23,8 +28,8 @@ android {
         applicationId = "pl.rk.rosario"
         minSdk = 28
         targetSdk = 36
-        versionCode = 33
-        versionName = "1.7.3"
+        versionCode = 34
+        versionName = "1.7.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,22 +42,51 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
+
+    kotlin {
+        jvmToolchain(21)
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
+
     buildFeatures {
         compose = true
     }
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
         }
     }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     buildToolsVersion = "36.0.0"
+
+    dependenciesInfo {
+        includeInApk = true
+        includeInBundle = true
+    }
 }
 
 dependencies {
@@ -100,11 +134,67 @@ tasks.withType<DetektCreateBaselineTask>().configureEach {
     jvmTarget = JvmTarget.JVM_21.target
 }
 
+val jacocoTestReport by tasks.registering(JacocoReport::class) {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        csv.required.set(false)
+    }
+
+    val fileTree = fileTree("${project.layout.buildDirectory}/intermediates/javac/debug") {
+        exclude("**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*")
+    }
+
+    classDirectories.setFrom(fileTree)
+    sourceDirectories.setFrom(files("src/main/java"))
+    executionData.setFrom(files("${project.layout.buildDirectory}/jacoco/testDebugUnitTest.exec"))
+}
+
+val jacocoTestCoverageVerification by tasks.registering(JacocoCoverageVerification::class) {
+    dependsOn("testDebugUnitTest")
+
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.75".toBigDecimal()
+            }
+        }
+        rule {
+            enabled = true
+            element = "CLASS"
+            includes = listOf("rk.*")
+            limit {
+                counter = "LINE"
+                value = "COVEREDRATIO"
+                minimum = "0.75".toBigDecimal()
+            }
+        }
+    }
+
+    classDirectories.setFrom(fileTree("${project.layout.buildDirectory}/intermediates/javac/debug"))
+    sourceDirectories.setFrom(files("src/main/java"))
+    executionData.setFrom(files("${project.layout.buildDirectory}/jacoco/testDebugUnitTest.exec"))
+}
+
+tasks.register("cleanReports") {
+    doLast {
+        delete("${layout.buildDirectory}/reports")
+    }
+}
+
+tasks.register("coverage") {
+    dependsOn("testDebugUnitTest", jacocoTestReport, jacocoTestCoverageVerification)
+}
+
 dokka {
     dokkaSourceSets.main {
-        jdkVersion.set(
-            java.targetCompatibility.toString().toInt()
-        ) // Used for linking to JDK documentation
+        jdkVersion.set(java.targetCompatibility.toString().toInt()) // Used for linking to JDK documentation
         skipDeprecated.set(false)
     }
 
