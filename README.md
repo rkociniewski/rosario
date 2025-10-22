@@ -50,7 +50,7 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
 ### Requirements
 
 * Android Studio Hedgehog or later
-* Android 8.0+ (API 26+)
+* Android 12.0+ (API 31+)
 * Kotlin 2.2.20
 * Gradle 9.10
 
