@@ -58,8 +58,8 @@ android {
         applicationId = "pl.rk.rosario"
         minSdk = 31
         targetSdk = 36
-        versionCode = 34
-        versionName = "1.7.4"
+        versionCode = 35
+        versionName = "1.7.5"
         buildToolsVersion = "36.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -263,12 +263,15 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         "**/hilt_aggregated_deps/*"
     )
 
-    sourceDirectories.setFrom(files(
-        "${project.projectDir}/src/main/java",
-        "${project.projectDir}/src/main/kotlin"
-    ))
+    sourceDirectories.setFrom(
+        files(
+            "${project.projectDir}/src/main/java",
+            "${project.projectDir}/src/main/kotlin"
+        )
+    )
 
-    classDirectories.setFrom(files(
+    classDirectories.setFrom(
+        files(
         fileTree("${layout.buildDirectory.get()}/intermediates/javac/debug") {
             exclude(fileFilter)
         },
@@ -277,22 +280,28 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         }
     ))
 
-    executionData.setFrom(files(
-        "${layout.buildDirectory.get()}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
-    ))
+    executionData.setFrom(
+        files(
+            "${layout.buildDirectory.get()}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+        )
+    )
 }
 
 tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
     dependsOn("jacocoTestReport")
 
-    sourceDirectories.setFrom(files(
-        "${project.projectDir}/src/main/java",
-        "${project.projectDir}/src/main/kotlin"
-    ))
+    sourceDirectories.setFrom(
+        files(
+            "${project.projectDir}/src/main/java",
+            "${project.projectDir}/src/main/kotlin"
+        )
+    )
 
-    executionData.setFrom(files(
-        "${layout.buildDirectory.get()}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
-    ))
+    executionData.setFrom(
+        files(
+            "${layout.buildDirectory.get()}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+        )
+    )
 
     violationRules {
         rule {

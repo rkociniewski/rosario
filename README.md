@@ -1,6 +1,6 @@
 # 📿 Rosario – Android Prayer App
 
-[![version](https://img.shields.io/badge/version-1.7.1-yellow.svg)](https://semver.org)
+[![version](https://img.shields.io/badge/version-1.7.5-yellow.svg)](https://semver.org)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![Build](https://github.com/rkociniewski/rosario/actions/workflows/main.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/main.yml)
 [![CodeQL](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml)
@@ -172,6 +172,7 @@ See [GIT_HOOKS.md](docs/GIT_HOOKS.md) for details.
 ### Pre-commit Checks
 
 Git hooks automatically check:
+
 - ✅ Commit message format (Conventional Commits)
 - ✅ No debug statements (excluding Logger classes)
 - ✅ No secrets in code
@@ -179,6 +180,7 @@ Git hooks automatically check:
 - ✅ No merge conflicts
 
 Bypass only in emergencies:
+
 ```bash
 git commit --no-verify -m "hotfix: Critical fix"
 ```
@@ -231,6 +233,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 We use [Semantic Versioning](http://semver.org/) for versioning.
 
 Version format: `MAJOR.MINOR.PATCH`
+
 - **MAJOR**: Breaking changes
 - **MINOR**: New features (backward compatible)
 - **PATCH**: Bug fixes
@@ -239,7 +242,8 @@ Version format: `MAJOR.MINOR.PATCH`
 
 * **Rafał Kociniewski** - [rkociniewski](https://github.com/rkociniewski)
 
-See also the list of [contributors](https://github.com/rkociniewski/rosario/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/rkociniewski/rosario/contributors) who participated in this
+project.
 
 ## 🙏 Acknowledgments
 

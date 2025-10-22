@@ -1,6 +1,7 @@
 # 📚 Rosario Documentation
 
-Welcome to the Rosario project documentation! This directory contains comprehensive guides for developers, contributors, and maintainers.
+Welcome to the Rosario project documentation! This directory contains comprehensive guides for developers, contributors,
+and maintainers.
 
 ## 📖 Table of Contents
 
@@ -66,12 +67,12 @@ Scripts are located in the `../scripts/` directory:
 
 ### Available Scripts
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| `setup-git-hooks.sh` | Install Git hooks | `./scripts/setup-git-hooks.sh` |
-| `test-hooks.sh` | Test hooks | `./scripts/test-hooks.sh all` |
-| `validate-hooks.sh` | Validate syntax | `./scripts/validate-hooks.sh` |
-| `advanced-version-check.sh` | Version validation | Used by pre-push hook |
+| Script                      | Purpose            | Usage                          |
+|-----------------------------|--------------------|--------------------------------|
+| `setup-git-hooks.sh`        | Install Git hooks  | `./scripts/setup-git-hooks.sh` |
+| `test-hooks.sh`             | Test hooks         | `./scripts/test-hooks.sh all`  |
+| `validate-hooks.sh`         | Validate syntax    | `./scripts/validate-hooks.sh`  |
+| `advanced-version-check.sh` | Version validation | Used by pre-push hook          |
 
 ## 📊 Quick Links
 

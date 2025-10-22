@@ -283,11 +283,13 @@ val apiKey = BuildConfig.API_KEY
 **A:** Only in emergencies:
 
 ✅ **OK to bypass:**
+
 - Critical production bug that needs immediate fix
 - CI/CD pipeline is broken and needs urgent repair
 - Reverting a breaking change
 
 ❌ **NOT OK to bypass:**
+
 - "I'm in a hurry"
 - "Tests take too long"
 - "I'll fix it later"
@@ -409,11 +411,14 @@ fi
 ##maps_key_here
 
 ## OAuth
+
 OAUTH_CLIENT_ID=your_client_id
 OAUTH_CLIENT_SECRET=your_client_secret
 
 ## Database
+
 DB_PASSWORD=your_db_password
+
 ```
 
 ---
@@ -578,6 +583,7 @@ fi
 5. **Create issue**: In project repository
 
 **Emergency bypass** (document reason!):
+
 ```bash
 git commit --no-verify -m "type: description [BYPASS: reason]"
 ```
