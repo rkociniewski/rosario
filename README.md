@@ -6,7 +6,7 @@
 [![CodeQL](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml)
 [![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-success?logo=dependabot)](https://github.com/rkociniewski/rosario/network/updates)
 [![codecov](https://codecov.io/gh/rkociniewski/rosario/branch/main/graph/badge.svg)](https://codecov.io/gh/rkociniewski/rosario)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.20-blueviolet?logo=kotlin)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-blueviolet?logo=kotlin)](https://kotlinlang.org/)
 [![Gradle](https://img.shields.io/badge/Gradle-9.1.0-blue?logo=gradle)](https://gradle.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -83,7 +83,7 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
 ## 🗂 Project Structure
 
 ```
-📦pl.rk.rosario
+📦rk.powermilk.rosario
  ┣ 📁data           # Data loading utilities (prayer text loader)
  ┣ 📁enums          # App-specific enums (language, prayer type, etc.)
  ┣ 📁model          # Data models (Bead, Settings)

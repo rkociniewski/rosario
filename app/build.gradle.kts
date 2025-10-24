@@ -30,8 +30,8 @@ val exclusions = listOf(
     "**/android/databinding/*Binding.*",
     "**/BR.*",
     "**/Br.*",
-    "**/*\$ViewInjector*.*",
-    "**/*\$ViewBinder*.*",
+    $$"**/*$ViewInjector*.*",
+    $$"**/*$ViewBinder*.*",
     "**/Lambda$*.class",
     "**/Lambda.class",
     "**/*Lambda.class",
@@ -49,15 +49,15 @@ val exclusions = listOf(
 )
 
 android {
-    namespace = "pl.rk.rosario"
+    namespace = "rk.powermilk.rosario"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "pl.rk.rosario"
+        applicationId = "rk.powermilk.rosario"
         minSdk = 31
         targetSdk = 36
-        versionCode = 36
-        versionName = "1.7.6"
+        versionCode = 37
+        versionName = "1.7.7"
         buildToolsVersion = "36.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -113,10 +113,6 @@ android {
         includeInApk = true
         includeInBundle = true
     }
-}
-
-jacoco {
-    toolVersion = "0.8.12"
 }
 
 dependencies {
@@ -269,8 +265,8 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         "**/databinding/*",
         "**/android/databinding/*Binding.*",
         "**/BR.*",
-        "**/*\$ViewInjector*.*",
-        "**/*\$ViewBinder*.*",
+        $$"**/*$ViewInjector*.*",
+        $$"**/*$ViewBinder*.*",
         "**/Lambda$*.class",
         "**/Lambda.class",
         "**/*Lambda.class",
@@ -297,13 +293,13 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 
     classDirectories.setFrom(
         files(
-        fileTree("${layout.buildDirectory.get()}/intermediates/javac/debug") {
-            exclude(fileFilter)
-        },
-        fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
-            exclude(fileFilter)
-        }
-    ))
+            fileTree("${layout.buildDirectory.get()}/intermediates/javac/debug") {
+                exclude(fileFilter)
+            },
+            fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+                exclude(fileFilter)
+            }
+        ))
 
     executionData.setFrom(
         files(
@@ -337,7 +333,7 @@ tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
         rule {
             enabled = true
             element = "CLASS"
-            includes = listOf("pl.rk.*")
+            includes = listOf("rk.powermilk.*")
             limit {
                 counter = "LINE"
                 value = "COVEREDRATIO"
