@@ -83,7 +83,7 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
 ## 🗂 Project Structure
 
 ```
-📦pl.rk.rosario
+📦rk.powermilk.rosario
  ┣ 📁data           # Data loading utilities (prayer text loader)
  ┣ 📁enums          # App-specific enums (language, prayer type, etc.)
  ┣ 📁model          # Data models (Bead, Settings)

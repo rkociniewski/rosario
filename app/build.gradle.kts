@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
@@ -49,15 +47,15 @@ val exclusions = listOf(
 )
 
 android {
-    namespace = "pl.rk.rosario"
+    namespace = "rk.powermilk.rosario"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "pl.rk.rosario"
+        applicationId = "rk.powermilk.rosario"
         minSdk = 31
         targetSdk = 36
-        versionCode = 36
-        versionName = "1.7.6"
+        versionCode = 37
+        versionName = "1.7.7"
         buildToolsVersion = "36.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
