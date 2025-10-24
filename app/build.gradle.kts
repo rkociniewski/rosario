@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.detekt)
     alias(libs.plugins.dokka)
-    alias(libs.plugins.test.logger)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.ksp)
     jacoco
@@ -45,7 +44,6 @@ val exclusions = listOf(
     "**/*Module*.*",
     "**/*Dagger*.*",
     "**/*Hilt*.*",
-    // Compose specifics
     "**/*ComposableSingletons*.*",
     "**/*_Impl*.*"
 )
@@ -58,8 +56,8 @@ android {
         applicationId = "pl.rk.rosario"
         minSdk = 31
         targetSdk = 36
-        versionCode = 35
-        versionName = "1.7.5"
+        versionCode = 36
+        versionName = "1.7.6"
         buildToolsVersion = "36.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -151,6 +149,33 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
     testImplementation(libs.coroutines.test)
+}
+
+dokka {
+    dokkaSourceSets.main {
+        jdkVersion.set(java.targetCompatibility.toString().toInt()) // Used for linking to JDK documentation
+        skipDeprecated.set(false)
+    }
+
+    pluginsConfiguration.html {
+        dokkaSourceSets {
+            configureEach {
+                documentedVisibilities.set(
+                    setOf(
+                        VisibilityModifier.Public,
+                        VisibilityModifier.Private,
+                        VisibilityModifier.Protected,
+                        VisibilityModifier.Internal,
+                        VisibilityModifier.Package,
+                    )
+                )
+            }
+        }
+    }
+}
+
+hilt {
+    enableAggregatingTask = false
 }
 
 detekt {
@@ -334,39 +359,4 @@ tasks.register("cleanReports") {
     doLast {
         delete("${layout.buildDirectory.get()}/reports")
     }
-}
-
-dokka {
-    dokkaSourceSets.main {
-        jdkVersion.set(java.targetCompatibility.toString().toInt()) // Used for linking to JDK documentation
-        skipDeprecated.set(false)
-    }
-
-    pluginsConfiguration.html {
-        dokkaSourceSets {
-            configureEach {
-                documentedVisibilities.set(
-                    setOf(
-                        VisibilityModifier.Public,
-                        VisibilityModifier.Private,
-                        VisibilityModifier.Protected,
-                        VisibilityModifier.Internal,
-                        VisibilityModifier.Package,
-                    )
-                )
-            }
-        }
-    }
-}
-
-hilt {
-    enableAggregatingTask = false
-}
-
-testlogger {
-    showStackTraces = false
-    showFullStackTraces = false
-    showCauses = false
-    slowThreshold = 10000
-    showSimpleNames = true
 }
