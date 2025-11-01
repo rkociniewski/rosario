@@ -2,8 +2,6 @@ package rk.powermilk.rosario.ui
 
 import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
@@ -17,7 +15,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import rk.powermilk.rosario.enums.PrayerType
-import rk.powermilk.rosario.model.Bead
 import rk.powermilk.rosario.model.Settings
 import rk.powermilk.rosario.ui.helper.generateBeads
 import rk.powermilk.rosario.ui.rosary.RosaryScreen

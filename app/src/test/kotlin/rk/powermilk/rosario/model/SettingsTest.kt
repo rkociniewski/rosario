@@ -55,17 +55,17 @@ class SettingsTest {
         @DisplayName("Should create settings with custom values")
         fun testCustomSettings() {
             val settings = Settings(
-                language = Language.PL,
-                navigationMode = NavigationMode.BUTTONS,
-                prayer = PrayerType.DIVINE_MERCY,
-                displayMode = DisplayMode.DARK,
-                allowRewind = false,
-                prayerLocation = PrayerLocation.TOP,
-                showBeadNumber = true
+                Language.PL,
+                NavigationMode.BUTTON,
+                PrayerType.DIVINE_MERCY,
+                DisplayMode.DARK,
+                false,
+                PrayerLocation.TOP,
+                true
             )
 
             assertEquals(Language.PL, settings.language)
-            assertEquals(NavigationMode.BUTTONS, settings.navigationMode)
+            assertEquals(NavigationMode.BUTTON, settings.navigationMode)
             assertEquals(PrayerType.DIVINE_MERCY, settings.prayer)
             assertEquals(DisplayMode.DARK, settings.displayMode)
             assertFalse(settings.allowRewind)

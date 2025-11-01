@@ -6,7 +6,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -217,11 +216,7 @@ class RosaryViewModelTest {
         @Test
         @DisplayName("Should update settings successfully")
         fun testUpdateSettings() = runTest {
-            val newSettings = Settings(
-                language = Language.PL,
-                navigationMode = NavigationMode.BUTTONS,
-                prayer = PrayerType.DIVINE_MERCY
-            )
+            val newSettings = Settings(Language.PL, NavigationMode.BUTTON, PrayerType.DIVINE_MERCY)
 
             coEvery { settingsRepository.updateSettings(any()) } returns true
 

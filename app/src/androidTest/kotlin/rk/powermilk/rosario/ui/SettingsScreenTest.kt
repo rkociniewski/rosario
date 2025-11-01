@@ -91,9 +91,7 @@ class SettingsScreenTest {
     @Test
     fun settingsScreen_displays_with_different_settings() {
         val settings = Settings(
-            language = Language.PL,
-            navigationMode = NavigationMode.BUTTONS,
-            displayMode = DisplayMode.DARK,
+            Language.PL, NavigationMode.BUTTON, displayMode = DisplayMode.DARK,
             allowRewind = false,
             showBeadNumber = true
         )

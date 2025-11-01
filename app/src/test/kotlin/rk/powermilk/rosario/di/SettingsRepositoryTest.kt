@@ -1,20 +1,18 @@
 package rk.powermilk.rosario.di
 
 import android.content.Context
-import app.cash.turbine.test
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
 import rk.powermilk.rosario.enums.Language
 import rk.powermilk.rosario.enums.NavigationMode
 import rk.powermilk.rosario.enums.PrayerType
 import rk.powermilk.rosario.model.Settings
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 @DisplayName("SettingsRepository Tests")
 class SettingsRepositoryTest {
@@ -22,7 +20,7 @@ class SettingsRepositoryTest {
     private lateinit var context: Context
     private lateinit var repository: SettingsRepository
 
-    @BeforeEach
+    @BeforeTest
     fun setup() {
         context = mockk(relaxed = true)
         repository = SettingsRepository(context)
@@ -48,11 +46,7 @@ class SettingsRepositoryTest {
     @Test
     @DisplayName("Should delegate updateSettings to SettingsStore")
     fun testUpdateSettings() = runTest {
-        val settings = Settings(
-            language = Language.PL,
-            navigationMode = NavigationMode.BUTTONS,
-            prayer = PrayerType.DIVINE_MERCY
-        )
+        val settings = Settings(Language.PL, NavigationMode.BUTTON, PrayerType.DIVINE_MERCY)
 
         // Note: In a real test environment with properly mocked DataStore,
         // we would verify that SettingsStore.write() is called with correct parameters

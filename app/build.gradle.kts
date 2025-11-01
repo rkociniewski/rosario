@@ -89,6 +89,9 @@ android {
 
     kotlin {
         jvmToolchain(21)
+        compilerOptions {
+            freeCompilerArgs.add("-XXLanguage:+MultiDollarInterpolation")
+        }
     }
 
     compileOptions {
@@ -138,7 +141,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)
-    testRuntimeOnly(libs.junit.jupiter.engine)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
@@ -157,6 +159,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.kotlin.test)
 }
 
 dokka {
