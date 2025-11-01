@@ -19,7 +19,7 @@ languages and personalization options, while keeping a clean and distraction-fre
 * 🔁 **Three prayer types**: Rosary, Divine Mercy, and Jesus Prayer (Chotka)
 * 🌐 **Multi-language support**: Automatically detects system language (e.g., EN, PL, FR), with manual override
 * 🌗 **Display modes**: Light, Dark, and System settings
-* 🎛️ **Prayer navigation**: Tap, Buttons, or Both
+* 🎛️ **Prayer navigation**: Tap, Button, or Both
 * 🧭 **Custom prayer text positioning**: Top or Bottom
 * 🧠 **State persistence**: Saves current position and preferences using `DataStore`
 * 🌱 **Jetpack Compose** UI and modern Android architecture (ViewModel, Hilt, Coroutines)
