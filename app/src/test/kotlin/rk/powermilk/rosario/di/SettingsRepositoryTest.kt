@@ -2,7 +2,6 @@ package rk.powermilk.rosario.di
 
 import android.content.Context
 import io.mockk.mockk
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.DisplayName
 import rk.powermilk.rosario.enums.Language
@@ -11,7 +10,6 @@ import rk.powermilk.rosario.enums.PrayerType
 import rk.powermilk.rosario.model.Settings
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @DisplayName("SettingsRepository Tests")
