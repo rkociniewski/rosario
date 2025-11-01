@@ -165,7 +165,7 @@ class SettingsTest {
             val currentLocale = Locale.getDefault()
             try {
                 // Set to a locale that's not in the Language enum
-                Locale.setDefault(Locale("xyz"))
+                Locale.setDefault(Locale.SIMPLIFIED_CHINESE)
 
                 val language = resolveDefaultLanguage()
 
@@ -180,7 +180,7 @@ class SettingsTest {
         fun testSupportedLocale() {
             val currentLocale = Locale.getDefault()
             try {
-                Locale.setDefault(Locale("pl"))
+                Locale.setDefault(Locale.forLanguageTag("pl"))
 
                 val language = resolveDefaultLanguage()
 

@@ -59,7 +59,7 @@ android {
         versionCode = 37
         versionName = "1.7.7"
         buildToolsVersion = "36.0.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "rk.powermilk.rosario.HiltTestRunner"
     }
 
     buildTypes {
