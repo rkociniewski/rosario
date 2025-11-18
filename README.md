@@ -1,13 +1,13 @@
 # 📿 Rosario – Android Prayer App
 
-[![version](https://img.shields.io/badge/version-1.7.6-yellow.svg)](https://semver.org)
+[![version](https://img.shields.io/badge/version-1.8.1-yellow.svg)](https://semver.org)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![Build](https://github.com/rkociniewski/rosario/actions/workflows/main.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/main.yml)
 [![CodeQL](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml)
 [![Dependabot Status](https://img.shields.io/badge/Dependabot-enabled-success?logo=dependabot)](https://github.com/rkociniewski/rosario/network/updates)
 [![codecov](https://codecov.io/gh/rkociniewski/rosario/branch/main/graph/badge.svg)](https://codecov.io/gh/rkociniewski/rosario)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-blueviolet?logo=kotlin)](https://kotlinlang.org/)
-[![Gradle](https://img.shields.io/badge/Gradle-9.1.0-blue?logo=gradle)](https://gradle.org/)
+[![Gradle](https://img.shields.io/badge/Gradle-9.2.0-blue?logo=gradle)](https://gradle.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 Rosario is a modern Android application built with Kotlin and Jetpack Compose, offering an intuitive and accessible

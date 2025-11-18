@@ -56,8 +56,8 @@ android {
         applicationId = "rk.powermilk.rosario"
         minSdk = 31
         targetSdk = 36
-        versionCode = 38
-        versionName = "1.8.0"
+        versionCode = 39
+        versionName = "1.8.1"
         buildToolsVersion = "36.0.0"
         testInstrumentationRunner = "rk.powermilk.rosario.HiltTestRunner"
     }
