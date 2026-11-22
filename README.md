@@ -1,6 +1,6 @@
 # 📿 Rosario – Android Prayer App
 
-[![version](https://img.shields.io/badge/version-1.8.1-yellow.svg)](https://semver.org)
+[![version](https://img.shields.io/badge/version-1.9.0-yellow.svg)](https://semver.org)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![Build](https://github.com/rkociniewski/rosario/actions/workflows/main.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/main.yml)
 [![CodeQL](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml/badge.svg)](https://github.com/rkociniewski/rosario/actions/workflows/codeql.yml)
@@ -50,9 +50,10 @@ Beads are generated dynamically in the ViewModel based on the selected `PrayerTy
 ### Requirements
 
 * Android Studio Hedgehog or later
-* Android 12.0+ (API 31+)
-* Kotlin 2.2.20
-* Gradle 9.10
+* Android 16+ (API 36+)
+* Kotlin 2.4.21
+* Gradle 9.9.2
+* JDK 27
 
 ### Installation
 
@@ -119,7 +120,7 @@ For security issues, please see [SECURITY.md](docs/SECURITY.md)
 * **Build & Test** - Runs on every push and PR
 * **CodeQL Security Scan** - Weekly security analysis (Mondays 2 AM)
 * **Dependabot** - Weekly dependency updates (Mondays 9 AM)
-* **UI Tests** - Automated on device emulators (API 28, 33, 34)
+* **UI Tests** - Automated on device emulators (API 36, 37)
 * **Release** - Automatic version tagging and GitHub releases
 
 ### Git Workflow
