@@ -1,14 +1,13 @@
 @file:Suppress("UnstableApiUsage")
 
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.DetektCreateBaselineTask
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Locale
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.detekt)
@@ -18,7 +17,11 @@ plugins {
     jacoco
 }
 
-val javaVersion: JavaVersion = JavaVersion.VERSION_21
+val toolchainVersion = 27
+val javaVersion: JavaVersion = JavaVersion.VERSION_26
+val jvmTargetVersion: JvmTarget = JvmTarget.JVM_26
+// detekt analysis target (may lag behind the compiler target)
+val detektJvmTarget: JvmTarget = jvmTargetVersion
 val exclusions = listOf(
     "**/R.class",
     "**/R$*.class",
@@ -50,15 +53,18 @@ val exclusions = listOf(
 
 android {
     namespace = "rk.powermilk.rosario"
-    compileSdk = 36
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         applicationId = "rk.powermilk.rosario"
-        minSdk = 31
-        targetSdk = 36
-        versionCode = 39
-        versionName = "1.8.1"
-        buildToolsVersion = "36.0.0"
+        minSdk = 36
+        targetSdk = 37
+        versionCode = 40
+        versionName = "1.9.0"
         testInstrumentationRunner = "rk.powermilk.rosario.HiltTestRunner"
     }
 
@@ -77,6 +83,10 @@ android {
         }
     }
 
+    testCoverage {
+        jacocoVersion = libs.versions.jacoco.get()
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -84,13 +94,6 @@ android {
             all {
                 it.useJUnitPlatform()
             }
-        }
-    }
-
-    kotlin {
-        jvmToolchain(21)
-        compilerOptions {
-            freeCompilerArgs.add("-XXLanguage:+MultiDollarInterpolation")
         }
     }
 
@@ -118,6 +121,14 @@ android {
     dependenciesInfo {
         includeInApk = true
         includeInBundle = true
+    }
+    buildToolsVersion = "36.0.0"
+}
+
+kotlin {
+    jvmToolchain(toolchainVersion)
+    compilerOptions {
+        jvmTarget.set(jvmTargetVersion)
     }
 }
 
@@ -163,7 +174,7 @@ dependencies {
 }
 
 dokka {
-    dokkaSourceSets.main {
+    dokkaSourceSets.configureEach {
         jdkVersion.set(java.targetCompatibility.toString().toInt()) // Used for linking to JDK documentation
         skipDeprecated.set(false)
     }
@@ -185,6 +196,19 @@ dokka {
     }
 }
 
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+// AGP pins its own (older) JaCoCo agent; force the version that supports Java 27 bytecode
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jacoco") {
+            useVersion(libs.versions.jacoco.get())
+        }
+    }
+}
+
 hilt {
     enableAggregatingTask = false
 }
@@ -195,11 +219,11 @@ detekt {
 }
 
 tasks.withType<Detekt>().configureEach {
-    jvmTarget = JvmTarget.JVM_21.target
+    jvmTarget.set(detektJvmTarget.target)
 }
 
 tasks.withType<DetektCreateBaselineTask>().configureEach {
-    jvmTarget = JvmTarget.JVM_21.target
+    jvmTarget.set(detektJvmTarget.target)
 }
 
 tasks.withType<Test> {
@@ -243,7 +267,7 @@ androidComponents {
                     fileTree("${layout.buildDirectory.get()}/intermediates/javac/${variant.name}") {
                         exclude(exclusions)
                     },
-                    fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/${variant.name}") {
+                    fileTree("${layout.buildDirectory.get()}/intermediates/built_in_kotlinc/${variant.name}/compile${variantName}Kotlin/classes") {
                         exclude(exclusions)
                     }
                 ))
@@ -311,7 +335,7 @@ tasks.register<JacocoReport>("jacocoTestReport") {
             fileTree("${layout.buildDirectory.get()}/intermediates/javac/debug") {
                 exclude(fileFilter)
             },
-            fileTree("${layout.buildDirectory.get()}/tmp/kotlin-classes/debug") {
+            fileTree("${layout.buildDirectory.get()}/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes") {
                 exclude(fileFilter)
             }
         ))
